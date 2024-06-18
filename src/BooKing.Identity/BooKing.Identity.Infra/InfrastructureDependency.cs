@@ -1,4 +1,5 @@
-﻿using BooKing.Generics.Domain;
+﻿using BooKing.Generics.Infra;
+using BooKing.Generics.Infra.Implementations;
 using BooKing.Identity.Domain.Interfaces;
 using BooKing.Identity.Infra.Context;
 using BooKing.Identity.Infra.Repositories;
@@ -24,6 +25,6 @@ public static class InfrastructureDependency
     private static void AddPersistence(IServiceCollection services)
     {
         services.AddTransient<IUserRepository, UserRepository>();
-        services.AddTransient<IUnitOfWork, UnitOfWork>();
+        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
     }
 }

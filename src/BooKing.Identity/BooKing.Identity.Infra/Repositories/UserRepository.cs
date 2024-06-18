@@ -1,4 +1,4 @@
-﻿using BooKing.Generics.Domain;
+﻿using BooKing.Generics.Infra;
 using BooKing.Identity.Domain.Entities;
 using BooKing.Identity.Domain.Interfaces;
 using BooKing.Identity.Infra.Context;
@@ -8,9 +8,9 @@ namespace BooKing.Identity.Infra.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly BooKingIdentityContext _context;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork<BooKingIdentityContext> _unitOfWork;
 
-    public UserRepository(BooKingIdentityContext context, IUnitOfWork unitOfWork)
+    public UserRepository(BooKingIdentityContext context, IUnitOfWork<BooKingIdentityContext> unitOfWork)
     {
         _context = context;
         _unitOfWork = unitOfWork;

@@ -14,11 +14,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
-    <ProjectReference Include="..\BooKing.Identity.Domain\BooKing.Identity.Domain.csproj" />
+    <ProjectReference Include="..\BooKing.Generics.Domain\BooKing.Generics.Domain.csproj" />
+    <ProjectReference Include="..\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Queues\" />
   </ItemGroup>
 
 </Project>

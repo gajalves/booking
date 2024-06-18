@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Api\BooKing.Generics.Api.csproj" />
+    <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Outbox\BooKing.Generics.Outbox.csproj" />
     <ProjectReference Include="..\BooKing.Identity.Application\BooKing.Identity.Application.csproj" />
     <ProjectReference Include="..\BooKing.Identity.Infra\BooKing.Identity.Infra.csproj" />
   </ItemGroup>

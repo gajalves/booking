@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BooKing.Generics.Bus\BooKing.Generics.Bus.csproj" />
     <ProjectReference Include="..\BooKing.Generics.Domain\BooKing.Generics.Domain.csproj" />
     <ProjectReference Include="..\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
   </ItemGroup>

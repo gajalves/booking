@@ -5,13 +5,19 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-BooKing.Outbox.Service-a9a712fc-60e8-4a1a-a82c-34ef45e59e98</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="8.0.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Outbox\BooKing.Generics.Outbox.csproj" />
   </ItemGroup>
 </Project>

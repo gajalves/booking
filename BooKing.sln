@@ -25,11 +25,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Generics.Api", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Generics.Outbox", "src\BooKing.Generics\BooKing.Generics.Outbox\BooKing.Generics.Outbox.csproj", "{E2A71FB3-0A93-49A1-A476-B7D9DC9A6505}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooKing.Generics.Bus", "src\BooKing.Generics\BooKing.Generics.Bus\BooKing.Generics.Bus.csproj", "{2C20806A-2F2C-4848-AB29-808F9400FB91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Generics.Bus", "src\BooKing.Generics\BooKing.Generics.Bus\BooKing.Generics.Bus.csproj", "{2C20806A-2F2C-4848-AB29-808F9400FB91}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BooKing.Outbox", "BooKing.Outbox", "{F26F26AB-3E0A-4E6A-B93B-67CD53901CB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooKing.Outbox.Service", "src\BooKing.Outbox\BooKing.Outbox.Service\BooKing.Outbox.Service.csproj", "{E2FCB16A-00BA-4A56-8F8A-424F28722899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Outbox.Service", "src\BooKing.Outbox\BooKing.Outbox.Service\BooKing.Outbox.Service.csproj", "{E2FCB16A-00BA-4A56-8F8A-424F28722899}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BooKing.Email", "BooKing.Email", "{24B9EF20-68BF-43D8-B1DC-E2A6AFDCEE8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Email.Service", "src\BooKing.Email\BooKing.Email.Service\BooKing.Email.Service.csproj", "{AF712818-F98F-4EDD-A332-55C0630F59FE}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8CA9254C-E6DF-43F1-A5EE-BEF4D95774EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +83,14 @@ Global
 		{E2FCB16A-00BA-4A56-8F8A-424F28722899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2FCB16A-00BA-4A56-8F8A-424F28722899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2FCB16A-00BA-4A56-8F8A-424F28722899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF712818-F98F-4EDD-A332-55C0630F59FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF712818-F98F-4EDD-A332-55C0630F59FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF712818-F98F-4EDD-A332-55C0630F59FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF712818-F98F-4EDD-A332-55C0630F59FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CA9254C-E6DF-43F1-A5EE-BEF4D95774EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CA9254C-E6DF-43F1-A5EE-BEF4D95774EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CA9254C-E6DF-43F1-A5EE-BEF4D95774EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CA9254C-E6DF-43F1-A5EE-BEF4D95774EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +109,8 @@ Global
 		{2C20806A-2F2C-4848-AB29-808F9400FB91} = {9EA064E4-BA30-4773-88F0-A555D8D9B888}
 		{F26F26AB-3E0A-4E6A-B93B-67CD53901CB9} = {97B3996D-0B6F-4FFF-A461-6BEDAA6970DB}
 		{E2FCB16A-00BA-4A56-8F8A-424F28722899} = {F26F26AB-3E0A-4E6A-B93B-67CD53901CB9}
+		{24B9EF20-68BF-43D8-B1DC-E2A6AFDCEE8A} = {97B3996D-0B6F-4FFF-A461-6BEDAA6970DB}
+		{AF712818-F98F-4EDD-A332-55C0630F59FE} = {24B9EF20-68BF-43D8-B1DC-E2A6AFDCEE8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83DDAC6D-5483-44AD-B21F-634C77DACD0F}

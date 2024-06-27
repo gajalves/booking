@@ -1,4 +1,5 @@
 ﻿using BooKing.Generics.Api.Configuration;
+using BooKing.Generics.Api.Middlewares;
 using BooKing.Identity.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,11 +9,13 @@ public static class ApiConfiguration
 {
     public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
+
+        var a = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<BooKingIdentityContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddDependencyInjectionApi();
-
+        
         services.AddControllers();
     }
 
@@ -27,6 +30,7 @@ public static class ApiConfiguration
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseCors("Total");
+        app.UseMiddleware<LoggingMiddleware>();
         app.UseAuthConfiguration();
         app.UseEndpoints(endpoints =>
         {

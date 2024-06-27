@@ -1,0 +1,84 @@
+version: '3.4'
+
+name: booking
+services:
+  booking.identity.api:
+    image: ${DOCKER_REGISTRY-}bookingidentityapi
+    container_name: Booking.Identity.Api
+    build:
+      context: .
+      dockerfile: src/BooKing.Identity/BooKing.Identity.Api/Dockerfile
+    depends_on:
+      - booking.db
+    ports:
+      - "9000:80"
+
+  booking.db:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: Booking.DB
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=password123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    
+  booking.rabbitmq:
+    image: rabbitmq:3-management
+    container_name: Booking.RabbitMQ
+    ports: 
+    - 5672:5672
+    - 15672:15672               
+    volumes:    
+    - /docker_conf/rabbitmq/data/:/var/lib/rabbitmq/    
+    environment:
+    - RABBITMQ_DEFAULT_USER=guest
+    - RABBITMQ_DEFAULT_PASS=guest
+    restart: always 
+
+  booking.seq:
+    image: datalust/seq:latest
+    container_name: Booking.Seq
+    environment:
+    - ACCEPT_EULA=Y
+    ports:
+    - 5341:5341
+    - 8081:80 
+
+  booking.outbox.service:
+    image: ${DOCKER_REGISTRY-}bookingoutboxservice
+    container_name: Booking.Outbox.Service
+    build:
+      context: .
+      dockerfile: src/BooKing.Outbox/BooKing.Outbox.Service/Dockerfile
+    depends_on:
+      - booking.db
+      - booking.rabbitmq
+
+  booking.email.service:
+    image: ${DOCKER_REGISTRY-}bookingemailservice
+    container_name: Booking.Email.Service
+    build:
+      context: .
+      dockerfile: src/BooKing.Email/BooKing.Email.Service/Dockerfile
+    depends_on:    
+      - booking.rabbitmq
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "8080:8000"
+      - "9090:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+    logs-folder:
+        name: ${log_booking_rabbitmq}
+        driver: local
+    portainer_data:
+

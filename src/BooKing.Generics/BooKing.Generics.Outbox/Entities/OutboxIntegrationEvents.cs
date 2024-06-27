@@ -21,4 +21,9 @@ public class OutboxIntegrationEvents : Entity
         Payload = payload;
         CreatedAt = DateTime.Now;
     }
+
+    public void SetProcessedAtToDateTimeNow()
+    {
+        this.ProcessedAt = DateTime.Now;
+    }
 }

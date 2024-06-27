@@ -1,8 +1,12 @@
 using BooKing.Generics.Api.Configuration;
+using BooKing.Generics.Api.Middlewares;
+using BooKing.Generics.Infra;
+using BooKing.Generics.Infra.Configuration;
 using BooKing.Generics.Outbox.Configurations;
 using BooKing.Identity.Api.Configuration;
 using BooKing.Identity.Application;
 using BooKing.Identity.Infra;
+using BooKing.Identity.Infra.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json", true, true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
     .AddEnvironmentVariables();
+
+builder.Host.AddSegAndSerilog();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -25,5 +31,6 @@ var app = builder.Build();
 
 app.UseSwaggerConfiguration(builder.Configuration);
 app.UseApiConfiguration(builder.Environment);
+app.Services.RunMigration<BooKingIdentityContext>();
 
 app.Run();

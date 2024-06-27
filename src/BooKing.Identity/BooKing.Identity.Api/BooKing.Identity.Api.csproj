@@ -4,6 +4,10 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>e1e829f0-676e-4419-813e-315085873316</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,11 +17,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Api\BooKing.Generics.Api.csproj" />
+    <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Outbox\BooKing.Generics.Outbox.csproj" />
     <ProjectReference Include="..\BooKing.Identity.Application\BooKing.Identity.Application.csproj" />
     <ProjectReference Include="..\BooKing.Identity.Infra\BooKing.Identity.Infra.csproj" />

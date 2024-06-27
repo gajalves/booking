@@ -6,4 +6,6 @@ public interface IOutboxReposity
     Task AddAsync(OutboxIntegrationEvents outboxEvent);
 
     Task<List<OutboxIntegrationEvents>> ReadAsync();
+
+    Task Commit();
 }

@@ -13,7 +13,7 @@ public class Worker : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            _logger.LogInformation("BooKing.Outbox.Service running at: {time}", DateTimeOffset.Now);
+            //
             await Task.Delay(20000, stoppingToken);
         }
     }

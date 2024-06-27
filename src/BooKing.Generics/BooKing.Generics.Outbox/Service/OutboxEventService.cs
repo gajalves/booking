@@ -24,4 +24,11 @@ public class OutboxEventService : IOutboxEventService
     {
        return await _reposity.ReadAsync();
     }
+
+    public async Task UpdateEventProcessedAt(OutboxIntegrationEvents ev)
+    {
+        ev.SetProcessedAtToDateTimeNow();
+
+        await _reposity.Commit();
+    }
 }

@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "booking.identity.api": "StartDebugging",
+        "booking.outbox.service": "StartDebugging",
+        "booking.email.service": "StartDebugging"
+      }
+    }
+  }
+}

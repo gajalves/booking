@@ -27,20 +27,10 @@ public class UserRepository : IUserRepository
 
     public async Task<bool> EmailAlreadyInUse(string email)
     {
-        try
-        {
-            return await _context.Set<User>().AnyAsync(u => u.Email == email);
-
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
-
-        return false;
+        return await _context.Set<User>().AnyAsync(u => u.Email == email);
     }
 
-    public async Task<User> GetByEmailAsync(string email)
+    public async Task<User?> GetByEmailAsync(string email)
     {
         return await _context.Set<User>()
                              .Include(u => u.UserSalt)

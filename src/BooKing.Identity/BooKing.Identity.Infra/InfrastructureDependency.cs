@@ -26,5 +26,5 @@ public static class InfrastructureDependency
     {
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
-    }
+    }    
 }

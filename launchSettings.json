@@ -6,7 +6,8 @@
       "serviceActions": {
         "booking.identity.api": "StartDebugging",
         "booking.outbox.service": "StartDebugging",
-        "booking.email.service": "StartDebugging"
+        "booking.email.service": "StartDebugging",
+        "booking.apartments.api": "StartDebugging"
       }
     }
   }

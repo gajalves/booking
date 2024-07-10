@@ -20,7 +20,7 @@ public class UserRepository : IUserRepository
     {
         await _context.Set<User>().AddAsync(user);
 
-        await _unitOfWork.Commit();
+        await _unitOfWork.CommitAsync();
 
         return user;
     }

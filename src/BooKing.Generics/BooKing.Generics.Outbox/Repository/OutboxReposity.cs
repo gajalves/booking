@@ -31,7 +31,7 @@ public class OutboxReposity : IOutboxReposity
 
     public async Task Commit()
     {
-        await _unitOfWork.Commit();
+        await _unitOfWork.CommitAsync();
     }
 
     public async Task<List<OutboxIntegrationEvents>> ReadAsync()

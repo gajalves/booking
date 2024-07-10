@@ -3,5 +3,6 @@
 namespace BooKing.Generics.Infra;
 public interface IUnitOfWork<TContext> where TContext : DbContext
 {
-    Task Commit();
+    Task CommitAsync();
+    void Commit();
 }

@@ -44,10 +44,12 @@ public class TokenService : ITokenService
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                 new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
-                 new Claim(JwtRegisteredClaimNames.Email, email)
+                 new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+                 new Claim(ClaimTypes.Email, email)
             }),
             Expires = DateTime.UtcNow.AddHours(_jwtSettings.ExpiresInHours),
+            Audience = _jwtSettings.Audience,
+            Issuer = _jwtSettings.Issuer,
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);

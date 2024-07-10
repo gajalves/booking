@@ -1,7 +1,9 @@
 ﻿using BooKing.Generics.Api.Configuration;
 using BooKing.Generics.Api.Middlewares;
 using BooKing.Identity.Infra.Context;
+using BooKing.Identity.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BooKing.Identity.Api.Configuration;
 
@@ -12,7 +14,8 @@ public static class ApiConfiguration
 
         var a = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<BooKingIdentityContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.IdentitySchema)));
 
         services.AddDependencyInjectionApi();
         

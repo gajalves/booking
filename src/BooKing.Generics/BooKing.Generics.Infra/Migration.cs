@@ -8,8 +8,8 @@ public static class Migration
     {
         using (var serviceScope = app.CreateScope())
         {
-            var context = serviceScope.ServiceProvider.GetService<T>();
-            context.Database.SetCommandTimeout(3 * 1000);
+            var context = serviceScope.ServiceProvider.GetService<T>();            
+            context.Database.SetCommandTimeout(3 * 1000);            
             context.Database.Migrate();
         }
     }

@@ -6,6 +6,7 @@ using BooKing.Generics.Outbox.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BooKing.Generics.Outbox.Configurations;
 public static class OutboxConfiguration
@@ -25,7 +26,8 @@ public static class OutboxConfiguration
         services.AddSingleton<IOutboxReposity, OutboxReposity>();
         services.AddSingleton<IUnitOfWork<OutboxContext>, UnitOfWork<OutboxContext>>();
         services.AddDbContext<OutboxContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")),
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Outbox")),
             ServiceLifetime.Singleton);
     }
 

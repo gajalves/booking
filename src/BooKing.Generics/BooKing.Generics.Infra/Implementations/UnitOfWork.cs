@@ -8,8 +8,14 @@ public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbCon
     {
         _dbContext = dbContext;
     }
-    public async Task Commit()
+
+    public async Task CommitAsync()
     {
         await _dbContext.SaveChangesAsync();
+    }
+
+    public void Commit()
+    {
+        _dbContext.SaveChanges();
     }
 }

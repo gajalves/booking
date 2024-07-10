@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Shared\BooKing.Generics.Shared.csproj" />
+    <ProjectReference Include="..\BooKing.Apartments.Domain\BooKing.Apartments.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -26,7 +26,6 @@ public class UserMapping : IEntityTypeConfiguration<User>
         builder.HasOne(u => u.UserSalt)
                    .WithOne()
                    .HasForeignKey<UserSalt>(us => us.UserId);
-
-        builder.ToTable(nameof(User), Schemas.IdentitySchema);
+        builder.ToTable(nameof(User), Schemas.IdentitySchema);        
     }
 }

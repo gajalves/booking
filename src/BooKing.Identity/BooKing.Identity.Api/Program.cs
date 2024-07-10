@@ -1,5 +1,4 @@
 using BooKing.Generics.Api.Configuration;
-using BooKing.Generics.Api.Middlewares;
 using BooKing.Generics.Infra;
 using BooKing.Generics.Infra.Configuration;
 using BooKing.Generics.Outbox.Configurations;

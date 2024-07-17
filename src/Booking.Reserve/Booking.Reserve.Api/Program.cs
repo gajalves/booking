@@ -1,8 +1,8 @@
-using BooKing.Apartments.Api.Configuration;
+using Booking.Reserve.Api.Configuration;
+using Booking.Reserve.Application;
+using Booking.Reserve.Infra;
+using Booking.Reserve.Infra.Context;
 using BooKing.Generics.Api.Configuration;
-using BooKing.Apartments.Infra;
-using BooKing.Apartments.Application;
-using BooKing.Apartments.Infra.Context;
 using BooKing.Generics.Infra;
 using BooKing.Generics.Infra.Configuration;
 using BooKing.Generics.Shared.CurrentUserService;
@@ -30,6 +30,6 @@ var app = builder.Build();
 
 app.UseSwaggerConfiguration(builder.Configuration);
 app.UseApiConfiguration(builder.Environment);
-app.Services.RunMigration<BooKingApartmentsContext>();
+app.Services.RunMigration<BooKingReserveContext>();
 
 app.Run();

@@ -97,7 +97,7 @@ public class ApartmentService : IApartmentService
 
         var mappedApartment = _mapper.Map<ApartmentDto>(apartment);
         
-        return Result.Success(mappedApartment);
+        return Result.Success<ApartmentDto>(mappedApartment);
     }
 
     public async Task<Result<PaginatedList<ApartmentDto>>> GetPaginatedApartmentsAsync(int pageIndex, int pageSize)

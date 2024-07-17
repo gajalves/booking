@@ -1,9 +1,4 @@
-﻿using BooKing.Apartments.Domain.Entities;
-using BooKing.Generics.Domain;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
+﻿using BooKing.Generics.Domain;
 
 namespace BooKing.Apartments.Application.Erros;
 public static class ApplicationErrors

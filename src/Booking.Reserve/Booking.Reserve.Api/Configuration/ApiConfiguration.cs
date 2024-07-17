@@ -1,20 +1,21 @@
-﻿using BooKing.Apartments.Infra.Context;
-using BooKing.Generics.Api.Configuration;
+﻿using Booking.Reserve.Infra.Context;
+using Booking.Reserve.Infra.Mappings;
 using BooKing.Generics.Api.Middlewares;
+using BooKing.Generics.Api.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
-using BooKing.Apartments.Infra.Mappings;
+using BooKing.Generics.Shared;
 
-namespace BooKing.Apartments.Api.Configuration;
+namespace Booking.Reserve.Api.Configuration;
 
 public static class ApiConfiguration
 {
     public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         var a = configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext<BooKingApartmentsContext>(options =>
+        services.AddDbContext<BooKingReserveContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-            o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.ApartmentsSchema)));
+            o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.ReservationsSchema)));
 
         services.AddCors(options =>
         {
@@ -25,6 +26,10 @@ public static class ApiConfiguration
                                     .AllowAnyMethod()
                                     .AllowAnyHeader());
         });
+
+        var externalServicesConfigurationProvider = new ExternalServices();
+        configuration.Bind("ExternalServices", externalServicesConfigurationProvider);
+        services.AddSingleton(externalServicesConfigurationProvider);
 
         services.AddDependencyInjectionApi();
 

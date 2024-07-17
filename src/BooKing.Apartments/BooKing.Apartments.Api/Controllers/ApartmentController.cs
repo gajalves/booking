@@ -49,7 +49,7 @@ public class ApartmentController : ControllerBase
 
         if (result.IsSuccess)
         {
-            return Ok(result.Value);
+            return Ok(result);
         }
 
         return NotFound(result.Error);

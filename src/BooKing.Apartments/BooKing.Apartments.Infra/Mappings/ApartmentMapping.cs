@@ -1,5 +1,4 @@
 ﻿using BooKing.Apartments.Domain.Entities;
-using BooKing.Apartments.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

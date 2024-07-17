@@ -9,4 +9,5 @@ public class ApartmentDto
     public decimal CleaningFee { get; set; }    
     public List<string> Amenities { get; set; }
     public string ImagePath { get; set; }
+    public string OwnerId { get; private set; }
 }

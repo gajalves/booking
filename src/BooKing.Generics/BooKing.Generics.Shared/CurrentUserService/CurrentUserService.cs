@@ -19,8 +19,9 @@ public class CurrentUserService : ICurrentUserService
         {
             var id = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var email = user.FindFirst(ClaimTypes.Email)?.Value;
+            var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
 
-            return new CurrentUser(new Guid(id), email);
+            return new CurrentUser(new Guid(id), email, token);
         }
 
         throw new Exception("User is not authenticated");

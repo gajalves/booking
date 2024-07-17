@@ -19,6 +19,15 @@ services:
     depends_on:      
       - booking.db 
 
+  booking.reserve.api:
+    image: ${DOCKER_REGISTRY-}bookingreserveapi
+    container_name: Booking.Reserve.Api
+    build:
+      context: .
+      dockerfile: src/Booking.Reserve/BooKing.Reserve.Api/Dockerfile
+    depends_on:      
+      - booking.db 
+
   booking.db:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     container_name: Booking.DB

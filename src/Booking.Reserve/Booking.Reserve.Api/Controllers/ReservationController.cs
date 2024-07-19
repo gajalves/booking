@@ -39,7 +39,7 @@ public class ReservationController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _reservationService.Reserve(dto);
+        var result = await _reservationService.ConfirmReserve(reservationId);
 
         if (result.IsSuccess)
         {

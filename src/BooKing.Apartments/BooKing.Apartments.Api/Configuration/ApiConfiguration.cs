@@ -11,7 +11,7 @@ public static class ApiConfiguration
 {
     public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var a = configuration.GetConnectionString("DefaultConnection");
+        
         services.AddDbContext<BooKingApartmentsContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
             o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.ApartmentsSchema)));

@@ -87,12 +87,7 @@ public class ReservationService : IReservationService
             return Result.Failure<Guid>(ApplicationErrors.ReserveError.Overlap);
         }
     }
-    
-    public Task CancelReserve(CancelReserveDto dto)
-    {
-        throw new NotImplementedException();
-    }
-
+        
     public async Task<Result> ConfirmReserve(Guid reservationId)
     {
         var reservation = await _reservationRepository.GetByIdAsync(reservationId);
@@ -113,5 +108,10 @@ public class ReservationService : IReservationService
         await _outboxEventService.AddEvent(QueueMapping.BookingReserveReservationConfirmed, new ReservationConfirmedByUserEvent(reservation.Id));
 
         return Result.Success();
+    }
+
+    public Task CancelReserve(CancelReserveDto dto)
+    {
+        throw new NotImplementedException();
     }
 }

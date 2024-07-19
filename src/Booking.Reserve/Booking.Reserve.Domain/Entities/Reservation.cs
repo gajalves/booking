@@ -66,6 +66,11 @@ public class Reservation : Entity
         ConfirmedOnUtc = DateTime.Now;
     }
 
+    public void ProcessConfirmed()
+    {
+        Status = ReservationStatus.PendingPayment;        
+    }
+
     public void Cancel()
     {
         Status = ReservationStatus.Cancelled;

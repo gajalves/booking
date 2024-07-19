@@ -80,6 +80,16 @@ services:
     depends_on:    
       - booking.rabbitmq
 
+  booking.reserve.service:
+    image: ${DOCKER_REGISTRY-}bookingreserveservice
+    container_name: Booking.Reserve.Service
+    build:
+      context: .
+      dockerfile: src/BooKing.Reserve/BooKing.Reserve.Service/Dockerfile
+    depends_on:
+      - booking.db
+      - booking.rabbitmq
+
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer

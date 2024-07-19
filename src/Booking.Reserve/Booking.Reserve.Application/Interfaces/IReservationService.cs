@@ -6,5 +6,7 @@ public interface IReservationService
 {
     Task<Result> Reserve(NewReservationDto dto);
 
+    Task<Result> ConfirmReserve(Guid reservationId);
+
     Task CancelReserve(CancelReserveDto dto);
 }

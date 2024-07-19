@@ -10,6 +10,7 @@ public static class EmailServiceConfiguration
     public static void AddEventHandlersDependency(this IServiceCollection services)
     {
         services.AddSingleton<NewUserEmailEventHandler>();
+        services.AddSingleton<ReservationCreatedEmailEventHandler>();
     }
 
     public static void UseConsumersRabbitMQ(this IHost host)
@@ -18,5 +19,8 @@ public static class EmailServiceConfiguration
 
         bus.Subscribe<NewUserEmailEvent, NewUserEmailEventHandler>(
                 QueueMapping.BookingEmailServiceNewUser, ExchangeMapping.BookingEmailService, prefetchCount: 10, deadLetter: true);
+
+        bus.Subscribe<ReservationCreatedEvent, ReservationCreatedEmailEventHandler>(
+                QueueMapping.BookingEmailServiceReservationCreated, ExchangeMapping.BookingEmailService, prefetchCount: 10, deadLetter: true);
     }
 }

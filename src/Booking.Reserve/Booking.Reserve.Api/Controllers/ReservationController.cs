@@ -32,4 +32,20 @@ public class ReservationController : ControllerBase
 
         return BadRequest(result.Error);
     }
+
+    [HttpPost("Confirm")]
+    public async Task<IActionResult> Confirm([FromBody] Guid reservationId)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _reservationService.Reserve(dto);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result.Error);
+    }
 }

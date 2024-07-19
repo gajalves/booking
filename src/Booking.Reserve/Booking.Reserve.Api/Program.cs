@@ -5,6 +5,7 @@ using Booking.Reserve.Infra.Context;
 using BooKing.Generics.Api.Configuration;
 using BooKing.Generics.Infra;
 using BooKing.Generics.Infra.Configuration;
+using BooKing.Generics.Outbox.Configurations;
 using BooKing.Generics.Shared.CurrentUserService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Host.AddSegAndSerilog();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddApiConfiguration(builder.Configuration);
+builder.Services.AddOutboxConfiguration(builder.Configuration);
 builder.Services.AddJwtConfiguration(builder.Configuration);
 builder.Services.AddInfrasctructureDependencies();
 builder.Services.AddApplicationDependencies();

@@ -37,7 +37,7 @@ public class Reservation : Entity
         CleaningFee = cleaningFee;
         TotalPrice = totalPrice;
         Status = ReservationStatus.Reserved;
-        CreatedOnUtc = DateTime.Now.Date;
+        CreatedOnUtc = DateTime.Now;
     }
 
     public static Reservation Reserve(Guid apartmentId, 
@@ -63,6 +63,7 @@ public class Reservation : Entity
     public void Confirm()
     {
         Status = ReservationStatus.Confirmed;
+        ConfirmedOnUtc = DateTime.Now;
     }
 
     public void Cancel()

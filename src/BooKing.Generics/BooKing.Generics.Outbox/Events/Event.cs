@@ -1,4 +1,5 @@
 ﻿using BooKing.Generics.Bus.Abstractions;
+using BooKing.Generics.Shared;
 
 namespace BooKing.Generics.Outbox.Events;
 public class Event : IEvent
@@ -9,6 +10,6 @@ public class Event : IEvent
     public Event()
     {
         EventId = Guid.NewGuid();
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTimeHelper.HoraBrasilia();
     }
 }

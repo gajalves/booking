@@ -37,4 +37,12 @@ public class ReservationRepository : BaseRepository<Reservation, BooKingReserveC
                                r.Duration.End >= duration.Start &&
                                ActiveBooKingStatuses.Contains(r.Status));
     }
+
+    public async Task<List<Reservation>> GetReservationsByStatusAndEndDateAsync(ReservationStatus status, DateTime endDate)
+    {
+        return await _context.Set<Reservation>()
+                             .Where(r => r.Status == status && 
+                                         r.Duration.End.Date == endDate.Date)
+                             .ToListAsync();
+    }
 }

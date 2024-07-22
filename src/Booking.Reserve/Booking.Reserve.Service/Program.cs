@@ -3,6 +3,7 @@ using BooKing.Reserve.Service;
 using BooKing.Reserve.Service.Configurations;
 using BooKing.Generics.Bus.Configurations;
 using BooKing.Generics.Infra.Configuration;
+using Booking.Reserve.Service.Executors;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .AddSegAndSerilog()
@@ -11,7 +12,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddBusConfiguration(hostContext.Configuration);
         services.AddDependencies(hostContext.Configuration);
         services.AddEventHandlersDependency();
-        services.AddHostedService<Worker>();
+        services.AddHostedService<ReservationCompletionExecutor>();        
 
     })
     .UseServiceProviderFactory(new AutofacServiceProviderFactory())

@@ -1,6 +1,7 @@
 ﻿using BooKing.Reserve.Domain.Enums;
 using BooKing.Reserve.Domain.ValueObjects;
 using BooKing.Generics.Domain;
+using BooKing.Generics.Shared;
 
 namespace BooKing.Reserve.Domain.Entities;
 public class Reservation : Entity
@@ -37,7 +38,7 @@ public class Reservation : Entity
         CleaningFee = cleaningFee;
         TotalPrice = totalPrice;
         Status = ReservationStatus.Pending;
-        CreatedOnUtc = DateTime.Now;
+        CreatedOnUtc = DateTimeHelper.HoraBrasilia();
     }
 
     public static Reservation Reserve(Guid apartmentId, 
@@ -63,13 +64,13 @@ public class Reservation : Entity
     public void Confirm()
     {
         Status = ReservationStatus.Confirmed;
-        ConfirmedOnUtc = DateTime.Now;
+        ConfirmedOnUtc = DateTimeHelper.HoraBrasilia();
     }
 
     public void Cancel()
     {
         Status = ReservationStatus.Cancelled;
-        CancelledOnUtc = DateTime.Now;
+        CancelledOnUtc = DateTimeHelper.HoraBrasilia();
     }
 
     public void ProcessConfirmed()
@@ -80,6 +81,17 @@ public class Reservation : Entity
     public void SetFailedPaymentStatus()
     {
         Status = ReservationStatus.FailedPayment;
+    }
+
+    public void SetReservedStatus()
+    {
+        Status = ReservationStatus.Reserved;
+    }
+
+    public void SetCompletedStatus()
+    {
+        Status = ReservationStatus.Completed;
+        CompletedOnUtc = DateTimeHelper.HoraBrasilia();
     }
 
     public void MarkPaymentCompleted()

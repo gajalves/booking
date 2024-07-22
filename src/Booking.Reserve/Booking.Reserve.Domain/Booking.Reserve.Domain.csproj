@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Domain\BooKing.Generics.Domain.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
+    <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Shared\BooKing.Generics.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using BooKing.Generics.Domain;
+using BooKing.Generics.Shared;
 
 namespace BooKing.Generics.Outbox.Entities;
 public class OutboxIntegrationEvents : Entity
@@ -20,12 +21,12 @@ public class OutboxIntegrationEvents : Entity
         Queue = queue;
         EventType = eventType;
         Payload = payload;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTimeHelper.HoraBrasilia();
     }
 
     public void SetProcessedAtToDateTimeNow()
     {
-        this.ProcessedAt = DateTime.Now;
+        this.ProcessedAt = DateTimeHelper.HoraBrasilia();
     }
 
     public void SetMessage(string message)

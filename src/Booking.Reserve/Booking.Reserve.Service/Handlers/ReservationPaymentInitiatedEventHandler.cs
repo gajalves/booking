@@ -54,7 +54,10 @@ public class ReservationPaymentInitiatedEventHandler : IEventHandler<Reservation
                         
             reservation.MarkPaymentCompleted();
             _reservationRepository.Update(reservation);
-                        
+
+            var reservedEvent = new ReservationReservedEvent(reservation.Id);
+            await _outboxEventService.AddEvent(QueueMapping.BooKingReserveReservationReserved, reservedEvent);
+
             _logger.LogInformation($"[ReservationPaymentInitiatedEventHandler]: Payment successful for ReservationId: {@event.ReservationId}");
             return true;
         }

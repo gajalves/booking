@@ -15,6 +15,7 @@ using BooKing.Reserve.Infra.Mappings;
 using Booking.Reserve.Service.Handlers;
 using Booking.Reserve.Application.Interfaces;
 using Booking.Reserve.Application.Services;
+using Booking.Reserve.Service.Configurations;
 
 namespace BooKing.Reserve.Service.Configurations;
 public static class ReserveServiceConfiguration
@@ -31,12 +32,15 @@ public static class ReserveServiceConfiguration
         services.AddSingleton(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
         services.AddOutboxConfigurationSingleton(configuration);
+
+        services.Configure<ExecutorOptions>(configuration.GetSection("ExecutorOptions"));
     }
 
     public static void AddEventHandlersDependency(this IServiceCollection services)
     {
         services.AddSingleton<ReservationConfirmedEventHandler>();
         services.AddSingleton<ReservationPaymentInitiatedEventHandler>();
+        services.AddSingleton<ReservationReservedEventHandler>();
     }
 
     public static void UseConsumersRabbitMQ(this IHost host)
@@ -48,5 +52,8 @@ public static class ReserveServiceConfiguration
 
         bus.Subscribe<ReservationPaymentInitiatedEvent, ReservationPaymentInitiatedEventHandler>(
                 QueueMapping.BooKingReservePaymentsInitiated, ExchangeMapping.BooKingReserveService, prefetchCount: 10, deadLetter: true);
+
+        bus.Subscribe<ReservationReservedEvent, ReservationReservedEventHandler>(
+                QueueMapping.BooKingReserveReservationReserved, ExchangeMapping.BooKingReserveService, prefetchCount: 10, deadLetter: true);
     }
 }

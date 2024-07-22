@@ -20,6 +20,15 @@ public class OutboxEventService : IOutboxEventService
         await _reposity.AddAsync(obj);
     }
 
+    public async Task AddEventAlreadyProcessed(string queue, Event json, string processedBy)
+    {
+        var obj = new OutboxIntegrationEvents(queue, json.GetType().Name, JsonConvert.SerializeObject(json));
+        obj.SetMessage($"Event processed by: {processedBy}");
+        obj.SetProcessedAtToDateTimeNow();
+
+        await _reposity.AddAsync(obj);
+    }
+
     public async Task<List<OutboxIntegrationEvents>> ReadEvents()
     {
        return await _reposity.ReadAsync();

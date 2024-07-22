@@ -1,9 +1,9 @@
-﻿using Booking.Reserve.Application.Dtos;
-using Booking.Reserve.Application.Interfaces;
+﻿using BooKing.Reserve.Application.Dtos;
+using BooKing.Reserve.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Booking.Reserve.Api.Controllers;
+namespace BooKing.Reserve.Api.Controllers;
 
 [Authorize]
 [Route("api/[controller]")]

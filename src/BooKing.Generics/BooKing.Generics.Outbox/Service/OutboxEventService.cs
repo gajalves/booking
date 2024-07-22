@@ -25,6 +25,15 @@ public class OutboxEventService : IOutboxEventService
        return await _reposity.ReadAsync();
     }
 
+    public async Task SetMessage(Guid eventId, string message)
+    {
+        var ev = await _reposity.GetByEventIdAsync(eventId);                
+
+        ev.SetMessage(message);        
+
+        await _reposity.Commit();
+    }
+
     public async Task UpdateEventProcessedAt(OutboxIntegrationEvents ev)
     {
         ev.SetProcessedAtToDateTimeNow();

@@ -7,23 +7,23 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["src/Booking.Reserve/Booking.Reserve.Api/Booking.Reserve.Api.csproj", "src/Booking.Reserve/Booking.Reserve.Api/"]
+COPY ["src/BooKing.Reserve/BooKing.Reserve.Api/BooKing.Reserve.Api.csproj", "src/BooKing.Reserve/BooKing.Reserve.Api/"]
 COPY ["src/BooKing.Generics/BooKing.Generics.Api/BooKing.Generics.Api.csproj", "src/BooKing.Generics/BooKing.Generics.Api/"]
 COPY ["src/BooKing.Generics/BooKing.Generics.Infra/BooKing.Generics.Infra.csproj", "src/BooKing.Generics/BooKing.Generics.Infra/"]
 COPY ["src/BooKing.Generics/BooKing.Generics.Domain/BooKing.Generics.Domain.csproj", "src/BooKing.Generics/BooKing.Generics.Domain/"]
-COPY ["src/Booking.Reserve/Booking.Reserve.Application/Booking.Reserve.Application.csproj", "src/Booking.Reserve/Booking.Reserve.Application/"]
+COPY ["src/BooKing.Reserve/BooKing.Reserve.Application/BooKing.Reserve.Application.csproj", "src/BooKing.Reserve/BooKing.Reserve.Application/"]
 COPY ["src/BooKing.Generics/BooKing.Generics.Shared/BooKing.Generics.Shared.csproj", "src/BooKing.Generics/BooKing.Generics.Shared/"]
-COPY ["src/Booking.Reserve/Booking.Reserve.Domain/Booking.Reserve.Domain.csproj", "src/Booking.Reserve/Booking.Reserve.Domain/"]
-COPY ["src/Booking.Reserve/Booking.Reserve.Infra/Booking.Reserve.Infra.csproj", "src/Booking.Reserve/Booking.Reserve.Infra/"]
-RUN dotnet restore "src/Booking.Reserve/Booking.Reserve.Api/Booking.Reserve.Api.csproj"
+COPY ["src/BooKing.Reserve/BooKing.Reserve.Domain/BooKing.Reserve.Domain.csproj", "src/BooKing.Reserve/BooKing.Reserve.Domain/"]
+COPY ["src/BooKing.Reserve/BooKing.Reserve.Infra/BooKing.Reserve.Infra.csproj", "src/BooKing.Reserve/BooKing.Reserve.Infra/"]
+RUN dotnet restore "src/BooKing.Reserve/BooKing.Reserve.Api/BooKing.Reserve.Api.csproj"
 COPY . .
-WORKDIR "/src/src/Booking.Reserve/Booking.Reserve.Api"
-RUN dotnet build "Booking.Reserve.Api.csproj" -c Release -o /app/build
+WORKDIR "/src/src/BooKing.Reserve/BooKing.Reserve.Api"
+RUN dotnet build "BooKing.Reserve.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Booking.Reserve.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "BooKing.Reserve.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Booking.Reserve.Api.dll"]
+ENTRYPOINT ["dotnet", "BooKing.Reserve.Api.dll"]

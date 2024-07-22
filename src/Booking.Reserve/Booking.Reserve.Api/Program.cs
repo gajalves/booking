@@ -1,7 +1,7 @@
-using Booking.Reserve.Api.Configuration;
-using Booking.Reserve.Application;
-using Booking.Reserve.Infra;
-using Booking.Reserve.Infra.Context;
+using BooKing.Reserve.Api.Configuration;
+using BooKing.Reserve.Application;
+using BooKing.Reserve.Infra;
+using BooKing.Reserve.Infra.Context;
 using BooKing.Generics.Api.Configuration;
 using BooKing.Generics.Infra;
 using BooKing.Generics.Infra.Configuration;

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Booking.Reserve.Application.Dtos;
-using Booking.Reserve.Domain.Entities;
+using BooKing.Reserve.Application.Dtos;
+using BooKing.Reserve.Domain.Entities;
 
-namespace Booking.Reserve.Application.Mappings;
+namespace BooKing.Reserve.Application.Mappings;
 public class MappingProfile : Profile
 {
     public MappingProfile()

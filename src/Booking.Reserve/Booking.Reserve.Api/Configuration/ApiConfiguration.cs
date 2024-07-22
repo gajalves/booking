@@ -1,12 +1,12 @@
-﻿using Booking.Reserve.Infra.Context;
-using Booking.Reserve.Infra.Mappings;
+﻿using BooKing.Reserve.Infra.Context;
+using BooKing.Reserve.Infra.Mappings;
 using BooKing.Generics.Api.Middlewares;
 using BooKing.Generics.Api.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using BooKing.Generics.Shared;
 
-namespace Booking.Reserve.Api.Configuration;
+namespace BooKing.Reserve.Api.Configuration;
 
 public static class ApiConfiguration
 {

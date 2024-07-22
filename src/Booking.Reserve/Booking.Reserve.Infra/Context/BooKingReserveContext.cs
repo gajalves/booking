@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Reserve.Infra.Context;
+namespace BooKing.Reserve.Infra.Context;
 public class BooKingReserveContext : DbContext
 {
     public BooKingReserveContext()
     {
 
     }
-    public BooKingReserveContext(DbContextOptions options) : base(options)
+    public BooKingReserveContext(DbContextOptions<BooKingReserveContext> options) : base(options)
     {
 
     }

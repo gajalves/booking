@@ -3,7 +3,7 @@ version: '3.4'
 services:
   booking.identity.api:
     image: ${DOCKER_REGISTRY-}bookingidentityapi
-    container_name: Booking.Identity.Api
+    container_name: BooKing.Identity.Api
     build:
       context: .
       dockerfile: src/BooKing.Identity/BooKing.Identity.Api/Dockerfile
@@ -12,7 +12,7 @@ services:
 
   booking.apartments.api:
     image: ${DOCKER_REGISTRY-}bookingapartmentsapi
-    container_name: Booking.Apartments.Api
+    container_name: BooKing.Apartments.Api
     build:
       context: .
       dockerfile: src/BooKing.Apartments/BooKing.Apartments.Api/Dockerfile
@@ -21,16 +21,16 @@ services:
 
   booking.reserve.api:
     image: ${DOCKER_REGISTRY-}bookingreserveapi
-    container_name: Booking.Reserve.Api
+    container_name: BooKing.Reserve.Api
     build:
       context: .
-      dockerfile: src/Booking.Reserve/BooKing.Reserve.Api/Dockerfile
+      dockerfile: src/BooKing.Reserve/BooKing.Reserve.Api/Dockerfile
     depends_on:      
       - booking.db 
 
   booking.db:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-    container_name: Booking.DB
+    container_name: BooKing.DB
     restart: always
     environment:
       - ACCEPT_EULA=Y
@@ -41,7 +41,7 @@ services:
     
   booking.rabbitmq:
     image: rabbitmq:3-management
-    container_name: Booking.RabbitMQ
+    container_name: BooKing.RabbitMQ
     ports: 
     - 5672:5672
     - 15672:15672               
@@ -54,7 +54,7 @@ services:
 
   booking.seq:
     image: datalust/seq:latest
-    container_name: Booking.Seq
+    container_name: BooKing.Seq
     environment:
     - ACCEPT_EULA=Y
     ports:
@@ -63,7 +63,7 @@ services:
 
   booking.outbox.service:
     image: ${DOCKER_REGISTRY-}bookingoutboxservice
-    container_name: Booking.Outbox.Service
+    container_name: BooKing.Outbox.Service
     build:
       context: .
       dockerfile: src/BooKing.Outbox/BooKing.Outbox.Service/Dockerfile
@@ -73,7 +73,7 @@ services:
 
   booking.email.service:
     image: ${DOCKER_REGISTRY-}bookingemailservice
-    container_name: Booking.Email.Service
+    container_name: BooKing.Email.Service
     build:
       context: .
       dockerfile: src/BooKing.Email/BooKing.Email.Service/Dockerfile
@@ -82,7 +82,7 @@ services:
 
   booking.reserve.service:
     image: ${DOCKER_REGISTRY-}bookingreserveservice
-    container_name: Booking.Reserve.Service
+    container_name: BooKing.Reserve.Service
     build:
       context: .
       dockerfile: src/BooKing.Reserve/BooKing.Reserve.Service/Dockerfile

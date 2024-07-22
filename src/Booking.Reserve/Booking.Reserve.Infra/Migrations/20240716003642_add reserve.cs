@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Booking.Reserve.Infra.Migrations
+namespace BooKing.Reserve.Infra.Migrations
 {
     /// <inheritdoc />
     public partial class addreserve : Migration
@@ -22,10 +22,17 @@ namespace Booking.Reserve.Infra.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CheckIn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CheckOut = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Duration_Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Duration_End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PriceForPeriod = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CleaningFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ConfirmedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RejectedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CompletedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CancelledOnUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

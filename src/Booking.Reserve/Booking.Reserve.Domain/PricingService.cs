@@ -1,6 +1,6 @@
-﻿using Booking.Reserve.Domain.ValueObjects;
+﻿using BooKing.Reserve.Domain.ValueObjects;
 
-namespace Booking.Reserve.Domain;
+namespace BooKing.Reserve.Domain;
 public class PricingService
 {
     public PricingDetails CalculatePrice(decimal price, decimal cleaningFee, DateRange period)

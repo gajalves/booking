@@ -1,7 +1,7 @@
-﻿using Booking.Reserve.Domain.Enums;
-using Booking.Reserve.Domain.ValueObjects;
+﻿using BooKing.Reserve.Domain.Enums;
+using BooKing.Reserve.Domain.ValueObjects;
 
-namespace Booking.Reserve.Application.Dtos;
+namespace BooKing.Reserve.Application.Dtos;
 public class ReservationCreatedDto
 {
     public Guid ApartmentId { get; set; }    

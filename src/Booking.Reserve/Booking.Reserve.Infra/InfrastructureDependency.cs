@@ -1,11 +1,11 @@
 ﻿using BooKing.Generics.Infra.Implementations;
 using BooKing.Generics.Infra;
 using Microsoft.Extensions.DependencyInjection;
-using Booking.Reserve.Infra.Context;
-using Booking.Reserve.Domain.Interfaces;
-using Booking.Reserve.Infra.Repositories;
+using BooKing.Reserve.Infra.Context;
+using BooKing.Reserve.Domain.Interfaces;
+using BooKing.Reserve.Infra.Repositories;
 
-namespace Booking.Reserve.Infra;
+namespace BooKing.Reserve.Infra;
 public static class InfrastructureDependency
 {
     public static IServiceCollection AddInfrasctructureDependencies(this IServiceCollection services)

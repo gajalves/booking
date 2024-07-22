@@ -34,6 +34,12 @@ public class OutboxReposity : IOutboxReposity
         await _unitOfWork.CommitAsync();
     }
 
+    public async Task<OutboxIntegrationEvents> GetByEventIdAsync(Guid id)
+    {
+        return await _context.Set<OutboxIntegrationEvents>()
+                        .FirstAsync(e => e.Id == id);
+    }
+
     public async Task<List<OutboxIntegrationEvents>> ReadAsync()
     {
         return await _context.Set<OutboxIntegrationEvents>()

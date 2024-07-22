@@ -1,4 +1,4 @@
-﻿namespace Booking.Reserve.Domain.Enums;
+﻿namespace BooKing.Reserve.Domain.Enums;
 public enum ReservationStatus
 {
     Pending = 0,
@@ -7,4 +7,6 @@ public enum ReservationStatus
     Reserved = 3,
     Completed = 4,
     PendingPayment = 5,
+    FailedPayment = 6,
+    PaymentCompleted = 7
 }

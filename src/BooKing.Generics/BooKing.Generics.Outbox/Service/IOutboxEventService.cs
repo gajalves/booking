@@ -7,4 +7,5 @@ public interface IOutboxEventService
     Task AddEvent(string queue, Event json);
     Task<List<OutboxIntegrationEvents>> ReadEvents();
     Task UpdateEventProcessedAt(OutboxIntegrationEvents ev);
+    Task SetMessage(Guid eventId, string message);
 }

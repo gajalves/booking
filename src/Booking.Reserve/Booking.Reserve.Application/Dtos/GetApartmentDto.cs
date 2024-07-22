@@ -1,4 +1,4 @@
-﻿namespace Booking.Reserve.Application.Dtos;
+﻿namespace BooKing.Reserve.Application.Dtos;
 public class GetApartmentDto
 {
     public Guid Id { get; set; }

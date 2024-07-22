@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-Booking.Reserve.Service-f6ee78f4-6fc9-440d-ae87-94e091232d4e</UserSecretsId>
+    <UserSecretsId>dotnet-BooKing.Reserve.Service-f6ee78f4-6fc9-440d-ae87-94e091232d4e</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
@@ -19,7 +19,8 @@
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Bus\BooKing.Generics.Bus.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Outbox\BooKing.Generics.Outbox.csproj" />
-    <ProjectReference Include="..\Booking.Reserve.Domain\Booking.Reserve.Domain.csproj" />
-    <ProjectReference Include="..\Booking.Reserve.Infra\Booking.Reserve.Infra.csproj" />
+    <ProjectReference Include="..\Booking.Reserve.Application\Booking.Reserve.Application.csproj" />
+    <ProjectReference Include="..\BooKing.Reserve.Domain\BooKing.Reserve.Domain.csproj" />
+    <ProjectReference Include="..\BooKing.Reserve.Infra\BooKing.Reserve.Infra.csproj" />
   </ItemGroup>
 </Project>

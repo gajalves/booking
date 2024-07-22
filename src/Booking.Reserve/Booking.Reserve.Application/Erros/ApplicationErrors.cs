@@ -1,6 +1,6 @@
 ﻿using BooKing.Generics.Domain;
 
-namespace Booking.Reserve.Application.Erros;
+namespace BooKing.Reserve.Application.Erros;
 public static class ApplicationErrors
 {
     public static class ReserveError

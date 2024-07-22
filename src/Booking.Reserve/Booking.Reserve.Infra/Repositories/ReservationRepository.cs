@@ -1,24 +1,25 @@
-﻿using Booking.Reserve.Domain.Entities;
-using Booking.Reserve.Domain.Enums;
-using Booking.Reserve.Domain.Interfaces;
-using Booking.Reserve.Domain.ValueObjects;
-using Booking.Reserve.Infra.Context;
+﻿using BooKing.Reserve.Domain.Entities;
+using BooKing.Reserve.Domain.Enums;
+using BooKing.Reserve.Domain.Interfaces;
+using BooKing.Reserve.Domain.ValueObjects;
+using BooKing.Reserve.Infra.Context;
 using BooKing.Generics.Infra;
 using BooKing.Generics.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Reserve.Infra.Repositories;
+namespace BooKing.Reserve.Infra.Repositories;
 public class ReservationRepository : BaseRepository<Reservation, BooKingReserveContext>, IReservationRepository
 {
     private readonly BooKingReserveContext _context;
     private readonly IUnitOfWork<BooKingReserveContext> _unitOfWork;
 
-    private static readonly ReservationStatus[] ActiveBookingStatuses =
+    private static readonly ReservationStatus[] ActiveBooKingStatuses =
     {
+        ReservationStatus.Pending,
         ReservationStatus.Reserved,
-        ReservationStatus.Confirmed,
-        ReservationStatus.Completed,
-        ReservationStatus.PendingPayment
+        ReservationStatus.Confirmed,        
+        ReservationStatus.PendingPayment,
+        ReservationStatus.PaymentCompleted
     };
 
     public ReservationRepository(BooKingReserveContext context, 
@@ -34,6 +35,6 @@ public class ReservationRepository : BaseRepository<Reservation, BooKingReserveC
                 .AnyAsync(r => r.ApartmentId == apartmetnId &&
                                r.Duration.Start <= duration.End &&
                                r.Duration.End >= duration.Start &&
-                               ActiveBookingStatuses.Contains(r.Status));
+                               ActiveBooKingStatuses.Contains(r.Status));
     }
 }

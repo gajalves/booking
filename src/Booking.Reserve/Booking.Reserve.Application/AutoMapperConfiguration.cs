@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Booking.Reserve.Application.Mappings;
+using BooKing.Reserve.Application.Mappings;
 
-namespace Booking.Reserve.Application;
+namespace BooKing.Reserve.Application;
 public static class AutoMapperConfiguration
 {
     public static MapperConfiguration Create()

@@ -11,6 +11,8 @@ public static class EmailServiceConfiguration
     {
         services.AddSingleton<NewUserEmailEventHandler>();
         services.AddSingleton<ReservationCreatedEmailEventHandler>();
+        services.AddSingleton<ServicePaymentProcessedEmailEventHandler>();
+        services.AddSingleton<ReservationCancelledEmailEventHandler>();
     }
 
     public static void UseConsumersRabbitMQ(this IHost host)
@@ -18,9 +20,16 @@ public static class EmailServiceConfiguration
         var bus = host.Services.GetRequiredService<IEventBus>();
 
         bus.Subscribe<NewUserEmailEvent, NewUserEmailEventHandler>(
-                QueueMapping.BookingEmailServiceNewUser, ExchangeMapping.BookingEmailService, prefetchCount: 10, deadLetter: true);
+                QueueMapping.BooKingEmailServiceNewUser, ExchangeMapping.BooKingEmailService, prefetchCount: 10, deadLetter: true);
 
         bus.Subscribe<ReservationCreatedEvent, ReservationCreatedEmailEventHandler>(
-                QueueMapping.BookingEmailServiceReservationCreated, ExchangeMapping.BookingEmailService, prefetchCount: 10, deadLetter: true);
+                QueueMapping.BooKingEmailServiceReservationCreated, ExchangeMapping.BooKingEmailService, prefetchCount: 10, deadLetter: true);
+
+        bus.Subscribe<ReservationPaymentProcessedEvent, ServicePaymentProcessedEmailEventHandler>(
+                QueueMapping.BooKingEmailServicePaymentProcessed, ExchangeMapping.BooKingEmailService, prefetchCount: 10, deadLetter: true);
+        
+        bus.Subscribe<ReservationCancelledByUserEvent, ReservationCancelledEmailEventHandler>(
+                QueueMapping.BooKingReserveReservationCancelled, ExchangeMapping.BooKingEmailService, prefetchCount: 10, deadLetter: true);
+
     }
 }

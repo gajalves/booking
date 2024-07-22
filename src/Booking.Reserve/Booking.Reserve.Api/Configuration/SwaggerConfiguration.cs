@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace Booking.Reserve.Api.Configuration;
+namespace BooKing.Reserve.Api.Configuration;
 
 public static class SwaggerConfiguration
 {

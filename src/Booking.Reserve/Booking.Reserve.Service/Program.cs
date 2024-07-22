@@ -1,6 +1,6 @@
 using Autofac.Extensions.DependencyInjection;
-using Booking.Reserve.Service;
-using Booking.Reserve.Service.Configurations;
+using BooKing.Reserve.Service;
+using BooKing.Reserve.Service.Configurations;
 using BooKing.Generics.Bus.Configurations;
 using BooKing.Generics.Infra.Configuration;
 

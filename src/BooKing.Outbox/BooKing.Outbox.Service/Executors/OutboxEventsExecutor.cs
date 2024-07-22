@@ -28,7 +28,7 @@ public class OutboxEventsExecutor : BackgroundService
         _logger.LogInformation("BooKing.Outbox.Service - OutboxEventsExecutor starts at: {time}", DateTimeOffset.Now);
         while (!stoppingToken.IsCancellationRequested)
         {
-            _logger.LogInformation("BooKing.Outbox.Service running at: {time}", DateTimeOffset.Now);
+            //_logger.LogInformation("BooKing.Outbox.Service running at: {time}", DateTimeOffset.Now);
 
             var events = await _outboxEventService.ReadEvents();
 

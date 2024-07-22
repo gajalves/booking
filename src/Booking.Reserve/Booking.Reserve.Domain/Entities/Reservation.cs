@@ -1,8 +1,8 @@
-﻿using Booking.Reserve.Domain.Enums;
-using Booking.Reserve.Domain.ValueObjects;
+﻿using BooKing.Reserve.Domain.Enums;
+using BooKing.Reserve.Domain.ValueObjects;
 using BooKing.Generics.Domain;
 
-namespace Booking.Reserve.Domain.Entities;
+namespace BooKing.Reserve.Domain.Entities;
 public class Reservation : Entity
 {
     public Guid ApartmentId { get; private set; }
@@ -36,7 +36,7 @@ public class Reservation : Entity
         PriceForPeriod = priceForPeriod;
         CleaningFee = cleaningFee;
         TotalPrice = totalPrice;
-        Status = ReservationStatus.Reserved;
+        Status = ReservationStatus.Pending;
         CreatedOnUtc = DateTime.Now;
     }
 
@@ -66,13 +66,24 @@ public class Reservation : Entity
         ConfirmedOnUtc = DateTime.Now;
     }
 
+    public void Cancel()
+    {
+        Status = ReservationStatus.Cancelled;
+        CancelledOnUtc = DateTime.Now;
+    }
+
     public void ProcessConfirmed()
     {
         Status = ReservationStatus.PendingPayment;        
     }
 
-    public void Cancel()
+    public void SetFailedPaymentStatus()
     {
-        Status = ReservationStatus.Cancelled;
-    }    
+        Status = ReservationStatus.FailedPayment;
+    }
+
+    public void MarkPaymentCompleted()
+    {
+        Status = ReservationStatus.PaymentCompleted;
+    }        
 }

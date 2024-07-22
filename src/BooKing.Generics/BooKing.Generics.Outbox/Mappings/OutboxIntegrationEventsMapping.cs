@@ -25,6 +25,9 @@ public class OutboxIntegrationEventsMapping : IEntityTypeConfiguration<OutboxInt
         builder.Property(o => o.ProcessedAt)
             .IsRequired(false);
 
+        builder.Property(o => o.Message)
+            .IsRequired(false);
+
         builder.ToTable(nameof(OutboxIntegrationEvents), "Outbox");
     }
 }

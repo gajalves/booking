@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Booking.Reserve.Service": {
+    "BooKing.Reserve.Service": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"

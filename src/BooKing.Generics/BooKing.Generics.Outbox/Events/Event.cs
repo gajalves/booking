@@ -3,12 +3,12 @@
 namespace BooKing.Generics.Outbox.Events;
 public class Event : IEvent
 {    
-    public Guid Id { get; set; }
+    public Guid EventId { get; set; }
     public DateTime CreatedAt { get; set; }
 
     public Event()
     {
-        Id = Guid.NewGuid();
+        EventId = Guid.NewGuid();
         CreatedAt = DateTime.Now;
     }
 }

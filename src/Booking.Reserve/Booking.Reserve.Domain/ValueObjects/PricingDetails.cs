@@ -1,4 +1,4 @@
-﻿namespace Booking.Reserve.Domain.ValueObjects;
+﻿namespace BooKing.Reserve.Domain.ValueObjects;
 public record PricingDetails(
     decimal PriceForPeriod,
     decimal CleaningFee,    

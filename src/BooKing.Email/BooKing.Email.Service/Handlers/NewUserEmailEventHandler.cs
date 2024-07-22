@@ -37,7 +37,7 @@ public class NewUserEmailEventHandler : IEventHandler<NewUserEmailEvent>
 
 
         await Task.Delay( 3000 );
-        _logger.LogInformation($"Processed NewUserEmailEvent for {@event.Email}");
+        _logger.LogInformation($"[NewUserEmailEventHandler] Processed NewUserEmailEvent for {@event.Email}");
         return true;
     }
 }

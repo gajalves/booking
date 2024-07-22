@@ -1,11 +1,11 @@
-﻿using Booking.Reserve.Application.Dtos;
-using Booking.Reserve.Application.Interfaces;
+﻿using BooKing.Reserve.Application.Dtos;
+using BooKing.Reserve.Application.Interfaces;
 using BooKing.Generics.Domain;
 using BooKing.Generics.Shared;
 using BooKing.Generics.Shared.CurrentUserService;
 using BooKing.Generics.Shared.HttpClientService;
 
-namespace Booking.Reserve.Application.Services;
+namespace BooKing.Reserve.Application.Services;
 public class ApartmentService : IApartmentService
 {
     private readonly IHttpClientService _httpClientService;

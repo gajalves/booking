@@ -8,6 +8,7 @@ public class OutboxIntegrationEvents : Entity
     public string Payload { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
+    public string Message { get; set; }
 
     public OutboxIntegrationEvents()
     {
@@ -25,5 +26,10 @@ public class OutboxIntegrationEvents : Entity
     public void SetProcessedAtToDateTimeNow()
     {
         this.ProcessedAt = DateTime.Now;
+    }
+
+    public void SetMessage(string message)
+    {
+        this.Message = message;
     }
 }

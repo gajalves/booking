@@ -1,8 +1,8 @@
-﻿using Booking.Reserve.Domain.Entities;
+﻿using BooKing.Reserve.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Booking.Reserve.Infra.Mappings;
+namespace BooKing.Reserve.Infra.Mappings;
 public class ReservationMapping : IEntityTypeConfiguration<Reservation>
 {
     public void Configure(EntityTypeBuilder<Reservation> builder)

@@ -1,4 +1,4 @@
-﻿namespace Booking.Reserve.Infra.Mappings;
+﻿namespace BooKing.Reserve.Infra.Mappings;
 public static class Schemas
 {
     public const string ReservationsSchema = "Reservations";

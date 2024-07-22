@@ -1,10 +1,10 @@
-﻿using Booking.Reserve.Application.Interfaces;
-using Booking.Reserve.Application.Services;
+﻿using BooKing.Reserve.Application.Interfaces;
+using BooKing.Reserve.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using BooKing.Generics.Shared.HttpClientService;
-using Booking.Reserve.Domain;
+using BooKing.Reserve.Domain;
 
-namespace Booking.Reserve.Application;
+namespace BooKing.Reserve.Application;
 public static class ApplicationDependency
 {
     public static IServiceCollection AddApplicationDependencies(this IServiceCollection services)

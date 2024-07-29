@@ -1,7 +1,12 @@
-﻿namespace BooKing.Generics.Outbox.Events;
+﻿using BooKing.Generics.EventSourcing;
+
+namespace BooKing.Generics.Outbox.Events;
 public class ReservationPaymentInitiatedEvent : Event
 {
-    public ReservationPaymentInitiatedEvent(Guid reservationId, Guid userId, decimal totalPrice, string userEmail)
+    public ReservationPaymentInitiatedEvent(Guid reservationId, 
+                                            Guid userId, 
+                                            decimal totalPrice, 
+                                            string userEmail) : base(reservationId)
     {
         ReservationId = reservationId;
         UserId = userId;

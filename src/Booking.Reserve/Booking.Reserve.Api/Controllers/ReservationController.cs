@@ -48,4 +48,20 @@ public class ReservationController : ControllerBase
 
         return BadRequest(result.Error);
     }
+
+    [HttpPost("Cancel")]
+    public async Task<IActionResult> Cancel([FromBody] Guid reservationId)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _reservationService.CancelReserve(reservationId);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result.Error);
+    }
 }

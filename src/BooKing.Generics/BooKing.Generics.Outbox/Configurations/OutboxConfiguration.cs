@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Migrations;
+using BooKing.Generics.EventSourcing.Services;
+using BooKing.Generics.EventSourcing.Interfaces;
+using BooKing.Generics.EventSourcing.Repository;
+using BooKing.Generics.EventSourcing;
 
 namespace BooKing.Generics.Outbox.Configurations;
 public static class OutboxConfiguration
@@ -25,8 +29,10 @@ public static class OutboxConfiguration
         services.AddSingleton<IOutboxEventService, OutboxEventService>();
         services.AddSingleton<IOutboxReposity, OutboxReposity>();
         services.AddSingleton<IUnitOfWork<OutboxContext>, UnitOfWork<OutboxContext>>();
+        services.AddSingleton<IEventStoreService, EventStoreService>();
+        services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
         services.AddDbContext<OutboxContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            options.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"),
             o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Outbox")),
             ServiceLifetime.Singleton);
     }
@@ -34,12 +40,15 @@ public static class OutboxConfiguration
     private static void AddOutboxDependencies(IServiceCollection services)
     {
         services.AddScoped<IOutboxReposity, OutboxReposity>();
-        services.AddScoped<IOutboxEventService, OutboxEventService>();        
+        services.AddScoped<IOutboxEventService, OutboxEventService>();
+
+        services.AddSingleton<IEventStoreService, EventStoreService>();
+        services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {        
         services.AddDbContext<OutboxContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(configuration.GetConnectionString("DataBaseConnection")));
     }
 }

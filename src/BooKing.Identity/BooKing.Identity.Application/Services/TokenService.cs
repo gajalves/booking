@@ -47,8 +47,8 @@ public class TokenService : ITokenService
             {
                  new Claim(ClaimTypes.NameIdentifier, id.ToString()),
                  new Claim(ClaimTypes.Email, email)
-            }),
-            Expires = DateTimeHelper.HoraBrasilia().AddHours(_jwtSettings.ExpiresInHours),
+            }),            
+            Expires = DateTime.UtcNow.AddHours(_jwtSettings.ExpiresInHours),
             Audience = _jwtSettings.Audience,
             Issuer = _jwtSettings.Issuer,
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

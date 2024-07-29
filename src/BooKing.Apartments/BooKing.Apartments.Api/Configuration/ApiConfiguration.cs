@@ -13,7 +13,7 @@ public static class ApiConfiguration
     {
         
         services.AddDbContext<BooKingApartmentsContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            options.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"),
             o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.ApartmentsSchema)));
 
         services.AddCors(options =>

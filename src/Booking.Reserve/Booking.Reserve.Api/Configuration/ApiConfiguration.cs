@@ -14,7 +14,7 @@ public static class ApiConfiguration
     {
         
         services.AddDbContext<BooKingReserveContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            options.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"),
             o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.ReservationsSchema)));
 
         services.AddCors(options =>

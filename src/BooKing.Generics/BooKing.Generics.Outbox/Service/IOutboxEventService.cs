@@ -1,4 +1,5 @@
-﻿using BooKing.Generics.Outbox.Entities;
+﻿using BooKing.Generics.EventSourcing;
+using BooKing.Generics.Outbox.Entities;
 using BooKing.Generics.Outbox.Events;
 
 namespace BooKing.Generics.Outbox.Service;

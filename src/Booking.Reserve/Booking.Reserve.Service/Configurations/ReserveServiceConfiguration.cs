@@ -23,7 +23,7 @@ public static class ReserveServiceConfiguration
     public static void AddDependencies(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<BooKingReserveContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            options.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"),
             o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.ReservationsSchema)),
             ServiceLifetime.Singleton);
 

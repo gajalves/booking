@@ -77,6 +77,10 @@ public class ReservationCompletionExecutor : BackgroundService
         var minutes = Convert.ToInt32(splitTime[1]) - now.Minute;
         var seconds = Convert.ToInt32(splitTime[2]) - now.Second;
         var secondsTillStart = hours * 3600 + minutes * 60 + seconds;
+
+        if (secondsTillStart < 0)
+            secondsTillStart = 300;
+
         return secondsTillStart;        
     }
 }

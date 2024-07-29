@@ -74,8 +74,10 @@ public class ReservationService : IReservationService
 
             await _outboxEventService.AddEvent(
                 QueueMapping.BooKingEmailServiceReservationCreated,
-                new ReservationCreatedEvent(reserve.Id, user.Email, apartment.Name,
-                reserve.Duration.Start, reserve.Duration.End, reserve.TotalPrice));
+                new ReservationCreatedEvent(reserve.Id, user.Id, user.Email, apartment.Id, 
+                                            apartment.Name, reserve.Duration.Start, reserve.Duration.End, 
+                                            reserve.PriceForPeriod, reserve.CleaningFee, 
+                                            reserve.TotalPrice, reserve.CreatedOnUtc));
 
             var reservationDto = _mapper.Map<ReservationCreatedDto>(reserve);
 

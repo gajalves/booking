@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BooKing.Generics.Bus\BooKing.Generics.Bus.csproj" />
     <ProjectReference Include="..\BooKing.Generics.Domain\BooKing.Generics.Domain.csproj" />
+    <ProjectReference Include="..\BooKing.Generics.EventSourcing\BooKing.Generics.EventSourcing.csproj" />
     <ProjectReference Include="..\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
     <ProjectReference Include="..\BooKing.Generics.Shared\BooKing.Generics.Shared.csproj" />
   </ItemGroup>

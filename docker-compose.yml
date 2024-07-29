@@ -47,7 +47,7 @@ services:
     - 15672:15672               
     volumes:    
     - /docker_conf/rabbitmq/data/:/var/lib/rabbitmq/    
-    environment:
+    environment:    
     - RABBITMQ_DEFAULT_USER=guest
     - RABBITMQ_DEFAULT_PASS=guest
     restart: always 
@@ -101,10 +101,31 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
  
+  booking.eventstore.db:    
+    image: eventstore/eventstore:24.2.0-jammy
+    container_name: BooKing.EventStore.Db
+    environment:
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_RUN_PROJECTIONS=All
+      - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+      - EVENTSTORE_HTTP_PORT=2113
+      - EVENTSTORE_INSECURE=true
+      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+    ports:
+      - "2113:2113"
+    volumes:
+      - type: volume
+        source: eventstore-volume-data
+        target: /var/lib/eventstore
+      - type: volume
+        source: eventstore-volume-logs
+        target: /var/log/eventstore
+ 
 volumes:
     logs-folder:
         name: ${log_booking_rabbitmq}
         driver: local
     portainer_data:
-
+    eventstore-volume-data:
+    eventstore-volume-logs:
 

@@ -1,4 +1,6 @@
-﻿namespace BooKing.Generics.Outbox.Events;
+﻿using BooKing.Generics.EventSourcing;
+
+namespace BooKing.Generics.Outbox.Events;
 public class ReservationCancelledByUserEvent : Event
 {
     public ReservationCancelledByUserEvent(Guid reservationId, 
@@ -6,7 +8,7 @@ public class ReservationCancelledByUserEvent : Event
                                            string userEmail, 
                                            DateTime start, 
                                            DateTime end, 
-                                           decimal totalPrice)
+                                           decimal totalPrice) : base(reservationId)
     {
         ReservationId = reservationId;
         UserId = userId;

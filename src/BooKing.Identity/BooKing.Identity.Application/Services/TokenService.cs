@@ -18,21 +18,19 @@ public class TokenService : ITokenService
         _jwtSettings = jwtSettings.Value;
     }
 
-    public ReturnLoginUserDto GenerateToken(Guid id, string email)
+    public ResponseGenerateTokenDto GenerateToken(Guid id, string email)
     {
         string encodedToken = WriteToken(id, email);
 
-        return GenerateResponse(encodedToken, id ,email);
+        return GenerateResponse(encodedToken);
     }
 
-    private ReturnLoginUserDto GenerateResponse(string encodedToken, Guid id, string email)
+    private ResponseGenerateTokenDto GenerateResponse(string encodedToken)
     {
-        return new ReturnLoginUserDto
+        return new ResponseGenerateTokenDto
         {
             AccessToken = encodedToken,
-            ExpiresIn = TimeSpan.FromHours(_jwtSettings.ExpiresInHours).TotalSeconds,
-            UserId = id,
-            UserEmail = email
+            ExpiresIn = TimeSpan.FromHours(_jwtSettings.ExpiresInHours).TotalSeconds            
         };
     }
 

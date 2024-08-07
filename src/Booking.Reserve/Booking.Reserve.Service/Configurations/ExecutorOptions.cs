@@ -1,4 +1,4 @@
-﻿namespace Booking.Reserve.Service.Configurations;
+﻿namespace BooKing.Reserve.Service.Configurations;
 public class ExecutorOptions
 {
     public string ReservationCompletionExecutorStartTime { get; set; }

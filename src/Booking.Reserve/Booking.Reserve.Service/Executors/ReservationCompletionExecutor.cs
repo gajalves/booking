@@ -1,4 +1,4 @@
-﻿using Booking.Reserve.Service.Configurations;
+﻿using BooKing.Reserve.Service.Configurations;
 using BooKing.Generics.Bus.Queues;
 using BooKing.Generics.Outbox.Configurations;
 using BooKing.Generics.Outbox.Events;
@@ -8,7 +8,7 @@ using BooKing.Reserve.Domain.Enums;
 using BooKing.Reserve.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 
-namespace Booking.Reserve.Service.Executors;
+namespace BooKing.Reserve.Service.Executors;
 public class ReservationCompletionExecutor : BackgroundService
 {
     private readonly ILogger<ReservationCompletionExecutor> _logger;

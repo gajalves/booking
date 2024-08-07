@@ -9,6 +9,10 @@ public static class ApplicationErrors
             "UserRegisterService.Register",
             "The provided email address is already in use!");
 
+        public static readonly Error UnexpectedErrorCreatingUser = new Error(
+            "UserRegisterService.Register",
+            "Unexpected error while creating user!");
+
         public static readonly Error ProvidedEmailAccountNotFound = new Error(
             "UserLoginService.Login",
             "Provided email account does not exists!");

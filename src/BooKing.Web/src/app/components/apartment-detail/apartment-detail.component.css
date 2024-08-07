@@ -1,0 +1,17 @@
+.img-fluid {
+  max-height: 250px;
+  object-fit: cover;
+}
+
+.card {
+  margin-top: 20px;
+}
+
+.card-body h5 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.list-group-item {
+  font-size: 0.9rem;
+}

@@ -13,8 +13,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Outbox\BooKing.Generics.Outbox.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Shared\BooKing.Generics.Shared.csproj" />
-    <ProjectReference Include="..\BooKing.Reserve.Domain\BooKing.Reserve.Domain.csproj" />
-    <ProjectReference Include="..\BooKing.Reserve.Infra\BooKing.Reserve.Infra.csproj" />
+    <ProjectReference Include="..\Booking.Reserve.Domain\BooKing.Reserve.Domain.csproj" />
+    <ProjectReference Include="..\Booking.Reserve.Infra\BooKing.Reserve.Infra.csproj" />
   </ItemGroup>
 
 </Project>

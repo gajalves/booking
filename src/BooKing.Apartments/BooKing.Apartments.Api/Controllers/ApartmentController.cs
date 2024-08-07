@@ -42,6 +42,7 @@ public class ApartmentController : ControllerBase
         return BadRequest(result.Error);
     }
 
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {

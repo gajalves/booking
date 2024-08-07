@@ -1,0 +1,24 @@
+@import 'ngx-toastr/toastr';
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+html,
+body {
+    height: 100%;
+}
+
+:root {
+  --color-main: #2a6bac;
+}
+
+input {
+  border-radius: 8px;
+  flex: 1;
+  border: 0;
+  padding: 12px 24px;
+  padding-right: calc(48px + 16px);
+  outline-color:  var(--color-main);
+}
+
+.color-main-color{
+  color: var(--color-main);
+}

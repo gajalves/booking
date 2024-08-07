@@ -23,7 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Api\BooKing.Generics.Api.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
-    <ProjectReference Include="..\BooKing.Reserve.Application\BooKing.Reserve.Application.csproj" />
+    <ProjectReference Include="..\Booking.Reserve.Application\BooKing.Reserve.Application.csproj" />
   </ItemGroup>
 
 </Project>

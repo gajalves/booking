@@ -4,7 +4,7 @@ using BooKing.Generics.Outbox.Service;
 using BooKing.Reserve.Domain.Interfaces;
 using BooKing.Reserve.Service;
 
-namespace Booking.Reserve.Service.Handlers;
+namespace BooKing.Reserve.Service.Handlers;
 public class ReservationReservedEventHandler : IEventHandler<ReservationReservedEvent>
 {
     private readonly ILogger<Worker> _logger;

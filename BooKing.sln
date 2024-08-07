@@ -51,17 +51,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Generics.Shared", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Booking.Reserve", "Booking.Reserve", "{870675DD-CC66-4422-80DF-BB5373D37857}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Reserve.Domain", "src\Booking.Reserve\Booking.Reserve.Domain\Booking.Reserve.Domain.csproj", "{689D40D4-F8F6-4D24-82F0-C4E69990EA71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Reserve.Domain", "src\Booking.Reserve\Booking.Reserve.Domain\BooKing.Reserve.Domain.csproj", "{689D40D4-F8F6-4D24-82F0-C4E69990EA71}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Reserve.Infra", "src\Booking.Reserve\Booking.Reserve.Infra\Booking.Reserve.Infra.csproj", "{719DBFB3-A321-4495-932D-8699BE1DF30F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Reserve.Infra", "src\Booking.Reserve\Booking.Reserve.Infra\BooKing.Reserve.Infra.csproj", "{719DBFB3-A321-4495-932D-8699BE1DF30F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Reserve.Application", "src\Booking.Reserve\Booking.Reserve.Application\Booking.Reserve.Application.csproj", "{130B59F2-4F6D-4218-B93C-94E353701EB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Reserve.Application", "src\Booking.Reserve\Booking.Reserve.Application\BooKing.Reserve.Application.csproj", "{130B59F2-4F6D-4218-B93C-94E353701EB9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Reserve.Api", "src\Booking.Reserve\Booking.Reserve.Api\Booking.Reserve.Api.csproj", "{2AF17F14-153F-4147-8AB2-0B64A8B40F63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Reserve.Api", "src\Booking.Reserve\Booking.Reserve.Api\BooKing.Reserve.Api.csproj", "{2AF17F14-153F-4147-8AB2-0B64A8B40F63}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Reserve.Service", "src\Booking.Reserve\Booking.Reserve.Service\Booking.Reserve.Service.csproj", "{9E543288-4920-4104-9C8D-C38C01A694FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Reserve.Service", "src\Booking.Reserve\Booking.Reserve.Service\BooKing.Reserve.Service.csproj", "{9E543288-4920-4104-9C8D-C38C01A694FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooKing.Generics.EventSourcing", "src\BooKing.Generics\BooKing.Generics.EventSourcing\BooKing.Generics.EventSourcing.csproj", "{15FFED67-720A-46BB-89E9-3A38BACC797C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Generics.EventSourcing", "src\BooKing.Generics\BooKing.Generics.EventSourcing\BooKing.Generics.EventSourcing.csproj", "{15FFED67-720A-46BB-89E9-3A38BACC797C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKing.Identity.Tests", "src\BooKing.Identity\BooKing.Identity.Tests\BooKing.Identity.Tests.csproj", "{92206869-F2AE-4DCF-AF8A-431063200626}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,6 +163,10 @@ Global
 		{15FFED67-720A-46BB-89E9-3A38BACC797C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15FFED67-720A-46BB-89E9-3A38BACC797C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15FFED67-720A-46BB-89E9-3A38BACC797C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92206869-F2AE-4DCF-AF8A-431063200626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92206869-F2AE-4DCF-AF8A-431063200626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92206869-F2AE-4DCF-AF8A-431063200626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92206869-F2AE-4DCF-AF8A-431063200626}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +200,7 @@ Global
 		{2AF17F14-153F-4147-8AB2-0B64A8B40F63} = {870675DD-CC66-4422-80DF-BB5373D37857}
 		{9E543288-4920-4104-9C8D-C38C01A694FD} = {870675DD-CC66-4422-80DF-BB5373D37857}
 		{15FFED67-720A-46BB-89E9-3A38BACC797C} = {9EA064E4-BA30-4773-88F0-A555D8D9B888}
+		{92206869-F2AE-4DCF-AF8A-431063200626} = {D94E0CF4-26F5-4EED-9B51-41B4ABC4006B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83DDAC6D-5483-44AD-B21F-634C77DACD0F}

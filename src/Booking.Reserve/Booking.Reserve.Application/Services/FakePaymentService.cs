@@ -1,7 +1,7 @@
-﻿using Booking.Reserve.Application.Dtos;
-using Booking.Reserve.Application.Interfaces;
+﻿using BooKing.Reserve.Application.Dtos;
+using BooKing.Reserve.Application.Interfaces;
 
-namespace Booking.Reserve.Application.Services;
+namespace BooKing.Reserve.Application.Services;
 public class FakePaymentService : IPaymentService
 {
     private readonly Random _random;

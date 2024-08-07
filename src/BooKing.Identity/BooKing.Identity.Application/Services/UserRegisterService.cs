@@ -42,9 +42,10 @@ public class UserRegisterService : IUserRegisterService
         
         var createdUser = await _userRepository.CreateAsync(newUser);
 
-        if(createdUser != null)
-            await _outboxEventService.AddEvent(QueueMapping.BooKingEmailServiceNewUser, new NewUserEmailEvent(newUser.Id, dto.Name, dto.Email));
+        if(createdUser == null)
+            return Result.Failure<ReturnCreatedUserDto>(ApplicationErrors.UserError.UnexpectedErrorCreatingUser);
 
+        await _outboxEventService.AddEvent(QueueMapping.BooKingEmailServiceNewUser, new NewUserEmailEvent(newUser.Id, dto.Name, dto.Email));
 
         var newUserDto = _mapper.Map<ReturnCreatedUserDto>(createdUser);
 

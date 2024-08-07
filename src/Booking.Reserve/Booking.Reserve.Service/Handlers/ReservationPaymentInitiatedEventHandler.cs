@@ -1,4 +1,4 @@
-﻿using Booking.Reserve.Application.Interfaces;
+﻿using BooKing.Reserve.Application.Interfaces;
 using BooKing.Generics.Bus.Abstractions;
 using BooKing.Generics.Bus.Queues;
 using BooKing.Generics.Outbox.Events;
@@ -6,7 +6,7 @@ using BooKing.Generics.Outbox.Service;
 using BooKing.Reserve.Domain.Interfaces;
 using BooKing.Reserve.Service;
 
-namespace Booking.Reserve.Service.Handlers;
+namespace BooKing.Reserve.Service.Handlers;
 public class ReservationPaymentInitiatedEventHandler : IEventHandler<ReservationPaymentInitiatedEvent>
 {
     private readonly ILogger<Worker> _logger;

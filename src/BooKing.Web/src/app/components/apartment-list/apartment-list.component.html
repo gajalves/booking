@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center pb-2 m-3">
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <button class="btn btn-sm btn-outline-secondary">
+        <span><i class="bi bi-funnel"></i></span>
+        Filter
+      </button>
+    </div>
+  </div>
+
+  <div class="row d-flex justify-content-around" *ngIf="!isLoading">
+    <div *ngFor="let apartment of apartments" class="col-md-4 mb-4">
+      <div class="apartment-card card" (click)="apartmentCardClick(apartment.id)">
+        <img [src]="apartment.imagePath" alt="Apartment Image" class="apartment-image card-img-top">
+        <div class="apartment-info card-body">
+          <h3 class="apartment-title card-title">{{ apartment.name }}</h3>
+          <h4 class="apartment-price card-subtitle mb-2 text-muted">${{ apartment.price }} per night</h4>
+          <h6 class="apartment-amenities">{{ apartment.amenities.join(', ') }}</h6>
+          <h6 class="apartment-location text-end"><i class="bi bi-geo-alt-fill"></i> {{ apartment.address.city }} - {{ apartment.address.state }}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="isLoading">
+    <div *ngFor="let item of skeletonItems" class="col-md-4 mb-4">
+      <div class="skeleton-card card">
+        <ngx-skeleton-loader class="apartment-image-skeleton card-img-top"></ngx-skeleton-loader>
+        <div class="apartment-info card-body">
+          <ngx-skeleton-loader class="apartment-title-skeleton mb-2"></ngx-skeleton-loader>
+          <ngx-skeleton-loader class="apartment-price-skeleton mb-2"></ngx-skeleton-loader>
+          <ngx-skeleton-loader class="apartment-amenities-skeleton mb-2"></ngx-skeleton-loader>
+          <ngx-skeleton-loader class="apartment-location-skeleton mb-2"></ngx-skeleton-loader>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row m-4">
+    <div class="col-12 d-flex justify-content-center">
+      <button *ngIf="!isLoading && hasMoreApartments" (click)="loadMore()" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-clockwise"></i>
+        Load More
+      </button>
+    </div>
+  </div>
+</div>

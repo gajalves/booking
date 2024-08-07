@@ -3,5 +3,5 @@
 namespace BooKing.Identity.Application.Interfaces;
 public interface ITokenService
 {
-    ReturnLoginUserDto GenerateToken(Guid id, string email);
+    ResponseGenerateTokenDto GenerateToken(Guid id, string email);
 }

@@ -17,6 +17,16 @@ public static class ApiConfiguration
             options.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"),
             o => o.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.IdentitySchema)));
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAny",
+                            builder =>
+                                builder
+                                    .AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader());
+        });
+
         services.AddDependencyInjectionApi();
         
         services.AddControllers();
@@ -32,7 +42,7 @@ public static class ApiConfiguration
 
         app.UseHttpsRedirection();
         app.UseRouting();
-        app.UseCors("Total");
+        app.UseCors("AllowAny");
         app.UseMiddleware<LoggingMiddleware>();
         app.UseAuthConfiguration();
         app.UseEndpoints(endpoints =>

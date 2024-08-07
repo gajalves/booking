@@ -1,4 +1,4 @@
-﻿namespace Booking.Reserve.Application.Dtos;
+﻿namespace BooKing.Reserve.Application.Dtos;
 public class PaymentResultDto
 {
     public bool IsSuccess { get; set; }

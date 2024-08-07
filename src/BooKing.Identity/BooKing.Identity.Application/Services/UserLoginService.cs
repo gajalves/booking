@@ -33,12 +33,22 @@ public class UserLoginService : IUserLoginService
         if (user.Password != hash)
             return Result.Failure<ReturnLoginUserDto>(ApplicationErrors.UserError.PasswordIncorrect);
 
-        return CreateLoginReturn(user.Id, user.Email);
+        return CreateLoginReturn(user.Id, user.Email, user.Name);
     }
 
-    private Result<ReturnLoginUserDto> CreateLoginReturn(Guid id, string email)
+    private Result<ReturnLoginUserDto> CreateLoginReturn(Guid id, string email, string name)
     {
-        return _tokenService.GenerateToken(id, email);
+        var token =  _tokenService.GenerateToken(id, email);
+
+        return new ReturnLoginUserDto
+        {
+            AccessToken = token.AccessToken,
+            ExpiresIn = token.ExpiresIn,
+            UserEmail = email,
+            UserId = id,
+            UserName = name
+        };
+        
     }
 
     private string GenerateHash(string dtoPassword, string salt)

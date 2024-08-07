@@ -3,7 +3,7 @@ using BooKing.Reserve.Service;
 using BooKing.Reserve.Service.Configurations;
 using BooKing.Generics.Bus.Configurations;
 using BooKing.Generics.Infra.Configuration;
-using Booking.Reserve.Service.Executors;
+using BooKing.Reserve.Service.Executors;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .AddSegAndSerilog()

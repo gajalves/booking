@@ -12,10 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using BooKing.Generics.Outbox.Configurations;
 using Microsoft.EntityFrameworkCore.Migrations;
 using BooKing.Reserve.Infra.Mappings;
-using Booking.Reserve.Service.Handlers;
-using Booking.Reserve.Application.Interfaces;
-using Booking.Reserve.Application.Services;
-using Booking.Reserve.Service.Configurations;
+using BooKing.Reserve.Service.Handlers;
+using BooKing.Reserve.Application.Interfaces;
+using BooKing.Reserve.Application.Services;
+using BooKing.Reserve.Service.Configurations;
 
 namespace BooKing.Reserve.Service.Configurations;
 public static class ReserveServiceConfiguration

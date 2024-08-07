@@ -34,7 +34,9 @@ public static class BusConfiguration
                 HostName = configuration["RabbitMQ:HostName"],
                 Port = int.Parse(configuration["RabbitMQ:Port"]),
                 UserName = configuration["RabbitMQ:UserName"],
-                Password = configuration["RabbitMQ:Password"]
+                Password = configuration["RabbitMQ:Password"],
+                DispatchConsumersAsync = false,
+                ConsumerDispatchConcurrency = 1,
             };
 
             return new RabbitMQConnection(connectionFactory, logger);

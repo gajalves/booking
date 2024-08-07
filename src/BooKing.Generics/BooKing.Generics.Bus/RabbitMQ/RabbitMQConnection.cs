@@ -15,8 +15,7 @@ public class RabbitMQConnection : IRabbitMQConnection
     private IConnection _connection;
     private readonly ILogger<RabbitMQConnection> _logger;
     private readonly int _retryCount;
-
-    public string _clientProvideName = string.Empty;
+    
     private bool _disposed;
     object sync_root = new object();
 
@@ -26,10 +25,7 @@ public class RabbitMQConnection : IRabbitMQConnection
     {
         _retryCount = 5;
         _connectionFactory = connectionFactory;
-        _logger = logger;
-        
-        if (clientProvidedName != null)
-            _clientProvideName = clientProvidedName;
+        _logger = logger;                
     }
 
     public bool IsConnected => _connection != null && _connection.IsOpen && !_disposed;
@@ -80,7 +76,7 @@ public class RabbitMQConnection : IRabbitMQConnection
             policy.Execute(() =>
             {
                 _connection = _connectionFactory
-                      .CreateConnection(_clientProvideName);
+                      .CreateConnection();
             });
 
             if (IsConnected)

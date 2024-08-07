@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
-    <ProjectReference Include="..\BooKing.Reserve.Domain\BooKing.Reserve.Domain.csproj" />
+    <ProjectReference Include="..\Booking.Reserve.Domain\BooKing.Reserve.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <div class="row">
+    <!-- Photo Gallery -->
+    <div class="col-lg-7 mb-4">
+      <div class="row">
+        <div class="col-12">
+          <img [src]="apartment.imagePath" alt="{{ apartment.name }}" class="img-fluid w-100 rounded">
+        </div>
+      </div>
+    </div>
+    <!-- Apartment Details -->
+    <div class="col-lg-5">
+      <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Home</button>
+      <h2>{{ apartment.name }}</h2>
+      <p class="text-muted">{{ apartment.address.city }}, {{ apartment.address.state }}, {{ apartment.address.country }}</p>
+      <p>{{ apartment.description }}</p>
+      <p><strong>Price:</strong> ${{ apartment.price }} per night</p>
+      <p><strong>Cleaning Fee:</strong> ${{ apartment.cleaningFee }}</p>
+      <p><strong>Amenities:</strong> {{ apartment.amenities.join(', ') }}</p>
+      <p><strong>Address:</strong> {{ apartment.address.street }}, {{ apartment.address.number }}, {{ apartment.address.zipCode }}</p>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">${{ apartment.price }} <small class="text-muted">per night</small></h5>
+          <div class="d-flex justify-content-between mb-2">
+            <input type="date" class="form-control me-2" [(ngModel)]="checkInDate" (change)="calculateTotal()" placeholder="Check-in">
+            <input type="date" class="form-control" [(ngModel)]="checkOutDate" (change)="calculateTotal()" placeholder="Check-out">
+          </div>
+          <button class="btn btn-primary w-100" (click)="makeReservation()">Reserve</button>
+          <p class="text-muted mt-2">You won't be charged yet</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">${{ apartment.price }} x {{ numberOfNights }} night(s)</li>
+            <li class="list-group-item">Cleaning Fee: ${{ apartment.cleaningFee }}</li>
+            <li class="list-group-item">Service Fee: $87</li>
+            <li class="list-group-item"><strong>Total: ${{ totalPrice }}</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

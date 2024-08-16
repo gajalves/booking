@@ -10,12 +10,15 @@ public class UserController : ControllerBase
 {
     private readonly IUserRegisterService _registerService;
     private readonly IUserLoginService _loginService;
+    private readonly IUserService _userService;
 
-    public UserController(IUserRegisterService registerService, 
-                          IUserLoginService loginService)
-    {        
+    public UserController(IUserRegisterService registerService,
+                          IUserLoginService loginService,
+                          IUserService userService)
+    {
         _registerService = registerService;
         _loginService = loginService;
+        _userService = userService;
     }
 
     [HttpPost("Register")]
@@ -39,6 +42,20 @@ public class UserController : ControllerBase
             return BadRequest(ModelState);
 
         var result = await _loginService.Login(dto);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
+        return Ok(result.Value);
+    }
+
+    [HttpGet("UserInfo/{userId}")]
+    public async Task<IActionResult> UserInformation(Guid userId)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _userService.GetUserInformation(userId);
 
         if (result.IsFailure)
             return BadRequest(result.Error);

@@ -2,6 +2,7 @@ using BooKing.Generics.Api.Configuration;
 using BooKing.Generics.Infra;
 using BooKing.Generics.Infra.Configuration;
 using BooKing.Generics.Outbox.Configurations;
+using BooKing.Generics.Shared.CurrentUserService;
 using BooKing.Identity.Api.Configuration;
 using BooKing.Identity.Application;
 using BooKing.Identity.Infra;
@@ -24,6 +25,7 @@ builder.Services.AddOutboxConfiguration(builder.Configuration);
 builder.Services.AddJwtConfiguration(builder.Configuration);
 builder.Services.AddInfrasctructureDependencies();
 builder.Services.AddApplicationDependencies();
+builder.Services.AddCurrentUserService();
 builder.Services.AddSwaggerConfiguration();
 
 var app = builder.Build();

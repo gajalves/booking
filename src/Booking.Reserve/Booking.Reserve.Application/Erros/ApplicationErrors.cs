@@ -19,10 +19,26 @@ public static class ApplicationErrors
 
         public static readonly Error NotAllowedToConfirmReservation = new Error(
             "ReservationService.Confirm",
-            "You'r not allowed to confirm this reservation!");
+            "You're not allowed to confirm this reservation!");
 
         public static readonly Error InvalidStatus = new Error(
             "ReservationService.Confirm",
             "Invalid reservation status!");
+
+        public static readonly Error NotAllowedToRetrieveThisInformation = new Error(
+            "ReservationService",
+            "You're not allowed to retrieve this information!");
+
+        public static readonly Error EmptyAparmentList = new Error(
+            "ApartmentService.GetApartmentByGuidList",
+            "Empty apartment list!");
+
+        public static readonly Error ErrorObtainingApartmentData = new Error(
+            "ApartmentService.GetAllReservationsByUserId",
+            "Error obtaining apartment data!");
+
+        public static readonly Error EventsNotFound = new Error(
+            "ReservationService.GetReservationEvents",
+            "Events not found for this reserve");
     }
 }

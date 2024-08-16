@@ -20,5 +20,9 @@ public static class ApplicationErrors
         public static readonly Error PasswordIncorrect = new Error(
             "UserLoginService.Login",
             "Password Incorrect!");
+
+        public static readonly Error NotAllowedToRetrieveThisInformation = new Error(
+            "UserService",
+            "You're not allowed to retrieve this information!");
     }
 }

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.EventSourcing\BooKing.Generics.EventSourcing.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Outbox\BooKing.Generics.Outbox.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Shared\BooKing.Generics.Shared.csproj" />
     <ProjectReference Include="..\Booking.Reserve.Domain\BooKing.Reserve.Domain.csproj" />

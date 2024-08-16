@@ -165,4 +165,13 @@ public class ApartmentService : IApartmentService
     {
         return _currentUserService.GetCurrentUser();
     }
+
+    public async Task<Result<List<ApartmentDto>>> GetApartmentsByGuids(List<Guid> apartmentGuids)
+    {
+        var apartments = await _apartmentRepository.GetApartmentsByGuids(apartmentGuids);
+
+        var apartmentDtos = apartments.Select(a => _mapper.Map<ApartmentDto>(a)).ToList();
+
+        return Result.Success<List<ApartmentDto>>(apartmentDtos);
+    }
 }

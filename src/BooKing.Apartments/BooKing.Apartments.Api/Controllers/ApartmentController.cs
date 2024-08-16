@@ -81,4 +81,20 @@ public class ApartmentController : ControllerBase
 
         return BadRequest(result.Error);
     }
+
+    [HttpPost("GetApartmentsByGuids")]
+    public async Task<IActionResult> Create([FromBody] List<Guid> apartmentGuids)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _apartmentService.GetApartmentsByGuids(apartmentGuids);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result.Error);
+    }
 }

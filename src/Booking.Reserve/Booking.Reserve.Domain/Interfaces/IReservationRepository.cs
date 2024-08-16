@@ -8,4 +8,6 @@ public interface IReservationRepository : IBaseRepository<Reservation>
 {
     Task<bool> IsOverlappingAsync(Guid apartmetnId, DateRange duration);
     Task<List<Reservation>> GetReservationsByStatusAndEndDateAsync(ReservationStatus status, DateTime endDate);
+    Task<List<Reservation>> GetAllReservationsByUserId(Guid userId);
+    Task<Reservation> GetReservation(Guid reservationId);
 }

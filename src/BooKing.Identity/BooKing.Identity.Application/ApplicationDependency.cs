@@ -10,7 +10,7 @@ public static class ApplicationDependency
         AddService(services);
 
         AddAutoMapper(services);
-
+      
         return services;
     }
 
@@ -23,6 +23,7 @@ public static class ApplicationDependency
     {
         services.AddTransient<IUserRegisterService, UserRegisterService>();
         services.AddTransient<IUserLoginService, UserLoginService>();
+        services.AddTransient<IUserService, UserService>();
         services.AddTransient<IPasswordService, PasswordService>();
         services.AddTransient<ITokenService, TokenService>();
     }

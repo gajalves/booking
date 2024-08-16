@@ -3,6 +3,10 @@ using BooKing.Reserve.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using BooKing.Generics.Shared.HttpClientService;
 using BooKing.Reserve.Domain;
+using BooKing.Generics.EventSourcing;
+using BooKing.Generics.EventSourcing.Repository;
+using BooKing.Generics.EventSourcing.Interfaces;
+using BooKing.Generics.EventSourcing.Services;
 
 namespace BooKing.Reserve.Application;
 public static class ApplicationDependency
@@ -28,5 +32,7 @@ public static class ApplicationDependency
         services.AddTransient<IReservationService, ReservationService>();
         services.AddTransient<IApartmentService, ApartmentService>();
         services.AddTransient<PricingService>();
+        services.AddTransient<IEventSourcingRepository, EventSourcingRepository>();
+        services.AddTransient<IEventStoreService, EventStoreService>();
     }
 }

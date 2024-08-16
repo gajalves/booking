@@ -39,4 +39,13 @@ public class ApartmentRepository : BaseRepository<Apartment, BooKingApartmentsCo
                              .Include(x => x.Amenities)
                              .FirstOrDefaultAsync(a => a.Id == id);
     }
+
+    public async Task<List<Apartment>> GetApartmentsByGuids(List<Guid> apartmentIds)
+    {
+        return await _context.Set<Apartment>()
+                             .AsNoTracking()
+                             .Include(x => x.Amenities)
+                             .Where(a => apartmentIds.Contains(a.Id))
+                             .ToListAsync();
+    }
 }

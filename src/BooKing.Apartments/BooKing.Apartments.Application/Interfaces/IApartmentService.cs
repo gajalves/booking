@@ -10,4 +10,5 @@ public interface IApartmentService
     Task<Result> DeleteApartmentAsync(Guid id);
     Task<Result<ApartmentDto>> GetApartmentByIdAsync(Guid id);
     Task<Result<PaginatedList<ApartmentDto>>> GetPaginatedApartmentsAsync(int pageIndex, int pageSize);
+    Task<Result<List<ApartmentDto>>> GetApartmentsByGuids(List<Guid> apartmentGuids);
 }

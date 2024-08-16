@@ -64,4 +64,52 @@ public class ReservationController : ControllerBase
 
         return BadRequest(result.Error);
     }
+
+    [HttpGet("UserReservations/{userId}")]
+    public async Task<IActionResult> UserReservations(Guid userId)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _reservationService.GetAllReservationsByUserId(userId);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result.Error);
+    }
+
+    [HttpGet("{reservationId}")]
+    public async Task<IActionResult> GetReservation(Guid reservationId)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _reservationService.GetReservation(reservationId);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result.Error);
+    }
+
+    [HttpGet("ReservationEvents/{reservationId}")]
+    public async Task<IActionResult> ReservationEvents(Guid reservationId)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _reservationService.GetReservationEvents(reservationId);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result.Error);
+    }
 }

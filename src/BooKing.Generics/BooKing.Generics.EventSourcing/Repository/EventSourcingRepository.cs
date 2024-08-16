@@ -23,25 +23,33 @@ public class EventSourcingRepository : IEventSourcingRepository
 
     public async Task<IEnumerable<StoredEvent>> GetEvents(Guid aggregateId)
     {
-        var evts = await _eventStoreService
-                            .GetClient()
-                            .ReadStreamAsync(Direction.Forwards, aggregateId.ToString(), 0, 500)
-                            .ToListAsync();
-
         var eventList = new List<StoredEvent>();
-
-        foreach (var ev in evts)
+        
+        try
         {
-            var dataEncoded = Encoding.UTF8.GetString(ev.Event.Data.ToArray());
-            var jsonData = JsonConvert.DeserializeObject<Event>(dataEncoded);
+            var evts = await _eventStoreService
+                                .GetClient()
+                                .ReadStreamAsync(Direction.Forwards, aggregateId.ToString(), 0, 500)
+                                .ToListAsync();
 
-            var @event = new StoredEvent(
-                    new Guid(ev.Event.EventId.ToString()),
-                    ev.Event.EventType,
-                    dataEncoded,
-                    jsonData.CreatedAt);
+            foreach (var ev in evts)
+            {
+                var dataEncoded = Encoding.UTF8.GetString(ev.Event.Data.ToArray());
+                var jsonData = JsonConvert.DeserializeObject<Event>(dataEncoded);
 
-            eventList.Add(@event);
+                var @event = new StoredEvent(
+                        new Guid(ev.Event.EventId.ToString()),
+                        ev.Event.EventType,
+                        dataEncoded,
+                        jsonData.CreatedAt);
+
+                eventList.Add(@event);
+            }
+            
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
         }
 
         return eventList.OrderBy(x => x.CreatedAt);

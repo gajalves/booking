@@ -42,7 +42,22 @@ public class ReservationRepository : BaseRepository<Reservation, BooKingReserveC
     {
         return await _context.Set<Reservation>()
                              .Where(r => r.Status == status && 
-                                         r.Duration.End.Date == endDate.Date)
+                                         r.Duration.End.Date <= endDate.Date)
                              .ToListAsync();
+    }
+
+    public async Task<List<Reservation>> GetAllReservationsByUserId(Guid userId)
+    {
+        return await _context.Set<Reservation>()
+                             .Where(r => r.UserId == userId)
+                             .AsNoTracking()
+                             .ToListAsync();
+    }
+
+    public async Task<Reservation> GetReservation(Guid reservationId)
+    {
+        return await _context.Set<Reservation>()
+                        .Where(r => r.Id == reservationId)
+                        .FirstOrDefaultAsync();
     }
 }

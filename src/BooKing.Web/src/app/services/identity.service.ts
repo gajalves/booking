@@ -7,6 +7,7 @@ import { UserRegisterDto } from "../dtos/userregister.dto";
 import { ReturnLoginUserDto } from "../dtos/returnloginuser.dto";
 import { UserLoginDto } from "../dtos/userlogin.dto";
 import { ErrorReturnDto } from "../dtos/errorreturn.dto";
+import { UserInfoDto } from "../dtos/userInfo.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -33,12 +34,18 @@ export class IdentityService {
         localStorage.setItem('accessToken', response.accessToken);
         localStorage.setItem('userName', response.userName);
         localStorage.setItem('userEmail', response.userEmail);
+        localStorage.setItem('userId', response.userId);
       })
     );
   }
 
+  userInfo(id: string): Observable<UserInfoDto | ErrorReturnDto> {
+    return this.http.get<UserInfoDto>(`${this.API_URL}/User/UserInfo/${id}`);
+  }
+
   logout() {
-    localStorage.removeItem('accessToken');
+    localStorage.clear();
+
   }
 
   isLoggedIn(): boolean {
@@ -55,5 +62,9 @@ export class IdentityService {
 
   getUserEmail(): string | null {
     return localStorage.getItem('userEmail');
+  }
+
+  getUserId(): string | null {
+    return localStorage.getItem('userId');
   }
 }

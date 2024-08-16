@@ -8,6 +8,7 @@ import { ReservationsComponent } from './components/reservations/reservations.co
 import { CartComponent } from './components/cart/cart.component';
 import { UserdataComponent } from './components/userdata/userdata.component';
 import { ApartmentDetailComponent } from './components/apartment-detail/apartment-detail.component';
+import { ReservationDetailComponent } from './components/reservation-detail/reservation-detail.component';
 
 export const routes: Routes = [
   {
@@ -29,6 +30,7 @@ export const routes: Routes = [
     children: [
       { path: 'user', component: UserdataComponent },
       { path: 'reservations', component: ReservationsComponent },
+      { path: 'reservations/:id/details', component: ReservationDetailComponent }
     ]
   },
   {

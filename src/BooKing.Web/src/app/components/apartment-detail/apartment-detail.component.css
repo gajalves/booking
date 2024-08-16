@@ -15,3 +15,18 @@
 .list-group-item {
   font-size: 0.9rem;
 }
+
+.card-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.card i {
+  margin-right: 5px;
+}
+

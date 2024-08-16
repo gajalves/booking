@@ -1,8 +1,10 @@
 <div class="container-fluid" style="height: 100%;">
   <div class="row" style="height: 100%;">
-    <div class="col-2 d-none d-md-flex flex-column flex-shrink-0 p-3 bg-light" style="height: 100%;">
+    <div class="col-2 d-none d-md-flex flex-column flex-shrink-0 p-3 bg-light" style="">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <h2>BooKing</h2>
+        <h4>
+          <img class="img-fluid" loading="lazy" src="/booking-logo.png" alt="logo" style="margin-bottom: -20%;">
+        </h4>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -22,6 +24,12 @@
           <a routerLink="reservations" routerLinkActive="active" class="nav-link py-3 border-bottom">
             <i class="bi bi-calendar-week"></i>
             Reservations
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="apartments" routerLinkActive="active" class="nav-link py-3 border-bottom">
+            <i class="bi bi-buildings"></i>
+            Your Apartments
           </a>
         </li>
         <!-- <li class="nav-item">
@@ -44,7 +52,7 @@
     </div>
 
     <div class="col-2 d-md-none d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem;">
-      <a href="/" class="d-block p-3 link-dark text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a href="/" class="d-block p-3 link-dark text-decoration-none center" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
         <h1>B</h1>
       </a>
       <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
@@ -63,6 +71,11 @@
             <i class="bi bi-calendar-week"></i>
           </a>
         </li>
+        <li class="nav-item">
+          <a routerLink="apartments" routerLinkActive="active" class="nav-link py-3 border-bottom">
+            <i class="bi bi-buildings"></i>
+          </a>
+        </li>
         <!-- <li>
           <a routerLink="cart" routerLinkActive="active" class="nav-link py-3 border-bottom">
             <i class="bi bi-cart"></i>
@@ -71,15 +84,15 @@
       </ul>
       <div class="dropdown border-top">
         <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+          <img src="https://github.com/gajalves.png" alt="mdo" width="24" height="24" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
+          <li><a class="dropdown-item" (click)="logOutUser()">Sign out</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="col-9">
+    <div class="col-sm-10 col-9 justify-content-center">
       <router-outlet></router-outlet>
     </div>
   </div>

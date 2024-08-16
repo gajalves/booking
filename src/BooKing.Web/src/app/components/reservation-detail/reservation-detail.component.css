@@ -1,0 +1,31 @@
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.timeline-icon {
+  font-size: 25px;
+  color: var(--color-main);
+}
+
+.timeline-content {
+  padding-left: 10px;
+}
+
+.time {
+  font-size: 12px;
+  color: gray;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.timeline-content p {
+  margin: 5px 0;
+}
+

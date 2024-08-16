@@ -1,1 +1,37 @@
-<p>userdata works!</p>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">User Profile</h5>
+          <p class="card-text"><strong>Name:</strong> {{ userProfile.userName }}</p>
+          <p class="card-text"><strong>Email:</strong> {{ userProfile.email }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Statistics</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Total Reservations:</strong> {{ userProfile.totalReservations }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Apartments Created:</strong> {{ userProfile.apartmentsCreated }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Recent Activity</h5>
+          <!-- Here you can add recent reservations, apartment creation logs, etc. -->
+          <p>No recent activity available.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

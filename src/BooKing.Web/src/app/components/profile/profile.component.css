@@ -1,0 +1,14 @@
+ul > li {
+  margin: 5px;
+  /* background-color: var(--color-main) !important; */
+  color: var(--color-main) !important;
+}
+
+ul > li > a{
+  color: var(--color-main);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  background-color: var(--color-main) !important;
+  color: white;
+}

@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApartmentsService } from '../../services/apartments.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReserveService } from '../../services/reserve.service';
+import { ToastrService } from 'ngx-toastr';
+import { ErrorReturnDto } from '../../dtos/errorreturn.dto';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -16,12 +19,16 @@ export class ApartmentDetailComponent {
   checkInDate!: string;
   checkOutDate!: string;
   numberOfNights: number = 1;
-  totalPrice!: number;
+  totalPrice: number = 0;
+
+  loading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apartmentService: ApartmentsService
+    private apartmentService: ApartmentsService,
+    private reserveService: ReserveService,
+    private toastService: ToastrService
   ) {
     const apartmentId = this.route.snapshot.paramMap.get('id');
     if(!apartmentId)
@@ -29,12 +36,12 @@ export class ApartmentDetailComponent {
 
     this.apartmentService.getApartmentDetail(apartmentId!).subscribe(data => {
       this.apartment = data.body.value;
-      console.log(data);
     });
+
+    this.calculateTotal();
    }
 
    makeReservation(): void {
-    // Lógica para fazer a reserva, pode ser uma navegação para uma página de reserva ou uma chamada para um serviço de reserva
     alert('Reservation functionality is not implemented yet.');
   }
 
@@ -44,13 +51,39 @@ export class ApartmentDetailComponent {
       const checkOut = new Date(this.checkOutDate);
       this.numberOfNights = (checkOut.getTime() - checkIn.getTime()) / (1000 * 3600 * 24);
 
-      this.totalPrice = (this.apartment.price * this.numberOfNights) + this.apartment.cleaningFee + 87;
-    } else {
-      this.totalPrice = this.apartment.price + this.apartment.cleaningFee + 87;
-    }
+      this.totalPrice = (this.apartment.price * this.numberOfNights) + this.apartment.cleaningFee;
+     }
   }
 
-  goBack(): void {
+  reserve() {
+    this.loading = true;
+
+    const checkIn =  new Date(this.checkInDate).toJSON();
+    const checkOut =  new Date(this.checkOutDate).toJSON();
+
+    this.reserveService.reserve(this.apartment.id, checkIn, checkOut).subscribe({
+      next: () => {
+        this.toastService.success("Reservation created successfully!")
+        setTimeout(() =>
+        {
+            this.router.navigate(['/profile/reservations']);
+            this.loading = false;
+        },
+        3000);
+      },
+      error: (e) => {
+        const ret = e.error as ErrorReturnDto;
+        this.toastService.error(ret.name);
+        this.loading = false;
+      }
+    })
+  }
+
+  goHome(): void {
     this.router.navigate(['/']);
+  }
+
+  goProfile(): void {
+    this.router.navigate(['/profile/user']);
   }
 }

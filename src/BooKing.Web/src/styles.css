@@ -7,7 +7,7 @@ body {
 }
 
 :root {
-  --color-main: #2a6bac;
+  --color-main: #3d55d1;
 }
 
 input {
@@ -19,6 +19,16 @@ input {
   outline-color:  var(--color-main);
 }
 
-.color-main-color{
-  color: var(--color-main);
+.btn-ico-color-main-color {
+  color: var(--color-main) !important;
+  border-color: var(--color-main) !important;
+}
+
+.btn-regular-color-main-color {
+  border-color: var(--color-main) !important;
+  background-color: var(--color-main) !important;
+}
+
+button {
+  background-color: var(--color-main);
 }

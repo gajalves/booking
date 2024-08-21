@@ -3,11 +3,11 @@ import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { NewReservationDto } from "../dtos/newreservation.dto";
 import { Observable } from "rxjs";
-import { ErrorReturnDto } from "../dtos/errorreturn.dto";
+import { ErrorReturnDto } from "../dtos/errorReturn.dto";
 import { BaseResultDto } from "../dtos/base.result.dto";
 import { Result } from "../dtos/result.dto";
 import { ReservationDto } from "../dtos/reservation.dto";
-import { ReservationEventsDto } from "../dtos/reservationevents.dto";
+import { ReservationEventsDto } from "../dtos/reservationEvents.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +40,9 @@ export class ReserveService {
     return this.http.get<Result<ReservationEventsDto[]>>(`${this.API_URL}/Reservation/ReservationEvents/${reservationId}`);
   }
 
-  confirm(reservationId: string): Observable<BaseResultDto | ErrorReturnDto> {
+  confirm(reservationId: string): Observable<Result<object>> {
     const payload = '"' + reservationId + '"'
-    return this.http.post<BaseResultDto>(`${this.API_URL}/Reservation/Confirm`, payload);
+    return this.http.post<Result<object>>(`${this.API_URL}/Reservation/Confirm`, payload);
   }
 
   cancel(reservationId: string): Observable<BaseResultDto | ErrorReturnDto> {

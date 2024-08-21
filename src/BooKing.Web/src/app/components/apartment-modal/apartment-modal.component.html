@@ -1,0 +1,30 @@
+<div class="modal fade" id="apartmentModal" tabindex="-1" aria-labelledby="apartmentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="apartmentModalLabel">{{ apartment?.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <img [src]="apartment?.imagePath" class="img-fluid rounded mb-3" style="object-fit: cover; width: 100%; height: 250px;">
+          </div>
+          <div class="col-md-6">
+            <p><strong>Description:</strong> {{ apartment?.description }}</p>
+            <p><strong>Price:</strong> ${{ apartment?.price }} per night</p>
+            <p><strong>Cleaning Fee:</strong> ${{ apartment?.cleaningFee }}</p>
+            <p><strong>Amenities:</strong> {{ apartment?.amenitiesDescription }}</p>
+            <p><strong>Address:</strong> {{ apartment?.address!.street }}, {{ apartment?.address!.number }}, {{ apartment?.address!.zipCode }}</p>
+            <p><strong>City:</strong> {{ apartment?.address!.city }}</p>
+            <p><strong>State:</strong> {{ apartment?.address!.state }}</p>
+            <p><strong>Country:</strong> {{ apartment?.address!.country }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

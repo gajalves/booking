@@ -5,15 +5,19 @@ import { ApartmentDto } from '../dtos/apartment.dto';
 import { BaseService } from './base.service';
 import { environment } from '../../environments/environment';
 import { BaseResultDto } from '../dtos/base.result.dto';
+import { Result } from '../dtos/result.dto';
+import { UpdateApartmentDto } from '../dtos/updateApartment.dto';
+import { NewApartmentDto } from '../dtos/newApartment.dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApartmentsService extends BaseService<ApartmentDto> {
+export class ApartmentsService {
   protected API_URL: string;
+  protected http: HttpClient;
 
   constructor(http: HttpClient) {
-    super(http);
+    this.http = http;
 
     this.API_URL = environment.apartment_url;
   }
@@ -36,5 +40,17 @@ export class ApartmentsService extends BaseService<ApartmentDto> {
           body: response.body as BaseResultDto
         }))
       );
+  }
+
+  getUserApartments(userId: string): Observable<Result<ApartmentDto[]>> {
+    return this.http.get<Result<ApartmentDto[]>>(`${this.API_URL}/Apartment/UserApartments/${userId}`)
+  }
+
+  createApartment(apartment: NewApartmentDto): Observable<Result<ApartmentDto[]>> {
+    return this.http.post<Result<ApartmentDto[]>>(`${this.API_URL}/Apartment/Create`, apartment);
+  }
+
+  updateApartment(apartmentId: string, apartment: UpdateApartmentDto): Observable<Result<ApartmentDto[]>> {
+    return this.http.put<Result<ApartmentDto[]>>(`${this.API_URL}/Apartment/${apartmentId}`, apartment);
   }
 }

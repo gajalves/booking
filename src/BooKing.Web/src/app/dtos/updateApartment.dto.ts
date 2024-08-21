@@ -1,14 +1,11 @@
-import { AmenityDto } from "./amenity.dto";
-
-export class ApartmentDto {
+export class UpdateApartmentDto {
   id: string;
   name: string;
   description: string;
   address: AddressDto;
   price: number;
   cleaningFee: number;
-  amenities: AmenityDto[];
-  amenitiesDescription: string;
+  amenities: string[];
   imagePath: string;
   ownerId: string;
 
@@ -19,12 +16,11 @@ export class ApartmentDto {
     address: AddressDto,
     price: number,
     cleaningFee: number,
-    amenities: AmenityDto[],
-    amenitiesDescription: string,
+    amenities: string[],
     imagePath: string,
     ownerId: string
   ) {
-    this.id = id;
+    this.id = id
     this.name = name;
     this.description = description;
     this.address = address;
@@ -33,7 +29,6 @@ export class ApartmentDto {
     this.amenities = amenities;
     this.imagePath = imagePath;
     this.ownerId = ownerId;
-    this.amenitiesDescription = amenitiesDescription;
   }
 }
 

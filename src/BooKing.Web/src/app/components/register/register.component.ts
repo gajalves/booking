@@ -2,9 +2,9 @@ import { Component, OnInit, signal } from '@angular/core';
 import { IdentityService } from '../../services/identity.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserRegisterDto } from '../../dtos/userregister.dto';
+import { UserRegisterDto } from '../../dtos/userRegister.dto';
 import { ToastrService } from 'ngx-toastr';
-import { ErrorReturnDto } from '../../dtos/errorreturn.dto';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 
 @Component({
   selector: 'app-register',

@@ -1,12 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { ReturnCreatedUserDto } from "../dtos/createduser.dto";
+import { ReturnCreatedUserDto } from "../dtos/createdUser.dto";
 import { Observable, tap } from "rxjs";
-import { UserRegisterDto } from "../dtos/userregister.dto";
-import { ReturnLoginUserDto } from "../dtos/returnloginuser.dto";
-import { UserLoginDto } from "../dtos/userlogin.dto";
-import { ErrorReturnDto } from "../dtos/errorreturn.dto";
+import { UserRegisterDto } from "../dtos/userRegister.dto";
+import { ReturnLoginUserDto } from "../dtos/returnLoginUser.dto";
+import { UserLoginDto } from "../dtos/userLogin.dto";
+import { ErrorReturnDto } from "../dtos/errorReturn.dto";
 import { UserInfoDto } from "../dtos/userInfo.dto";
 
 @Injectable({

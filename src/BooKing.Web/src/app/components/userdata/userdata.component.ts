@@ -3,7 +3,7 @@ import { UserInfoDto } from '../../dtos/userInfo.dto';
 import { IdentityService } from '../../services/identity.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ErrorReturnDto } from '../../dtos/errorreturn.dto';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 
 @Component({
   selector: 'app-userdata',
@@ -13,7 +13,7 @@ import { ErrorReturnDto } from '../../dtos/errorreturn.dto';
   styleUrl: './userdata.component.css'
 })
 export class UserdataComponent {
-  userProfile!: UserInfoDto;
+  userProfile: UserInfoDto | null = null;
 
   constructor(
     private identityService: IdentityService,

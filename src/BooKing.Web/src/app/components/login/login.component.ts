@@ -3,18 +3,20 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { IdentityService } from '../../services/identity.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserLoginDto } from '../../dtos/userlogin.dto';
-import { ErrorReturnDto } from '../../dtos/errorreturn.dto';
+import { UserLoginDto } from '../../dtos/userLogin.dto';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private identityService: IdentityService,
@@ -33,6 +35,7 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    this.loading = true;
     if (this.loginForm.invalid)
       return;
 
@@ -42,12 +45,14 @@ export class LoginComponent {
         this.loginForm.reset();
         this.toastService.success("Login Successful!");
         setTimeout(() => {
+          this.loading = false;
           this.router.navigate(['/']);
         }, 300);
       },
       error: (e) => {
         const ret = e.error as ErrorReturnDto;
         this.toastService.error(ret.name);
+        this.loading = false;
       }
     });
   }

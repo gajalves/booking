@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationDto } from '../../dtos/reservation.dto';
 import { ReserveService } from '../../services/reserve.service';
-import { ErrorReturnDto } from '../../dtos/errorreturn.dto';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 import { ToastrService } from 'ngx-toastr';
-import { ReservationEventsDto } from '../../dtos/reservationevents.dto';
+import { ReservationEventsDto } from '../../dtos/reservationEvents.dto';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -119,28 +119,4 @@ export class ReservationDetailComponent {
       })
   }
 
-  getCurrentEventIndex(): number {
-    return this.reservation.events.length - 1;
-  }
-
-  mapEventTypeToDescription(eventType: string): string {
-    switch (eventType) {
-      case 'ReservationCreatedEvent':
-        return 'Reservation Created';
-      case 'ReservationConfirmedByUserEvent':
-        return 'Reservation Confirmed';
-      case 'ReservationPaymentInitiatedEvent':
-        return 'Payment Initiated';
-      case 'ReservationPaymentProcessedEvent':
-        return 'Payment Processed';
-      case 'ReservationReservedEvent':
-        return 'Reserved';
-      case 'ReservationCancelledByUserEvent':
-        return 'Reservation Cancelled';
-      case 'ReservationCompletedEvent':
-        return 'Reservation Completed';
-      default:
-        return 'Unknown Event';
-    }
-  }
 }

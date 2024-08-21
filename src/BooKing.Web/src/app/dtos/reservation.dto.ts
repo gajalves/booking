@@ -1,5 +1,5 @@
 import { ApartmentDto } from "./apartment.dto";
-import { ReservationEventsDto } from "./reservationevents.dto";
+import { ReservationEventsDto } from "./reservationEvents.dto";
 
 export class ReservationDto {
   id: string;

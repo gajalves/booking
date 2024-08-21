@@ -1,6 +1,6 @@
 <div class="container-fluid" style="height: 100%;">
   <div class="row" style="height: 100%;">
-    <div class="col-2 d-none d-md-flex flex-column flex-shrink-0 p-3 bg-light" style="">
+    <div class="col-2 d-none d-md-flex flex-column flex-shrink-0 p-3 bg-light">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
         <h4>
           <img class="img-fluid" loading="lazy" src="/booking-logo.png" alt="logo" style="margin-bottom: -20%;">
@@ -10,7 +10,7 @@
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a routerLink="/"  class="nav-link py-3 border-bottom">
-            <i class="bi bi-house"></i>
+            <i class="bi bi-house-fill"></i>
             Book
           </a>
         </li>
@@ -32,12 +32,6 @@
             Your Apartments
           </a>
         </li>
-        <!-- <li class="nav-item">
-          <a routerLink="cart" routerLinkActive="active" class="nav-link py-3 border-bottom">
-            <i class="bi bi-cart"></i>
-            Cart
-          </a>
-        </li> -->
       </ul>
       <hr>
       <div class="dropdown">
@@ -58,7 +52,7 @@
       <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
         <li class="nav-item">
           <a routerLink="/"  class="nav-link py-3 border-bottom">
-            <i class="bi bi-house"></i>
+            <i class="bi bi-house-fill"></i>
           </a>
         </li>
         <li>
@@ -76,15 +70,10 @@
             <i class="bi bi-buildings"></i>
           </a>
         </li>
-        <!-- <li>
-          <a routerLink="cart" routerLinkActive="active" class="nav-link py-3 border-bottom">
-            <i class="bi bi-cart"></i>
-          </a>
-        </li> -->
       </ul>
       <div class="dropdown border-top">
         <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/gajalves.png" alt="mdo" width="24" height="24" class="rounded-circle">
+          <img src="https://github.com/gajalves.png" width="24" height="24" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
           <li><a class="dropdown-item" (click)="logOutUser()">Sign out</a></li>

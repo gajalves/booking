@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReserveService } from '../../services/reserve.service';
 import { ToastrService } from 'ngx-toastr';
-import { ErrorReturnDto } from '../../dtos/errorreturn.dto';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
+import { ApartmentDto } from '../../dtos/apartment.dto';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -15,7 +16,7 @@ import { ErrorReturnDto } from '../../dtos/errorreturn.dto';
   styleUrl: './apartment-detail.component.css'
 })
 export class ApartmentDetailComponent {
-  apartment: any;
+  apartment!: ApartmentDto;
   checkInDate!: string;
   checkOutDate!: string;
   numberOfNights: number = 1;
@@ -35,15 +36,11 @@ export class ApartmentDetailComponent {
       this.router.navigate(['/']);
 
     this.apartmentService.getApartmentDetail(apartmentId!).subscribe(data => {
-      this.apartment = data.body.value;
+      this.apartment = data.body.value as ApartmentDto;
     });
 
     this.calculateTotal();
    }
-
-   makeReservation(): void {
-    alert('Reservation functionality is not implemented yet.');
-  }
 
   calculateTotal(): void {
     if (this.checkInDate && this.checkOutDate) {

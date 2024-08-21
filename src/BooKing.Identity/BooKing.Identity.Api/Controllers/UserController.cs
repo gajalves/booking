@@ -1,5 +1,6 @@
 ﻿using BooKing.Identity.Application.Dtos;
 using BooKing.Identity.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooKing.Identity.Api.Controllers;
@@ -49,6 +50,7 @@ public class UserController : ControllerBase
         return Ok(result.Value);
     }
 
+    [Authorize]
     [HttpGet("UserInfo/{userId}")]
     public async Task<IActionResult> UserInformation(Guid userId)
     {

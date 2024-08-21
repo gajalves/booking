@@ -23,9 +23,14 @@ public class ApartmentController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        await _apartmentService.CreateApartmentAsync(dto);
+        var result = await _apartmentService.CreateApartmentAsync(dto);
 
-        return Ok();
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+
+        return BadRequest(result.Error);
     }
 
     [AllowAnonymous]
@@ -96,5 +101,18 @@ public class ApartmentController : ControllerBase
         }
 
         return BadRequest(result.Error);
+    }
+
+    [HttpGet("UserApartments/{userId}")]
+    public async Task<IActionResult> UserApartments(Guid userId)
+    {
+        var result = await _apartmentService.GetApartmentsByUserId(userId);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return NotFound(result.Error);
     }
 }

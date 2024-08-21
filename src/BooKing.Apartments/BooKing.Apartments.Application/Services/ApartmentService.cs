@@ -8,7 +8,6 @@ using BooKing.Apartments.Domain.ValueObjects;
 using BooKing.Generics.Domain;
 using BooKing.Generics.Shared;
 using BooKing.Generics.Shared.CurrentUserService;
-using Microsoft.AspNetCore.Http;
 
 namespace BooKing.Apartments.Application.Services;
 public class ApartmentService : IApartmentService
@@ -29,11 +28,15 @@ public class ApartmentService : IApartmentService
         _currentUserService = currentUserService;
     }
 
-    public async Task CreateApartmentAsync(NewApartmentDto dto)
+    public async Task<Result<ApartmentDto>> CreateApartmentAsync(NewApartmentDto dto)
     {
         var newApartment = await InstantiateNewApartment(dto);
         
         await _apartmentRepository.AddAsync(newApartment);
+
+        var mappedApartment = _mapper.Map<ApartmentDto>(newApartment);
+
+        return Result.Success(mappedApartment);
     }
 
     private async Task<Apartment> InstantiateNewApartment(NewApartmentDto dto)
@@ -79,7 +82,7 @@ public class ApartmentService : IApartmentService
 
         var user = GetUser();
 
-        if (apartment.OwnerId != user.Id.ToString())
+        if (apartment.OwnerId.ToLower() != user.Id.ToString().ToLower())
             return Result.Failure(ApplicationErrors.ApartmentError.NotAllowedToManageApartment);
 
         _apartmentRepository.Delete(apartment);
@@ -124,7 +127,7 @@ public class ApartmentService : IApartmentService
 
         var user = GetUser();
 
-        if (apartment.OwnerId != user.Id.ToString())
+        if (apartment.OwnerId.ToLower() != user.Id.ToString().ToLower())
             return Result.Failure<ApartmentDto>(ApplicationErrors.ApartmentError.NotAllowedToManageApartment);
 
         var address = new Address(
@@ -169,6 +172,15 @@ public class ApartmentService : IApartmentService
     public async Task<Result<List<ApartmentDto>>> GetApartmentsByGuids(List<Guid> apartmentGuids)
     {
         var apartments = await _apartmentRepository.GetApartmentsByGuids(apartmentGuids);
+
+        var apartmentDtos = apartments.Select(a => _mapper.Map<ApartmentDto>(a)).ToList();
+
+        return Result.Success<List<ApartmentDto>>(apartmentDtos);
+    }
+
+    public async Task<Result<List<ApartmentDto>>> GetApartmentsByUserId(Guid userId)
+    {
+        var apartments = await _apartmentRepository.GetApartmentsByUserId(userId);
 
         var apartmentDtos = apartments.Select(a => _mapper.Map<ApartmentDto>(a)).ToList();
 

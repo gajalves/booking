@@ -48,4 +48,13 @@ public class ApartmentRepository : BaseRepository<Apartment, BooKingApartmentsCo
                              .Where(a => apartmentIds.Contains(a.Id))
                              .ToListAsync();
     }
+
+    public async Task<List<Apartment>> GetApartmentsByUserId(Guid userId)
+    {
+        return await _context.Set<Apartment>()
+                             .AsNoTracking()
+                             .Include(x => x.Amenities)
+                             .Where(a => a.OwnerId == userId.ToString())
+                             .ToListAsync();
+    }
 }

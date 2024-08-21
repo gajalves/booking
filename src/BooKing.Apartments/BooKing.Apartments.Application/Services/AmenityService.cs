@@ -39,6 +39,6 @@ public class AmenityService : IAmenityService
     {
         var amenitites = await _amenityRepository.GetAllAsync();
 
-        return Result.Success(amenitites);
+        return Result.Success<List<Amenity>>(amenitites);
     }
 }

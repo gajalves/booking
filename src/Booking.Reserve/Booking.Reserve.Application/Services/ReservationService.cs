@@ -54,7 +54,7 @@ public class ReservationService : IReservationService
 
         var user = _currentUserService.GetCurrentUser();
 
-        if (user.Id.ToString() == apartment.OwnerId)
+        if (user.Id.ToString().ToLower() == apartment.OwnerId.ToLower())
             return Result.Failure(ApplicationErrors.ReserveError.NotAllowedToReserveYourOwnApartment);
 
         var duration = DateRange.Create(dto.StartDate, dto.EndDate);

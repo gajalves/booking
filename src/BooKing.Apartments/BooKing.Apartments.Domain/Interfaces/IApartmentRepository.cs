@@ -7,4 +7,5 @@ public interface IApartmentRepository : IBaseRepository<Apartment>
     Task<List<Apartment>> ListPagedAsync(int pageIndex, int pageSize);
     Task<int> CountAsync();
     Task<List<Apartment>> GetApartmentsByGuids(List<Guid> apartmentIds);
+    Task<List<Apartment>> GetApartmentsByUserId(Guid userId);
 }

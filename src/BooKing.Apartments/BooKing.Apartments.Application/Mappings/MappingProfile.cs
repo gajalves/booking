@@ -9,8 +9,9 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<Apartment, ApartmentDto>()
-            .ForMember(dest => dest.Amenities, opt => opt.MapFrom(src => src.Amenities.Select(a => a.Name).ToList()));
+            .ForMember(dest => dest.Amenities, opt => opt.MapFrom(src => src.Amenities));
 
+        CreateMap<Amenity, AmenityDto>();
         CreateMap<Address, AddressDto>();
     }
 }

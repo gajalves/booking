@@ -13,6 +13,8 @@ public class Apartment : Entity
     public List<Amenity> Amenities { get; private set; }
     public string OwnerId { get; private set; }
     public string ImagePath { get; private set; }
+    public bool IsActive { get; private set; }
+    public bool IsDeleted { get; private set; }
 
     public Apartment()
     {        
@@ -33,27 +35,10 @@ public class Apartment : Entity
         CleaningFee = cleaningFee;
         OwnerId = ownerId;
         ImagePath = imagepath;
+        IsActive = true;
+        IsDeleted = false;
     }
-
-    public Apartment(Guid id,
-                     string name,
-                     string description,
-                     Address address,
-                     decimal price,
-                     decimal cleaningFee,
-                     string ownerId,
-                     string imagepath)
-    {
-        Id = id;
-        Name = name;
-        Description = description;
-        Address = address;
-        Price = price;
-        CleaningFee = cleaningFee;
-        OwnerId = ownerId;
-        ImagePath = imagepath;
-    }
-
+    
     public void AddAmenitie(Amenity amenitie)
     {
         if(Amenities is null)
@@ -62,13 +47,14 @@ public class Apartment : Entity
         Amenities.Add(amenitie);
     }
 
-    public void Update(string name, string description, Address address, decimal price, decimal cleaningFee)
+    public void Update(string name, string description, Address address, decimal price, decimal cleaningFee, string imagePath)
     {
         Name = name;
         Description = description;
         Address = address;
         Price = price;
         CleaningFee = cleaningFee;
+        ImagePath = imagePath;
     }
 
     public void SetAmenities(List<Amenity> amenities)
@@ -82,5 +68,15 @@ public class Apartment : Entity
     public void SetImagePath(string imagePath)
     {
         ImagePath = imagePath;
+    }
+
+    public void SetIsActive(bool isActive)
+    {
+        IsActive = isActive;
+    }
+
+    public void SetIsDeleted(bool isDeleted)
+    {
+        IsDeleted = isDeleted;
     }
 }

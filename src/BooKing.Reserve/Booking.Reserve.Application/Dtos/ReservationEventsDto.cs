@@ -6,4 +6,5 @@ public class ReservationEventsDto
     public string EventTypeDescription { get; set; }
     public string Icon { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string AdditionalInformation { get; set; }
 }

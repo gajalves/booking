@@ -27,7 +27,7 @@ public class ApartmentController : ControllerBase
 
         if (result.IsSuccess)
         {
-            return Ok(result.Value);
+            return Ok(result);
         }
 
         return BadRequest(result.Error);
@@ -107,6 +107,35 @@ public class ApartmentController : ControllerBase
     public async Task<IActionResult> UserApartments(Guid userId)
     {
         var result = await _apartmentService.GetApartmentsByUserId(userId);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return NotFound(result.Error);
+    }
+
+    [HttpPatch("{apartmentId}/IsActive")]
+    public async Task<IActionResult> IsActive(Guid apartmentId, [FromBody] PatchApartmentIsActiveDto dto)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _apartmentService.PatchApartmentIsActive(apartmentId, dto.IsActive);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result.Error);
+    }
+
+    [HttpGet("CountUserApartmentsCreated")]
+    public async Task<IActionResult> CountUserApartmentsCreated()
+    {
+        var result = await _apartmentService.CountUserApartmentsCreated();
 
         if (result.IsSuccess)
         {

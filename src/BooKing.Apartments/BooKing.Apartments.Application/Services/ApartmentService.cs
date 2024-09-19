@@ -28,7 +28,7 @@ public class ApartmentService : IApartmentService
         _currentUserService = currentUserService;
     }
 
-    public async Task<Result<ApartmentDto>> CreateApartmentAsync(NewApartmentDto dto)
+    public async Task<Result> CreateApartmentAsync(NewApartmentDto dto)
     {
         var newApartment = await InstantiateNewApartment(dto);
         
@@ -121,9 +121,7 @@ public class ApartmentService : IApartmentService
     {
         var apartment = await _apartmentRepository.GetByIdAsync(id);
         if (apartment == null)
-        {
-            return Result.Failure<ApartmentDto>(ApplicationErrors.ApartmentError.ProvidedApartmentNotFound);
-        }
+            return Result.Failure<ApartmentDto>(ApplicationErrors.ApartmentError.ProvidedApartmentNotFound);       
 
         var user = GetUser();
 
@@ -143,7 +141,8 @@ public class ApartmentService : IApartmentService
             apartmentDto.Description,
             address,
             apartmentDto.Price,
-            apartmentDto.CleaningFee);
+            apartmentDto.CleaningFee,
+            apartmentDto.Imagepath);
 
         var amenities = new List<Amenity>();
         foreach (var amenitieId in apartmentDto.Amenities)
@@ -186,4 +185,31 @@ public class ApartmentService : IApartmentService
 
         return Result.Success<List<ApartmentDto>>(apartmentDtos);
     }
+
+    public async Task<Result<ApartmentDto>> PatchApartmentIsActive(Guid apartmentId, bool isActive)
+    {
+        var apartment = await _apartmentRepository.GetByIdAsync(apartmentId);
+        if (apartment == null)
+            return Result.Failure<ApartmentDto>(ApplicationErrors.ApartmentError.ProvidedApartmentNotFound);
+        
+        var user = GetUser();
+        if (apartment.OwnerId.ToLower() != user.Id.ToString().ToLower())
+            return Result.Failure<ApartmentDto>(ApplicationErrors.ApartmentError.NotAllowedToManageApartment);
+
+        apartment.SetIsActive(isActive);
+
+        _apartmentRepository.Update(apartment);
+
+        var mappedApartment = _mapper.Map<ApartmentDto>(apartment);
+
+        return Result.Success<ApartmentDto>(mappedApartment);
+    }
+
+    public async Task<Result> CountUserApartmentsCreated()
+    {
+        var user = GetUser();
+
+        var count = await _apartmentRepository.CountByUserIdAsync(user.Id);
+
+        return Result.Success<int>(count);}
 }

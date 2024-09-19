@@ -39,6 +39,15 @@ public class ApartmentMapping : IEntityTypeConfiguration<Apartment>
             .IsRequired()
             .HasMaxLength(255);
 
+        builder.Property(a => a.IsActive)
+            .IsRequired()
+            .HasDefaultValue(true);
+
+        builder.Property(a => a.IsDeleted)
+            .IsRequired()
+            .HasDefaultValue(false);
+
+
         builder.ToTable(nameof(Apartment), Schemas.ApartmentsSchema);        
     }
 }

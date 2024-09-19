@@ -6,11 +6,12 @@ import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 import { ToastrService } from 'ngx-toastr';
 import { ReservationEventsDto } from '../../dtos/reservationEvents.dto';
 import { CommonModule } from '@angular/common';
+import { BtnPrimaryComponent } from '../btn-primary/btn-primary.component';
 
 @Component({
   selector: 'app-reservation-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BtnPrimaryComponent],
   templateUrl: './reservation-detail.component.html',
   styleUrl: './reservation-detail.component.css'
 })

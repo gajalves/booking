@@ -43,11 +43,13 @@
             <input type="date" class="form-control me-2" [(ngModel)]="checkInDate" (change)="calculateTotal()" placeholder="Check-in">
             <input type="date" class="form-control" [(ngModel)]="checkOutDate" (change)="calculateTotal()" placeholder="Check-out">
           </div>
-          <button class="btn btn-primary w-100 btn-regular-color-main-color" (click)="reserve()" [disabled]="loading">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span *ngIf="!loading">Reserve</span>
-            <span *ngIf="loading" class="sr-only"> Loading...</span>
-          </button>
+          <btn-primary
+            [btnText]="'Reserve'"
+            [loading]="loading()"
+            [disabled]="loading()"
+            [btnClass]="'btn btn-primary w-100 btn-regular-color-main-color'"
+            (submit)="reserve()"
+          ></btn-primary>
           <p class="text-muted mt-2 text-center">You won't be charged yet</p>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">${{ apartment.price }} x {{ numberOfNights }} night(s)</li>

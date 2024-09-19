@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 
 @Component({
   selector: 'app-apartment-list',
@@ -49,18 +50,20 @@ export class ApartmentListComponent{
 
   private getPaginatedApartments(pageIndex: number, pageSize: number) {
     this.isLoading = true;
-    this.apartmentsService.getPaginatedApartments(pageIndex, pageSize).subscribe(response => {
-      if (response.status !== 200) {
-        this.toastService.error("Erro inesperado! Tente novamente mais tarde");
-        this.isLoading = false;
-        return;
-      }
-
-      const newApartments = response.body.items as ApartmentDto[];
-      this.apartments = [...this.apartments, ...newApartments];
-      this.isLoading = false;
-      this.hasMoreApartments = response.body.hasNextPage;
-    });
+    this.apartmentsService.getPaginatedApartments(pageIndex, pageSize).subscribe({
+        next: (resp) => {
+          const newApartments = resp.body.items as ApartmentDto[];
+          this.apartments = [...this.apartments, ...newApartments];
+          this.isLoading = false;
+          this.hasMoreApartments = resp.body.hasNextPage;
+        },
+        error: (err) => {
+          const ret = err.error as ErrorReturnDto;
+          this.toastService.error(ret.name);
+          this.toastService.error("Erro inesperado! Tente novamente mais tarde");
+          this.isLoading = false;
+        }
+      });
   }
 
   apartmentCardClick(apartmentId: string){

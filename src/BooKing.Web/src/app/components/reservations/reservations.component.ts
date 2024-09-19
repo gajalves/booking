@@ -5,6 +5,7 @@ import { IdentityService } from '../../services/identity.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 
 @Component({
   selector: 'app-reservations',
@@ -28,15 +29,17 @@ export class ReservationsComponent {
 
   getUserReservation() {
     const userId = this.identityService.getUserId();
-    this.reservationService.getUserReservations(userId!).subscribe(result => {
-      if (result.isSuccess) {
-        this.reservations = result.value!;
-
-        //this.reservations= this.reservations.flatMap(i => Array(10).fill(i))
-      } else {
-        this.toastService.error(result.error.name);
+    this.reservationService.getUserReservations(userId!).subscribe(
+      {
+        next: (response) => {
+          this.reservations = response.value as ReservationDto[];
+        },
+        error: (e) => {
+          const ret = e.error as ErrorReturnDto;
+          this.toastService.error(ret.name);
+        }
       }
-    });
+    );
   }
 
   viewApartmentClick(apartmentId: string) {

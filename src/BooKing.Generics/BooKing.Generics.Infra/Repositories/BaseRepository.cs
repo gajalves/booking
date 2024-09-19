@@ -29,7 +29,7 @@ public class BaseRepository<TEntity, TContext> : IBaseRepository<TEntity>
         await _unitOfWork.CommitAsync();
     }
 
-    public void Delete(TEntity obj)
+    public virtual void Delete(TEntity obj)
     {
         _dbSet.Remove(obj);
         _unitOfWork.Commit();

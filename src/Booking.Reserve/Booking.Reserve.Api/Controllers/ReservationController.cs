@@ -18,7 +18,7 @@ public class ReservationController : ControllerBase
     }
 
     [HttpPost("Reserve")]
-    public async Task<IActionResult> Resert([FromBody] NewReservationDto dto)
+    public async Task<IActionResult> Reserve([FromBody] NewReservationDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -104,6 +104,19 @@ public class ReservationController : ControllerBase
             return BadRequest(ModelState);
 
         var result = await _reservationService.GetReservationEvents(reservationId);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result.Error);
+    }
+
+    [HttpGet("CountUserReservations")]
+    public async Task<IActionResult> CountUserReservations()
+    {
+        var result = await _reservationService.CountUserReservations();
 
         if (result.IsSuccess)
         {

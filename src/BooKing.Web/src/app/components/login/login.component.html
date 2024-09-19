@@ -41,11 +41,13 @@
                   </div>
                   <div class="col-12">
                     <div class="d-grid">
-                      <button class="btn btn-primary w-100 btn-lg btn-regular-color-main-color" (click)="onSubmit()" [disabled]="loading">
-                        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span *ngIf="!loading">Log in now</span>
-                        <span *ngIf="loading" class="sr-only"> Loading...</span>
-                      </button>
+                      <btn-primary
+                      [btnText]="'Log in now'"
+                      [loading]="loading()"
+                      [disabled]="loading()"
+                      [btnClass]="'btn-primary w-100 btn-regular-color-main-color'"
+                      (submit)="onSubmit()"
+                    ></btn-primary>
                     </div>
                   </div>
                 </div>

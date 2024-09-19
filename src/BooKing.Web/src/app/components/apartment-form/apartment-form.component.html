@@ -1,43 +1,55 @@
 <div class="container mt-5">
   <h2>{{ isEditMode ? 'Edit Apartment' : 'Create Apartment' }}</h2>
 
-  <!-- Certifique-se de que o formulário inteiro está dentro do formGroup -->
-  <form [formGroup]="apartmentForm" (ngSubmit)="onSave()">
-
+  <form [formGroup]="apartmentForm">
     <!-- Section: Place -->
     <div class="card mb-4">
       <div class="card-header">
         <h4>Place</h4>
       </div>
       <div class="card-body">
-        <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" id="name" class="form-control" formControlName="name">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" class="form-control" formControlName="name">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" class="form-control" formControlName="description"></textarea>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
-          <textarea id="description" class="form-control" formControlName="description"></textarea>
-        </div>
+        <div formGroupName="address" class="row">
+          <div class="col-md-6 mb-3">
+            <label for="street" class="form-label">Street</label>
+            <input type="text" id="street" class="form-control" formControlName="street">
+          </div>
 
-        <div formGroupName="address" class="mb-3">
-          <label for="street" class="form-label">Street</label>
-          <input type="text" id="street" class="form-control" formControlName="street">
+          <div class="col-md-3 mb-3">
+            <label for="number" class="form-label">Number</label>
+            <input type="text" id="number" class="form-control" formControlName="number">
+          </div>
 
-          <label for="number" class="form-label mt-3">Number</label>
-          <input type="text" id="number" class="form-control" formControlName="number">
+          <div class="col-md-3 mb-3">
+            <label for="zipCode" class="form-label">Zip Code</label>
+            <input type="text" id="zipCode" class="form-control" formControlName="zipCode">
+          </div>
 
-          <label for="city" class="form-label mt-3">City</label>
-          <input type="text" id="city" class="form-control" formControlName="city">
+          <div class="col-md-6 mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" id="city" class="form-control" formControlName="city">
+          </div>
 
-          <label for="state" class="form-label mt-3">State</label>
-          <input type="text" id="state" class="form-control" formControlName="state">
+          <div class="col-md-6 mb-3">
+            <label for="state" class="form-label">State</label>
+            <input type="text" id="state" class="form-control" formControlName="state">
+          </div>
 
-          <label for="zipCode" class="form-label mt-3">Zip Code</label>
-          <input type="text" id="zipCode" class="form-control" formControlName="zipCode">
-
-          <label for="country" class="form-label mt-3">Country</label>
-          <input type="text" id="country" class="form-control" formControlName="country">
+          <div class="col-md-6 mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" id="country" class="form-control" formControlName="country">
+          </div>
         </div>
       </div>
     </div>
@@ -48,14 +60,16 @@
         <h4>Values</h4>
       </div>
       <div class="card-body">
-        <div class="mb-3">
-          <label for="price" class="form-label">Price per Night</label>
-          <input type="number" id="price" class="form-control" formControlName="price">
-        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="price" class="form-label">Price per Night</label>
+            <input type="number" id="price" class="form-control" formControlName="price">
+          </div>
 
-        <div class="mb-3">
-          <label for="cleaningFee" class="form-label">Cleaning Fee</label>
-          <input type="number" id="cleaningFee" class="form-control" formControlName="cleaningFee">
+          <div class="col-md-6 mb-3">
+            <label for="cleaningFee" class="form-label">Cleaning Fee</label>
+            <input type="number" id="cleaningFee" class="form-control" formControlName="cleaningFee">
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +80,6 @@
         <h4>Amenities</h4>
       </div>
       <div class="card-body">
-        <!-- Select for choosing amenities -->
         <div class="mb-3">
           <label for="amenities" class="form-label">Select Amenities</label>
           <select id="amenities" class="form-select" (change)="onAmenitySelect($event)">
@@ -74,7 +87,6 @@
           </select>
         </div>
 
-        <!-- Display selected amenities -->
         <div *ngIf="selectedAmenities.length > 0">
           <h5>Selected Amenities:</h5>
           <ul>
@@ -102,22 +114,22 @@
     <div class="row justify-content-end">
       <div class="col m-2">
         <div>
-          <button class="order-1 btn-sm btn btn-danger" (click)="return()" [disabled]="loading">
-            <span>Return</span>
+          <button class="order-1 btn-sm btn btn btn-secondary" (click)="return()" [disabled]="loading()">
+            <span>&#60; Back</span>
           </button>
         </div>
       </div>
       <div class="col d-block flex-nowrap justify-content-end d-sm-flex m-2">
         <div>
-          <button class="btn-sm btn btn-success" [disabled]="loading">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span *ngIf="!loading">Save</span>
-            <span *ngIf="loading" class="sr-only"> Loading...</span>
-          </button>
+          <btn-primary
+            [btnText]="'Save'"
+            [loading]="loading()"
+            [disabled]="loading()"
+            [btnClass]="'btn-sm btn btn-success'"
+            (submit)="onSave()"
+          ></btn-primary>
         </div>
       </div>
     </div>
-
-    <!-- <button type="submit" class="btn btn-primary btn-regular-color-main-color">Save</button> -->
   </form>
 </div>

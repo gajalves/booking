@@ -5,7 +5,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './services/authguard.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ReservationsComponent } from './components/reservations/reservations.component';
-import { CartComponent } from './components/cart/cart.component';
 import { UserdataComponent } from './components/userdata/userdata.component';
 import { ApartmentDetailComponent } from './components/apartment-detail/apartment-detail.component';
 import { ReservationDetailComponent } from './components/reservation-detail/reservation-detail.component';

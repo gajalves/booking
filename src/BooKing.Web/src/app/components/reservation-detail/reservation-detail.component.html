@@ -1,20 +1,25 @@
 <div class="container mt-4">
-  <div class="row">
-    <div class="col">
-      <h2 class="mb-4 text-center">Reservation Details</h2>
-    </div>
+  <!-- Reservation Details Heading -->
+  <div class="text-center mb-4">
+    <h2 class="text-dark display-6">Reservation Details</h2>
+    <hr class="w-25 mx-auto">
   </div>
+
+  <!-- Reservation Information -->
   <div class="row">
     <div class="col" *ngIf="reservation">
-      <div class="card">
-        <div class="card-header">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
           <strong>{{ reservation.createdOnUtc | date }}</strong>
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-4">
+            <!-- Apartment Image -->
+            <div class="col-md-4 text-center">
               <img src="{{ reservation.apartment.imagePath }}" class="img-thumbnail" alt="{{ reservation.apartment.name }}">
             </div>
+
+            <!-- Reservation Details -->
             <div class="col-md-8">
               <h3 class="card-title">{{ reservation.apartment.name }}</h3>
               <p class="card-text">{{ reservation.apartment.description }}</p>
@@ -23,26 +28,27 @@
               <p><strong>Period Price:</strong> ${{ reservation.priceForPeriod }}</p>
               <p><strong>Cleaning Fee:</strong> ${{ reservation.cleaningFee }}</p>
               <p><strong>Total Price:</strong> ${{ reservation.totalPrice }}</p>
-              <p><strong>Status:</strong> {{ reservation.statusDescription }}</p>
+              <p><strong>Status:</strong> <span class="badge bg-success">{{ reservation.statusDescription }}</span></p>
 
-              <div class="row justify-content-end">
-                <div class="col">
-                  <div *ngIf="reservation.statusValue === 0">
-                    <button class="btn-sm btn btn-success" (click)="confirmReservation()" [disabled]="confirmLoading || cancelLoading">
-                      <span *ngIf="confirmLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                      <span *ngIf="!confirmLoading">Confirm Reservation</span>
-                      <span *ngIf="confirmLoading" class="sr-only"> Loading...</span>
-                    </button>
-                  </div>
+              <!-- Action Buttons -->
+              <div class="d-flex justify-content-between">
+                <div *ngIf="reservation.statusValue === 0">
+                  <btn-primary
+                    [btnText]="'Confirm Reservation'"
+                    [loading]="confirmLoading"
+                    [disabled]="confirmLoading || cancelLoading"
+                    [btnClass]="'btn-sm btn btn-success'"
+                    (submit)="confirmReservation()"
+                  ></btn-primary>
                 </div>
-                <div class="col d-block flex-nowrap justify-content-end d-sm-flex">
-                  <div *ngIf="reservation.statusValue === 0">
-                    <button class="order-1 btn-sm btn btn-danger" (click)="cancelReservation()" [disabled]="confirmLoading || cancelLoading">
-                      <span *ngIf="cancelLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                      <span *ngIf="!cancelLoading">Cancel Reservation</span>
-                      <span *ngIf="cancelLoading" class="sr-only"> Loading...</span>
-                    </button>
-                  </div>
+                <div *ngIf="reservation.statusValue === 0">
+                  <btn-primary
+                    [btnText]="'Cancel Reservation'"
+                    [loading]="cancelLoading"
+                    [disabled]="confirmLoading || cancelLoading"
+                    [btnClass]="'btn-sm btn btn-danger'"
+                    (submit)="cancelReservation()"
+                  ></btn-primary>
                 </div>
               </div>
             </div>
@@ -52,23 +58,26 @@
     </div>
   </div>
 
-  <div class="row">
-    <h2 class="m-4 text-center">Reservation Timeline</h2>
+  <!-- Reservation Timeline Heading -->
+  <div class="text-center mt-5 mb-4">
+    <h2 class="text-dark display-7">Reservation Timeline</h2>
+    <hr class="w-25 mx-auto">
   </div>
 
+  <!-- Timeline Events -->
   <div class="row">
     <div class="col" *ngIf="reservation">
       <div class="container mt-4">
         <div class="row" *ngFor="let event of reservation.events">
           <div class="col text-center">
-            <div class="mb-4">
-              <div class="timeline-icon">
-                <i class="fas" [ngClass]="event.icon"></i>
+            <div class="timeline-event mb-2 p-2 border rounded shadow-sm" style="font-size: 0.85em;">
+              <div class="timeline-icon mb-1">
+                <i class="fas" [ngClass]="event.icon" style="font-size: 1.5em;"></i>
               </div>
               <div class="timeline-content">
-                <span class="time">{{ event.createdAt | date: 'shortTime' }}</span>
-                <h5 class="title">{{ event.eventTypeDescription }}</h5>
-                <p>{{ event.eventTypeDescription }}</p>
+                <span class="time text-muted">{{ event.createdAt | date: 'shortTime' }}</span>
+                <h6 class="title">{{ event.eventTypeDescription }}</h6>
+                <p>{{ event.additionalInformation }}</p>
               </div>
             </div>
           </div>

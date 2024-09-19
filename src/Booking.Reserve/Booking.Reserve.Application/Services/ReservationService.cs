@@ -14,6 +14,7 @@ using BooKing.Reserve.Domain.Entities;
 using BooKing.Reserve.Domain.Enums;
 using BooKing.Reserve.Domain.Interfaces;
 using BooKing.Reserve.Domain.ValueObjects;
+using Newtonsoft.Json;
 
 namespace BooKing.Reserve.Application.Services;
 public class ReservationService : IReservationService
@@ -224,12 +225,38 @@ public class ReservationService : IReservationService
             EventType = e.EventType,
             EventTypeDescription = MapEventTypeToDescription(e.EventType),
             Icon = MapEventTypeToIcon(e.EventType),
-            CreatedAt = e.CreatedAt
+            CreatedAt = e.CreatedAt,
+            AdditionalInformation = MapEventTypeToAdditionalInformation(e.EventType, e.Data),
         })
         .OrderBy(e => e.CreatedAt)
         .ToList();
 
         return reservationEventsDto;
+    }
+
+    private string MapEventTypeToAdditionalInformation(string eventType, string data)
+    {
+        return eventType switch
+        {
+            "ReservationCreatedEvent" => "",
+            "ReservationConfirmedByUserEvent" => "Reservation confirmed by user",
+            "ReservationCancelledByUserEvent" => "Reservation Cancelled by user",
+            "ReservationPaymentInitiatedEvent" => "",
+            "ReservationPaymentProcessedEvent" => GeneratePaymentProcessedEventInformation(data),
+            "ReservationReservedEvent" => "Reservation process finalized",
+            "ReservationCompletedEvent" => "Reservation Completed!",
+            _ => "Unknown Event"
+        };
+    }
+
+    private string GeneratePaymentProcessedEventInformation(string data)
+    {
+        if (string.IsNullOrEmpty(data))
+            return string.Empty;
+
+        var obj = JsonConvert.DeserializeObject<ReservationPaymentProcessedEvent>(data);
+
+        return $"Payment status: {(obj.IsApproved ? "Approved" : "Rejected")}";
     }
 
     private string MapEventTypeToDescription(string eventType)
@@ -260,5 +287,14 @@ public class ReservationService : IReservationService
             "ReservationCompletedEvent" => "bi bi-hand-thumbs-up-fill",
             _ => "fa-question-circle",
         };
+    }
+
+    public async Task<Result> CountUserReservations()
+    {
+        var user = _currentUserService.GetCurrentUser();
+
+        var count = await _reservationRepository.CountByUserIdAsync(user.Id);
+
+        return Result.Success(count);
     }
 }

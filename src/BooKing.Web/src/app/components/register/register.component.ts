@@ -1,21 +1,23 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { IdentityService } from '../../services/identity.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserRegisterDto } from '../../dtos/userRegister.dto';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
+import { BtnPrimaryComponent } from '../btn-primary/btn-primary.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, BtnPrimaryComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 
 export class RegisterComponent {
   registerForm!: FormGroup;
+  loading = signal(false);
 
   constructor(
     private identityService: IdentityService,
@@ -35,8 +37,11 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    if (this.registerForm.invalid)
+    this.loading.set(true);
+    if (this.registerForm.invalid) {
+      this.loading.set(false);
       return;
+    }
 
     const registerObject = this.createRegisterObject();
     this.identityService.register(registerObject.name, registerObject.email, registerObject.password).subscribe({
@@ -45,6 +50,7 @@ export class RegisterComponent {
         this.toastService.success("Your account has been created!")
         setTimeout(() =>
           {
+              this.loading.set(false);
               this.router.navigate(['/login']);
           },
           5000);
@@ -52,6 +58,7 @@ export class RegisterComponent {
       error: (e) => {
         const ret = e.error as ErrorReturnDto;
         this.toastService.error(ret.name);
+        this.loading.set(false);
       }
     });
   }

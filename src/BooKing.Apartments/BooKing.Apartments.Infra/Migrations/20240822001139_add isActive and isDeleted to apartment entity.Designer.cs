@@ -4,6 +4,7 @@ using BooKing.Apartments.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooKing.Apartments.Infra.Migrations
 {
     [DbContext(typeof(BooKingApartmentsContext))]
-    partial class BooKingApartmentsContextModelSnapshot : ModelSnapshot
+    [Migration("20240822001139_add isActive and isDeleted to apartment entity")]
+    partial class addisActiveandisDeletedtoapartmententity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -60,4 +60,10 @@ public class ReservationRepository : BaseRepository<Reservation, BooKingReserveC
                         .Where(r => r.Id == reservationId)
                         .FirstOrDefaultAsync();
     }
+
+    public async Task<int> CountByUserIdAsync(Guid userId)
+    {
+        return await _context.Set<Reservation>()
+                             .CountAsync(a => a.UserId == userId);
+    }
 }

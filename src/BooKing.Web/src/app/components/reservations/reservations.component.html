@@ -1,37 +1,41 @@
 <div class="container mt-4">
-  <h2 class="mb-4 text-center">My Reservations</h2>
+  <div class="text-center mb-4">
+    <h2 class="text-dark display-6">My Reservations</h2>
+    <p class="text-muted">Manage your upcoming stays and view past reservations.</p>
+    <hr class="w-25 mx-auto">
+  </div>
+
   <div class="row" *ngFor="let reservation of reservations">
     <div class="col align-self-center">
-      <div class="card mb-3">
-        <div class="card-header">
-          <strong>{{ reservation.createdOnUtc | date}}</strong>
+      <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-light">
+          <strong>{{ reservation.createdOnUtc | date }}</strong>
         </div>
         <div class="card-body">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-md-2">
-                    <img src="{{ reservation.apartment.imagePath }}" class="img-thumbnail mx-auto d-block" style="max-width:250px;max-height:115px;width: auto;height: auto;" alt="{{ reservation.apartment.name }}">
-                </div>
-                <div class="col-md-10">
-                    <h5 class="text-success mb-1">{{ reservation.statusDescription }}</h5>
-                    <p class="mb-2">
-                        From <strong>{{ reservation.duration.start | date }}</strong> to <strong>{{ reservation.duration.end | date}}</strong>
-                    </p>
-                    <p>{{ reservation.apartment.description }}</p>
-                    <p>
-                        {{ reservation.apartment.name }}, {{ reservation.apartment.address.street }}, {{ reservation.apartment.address.city }}, {{ reservation.apartment.address.state }}, {{ reservation.apartment.address.country }}
-                    </p>
-                    <p class="text-muted">
-                      Total price: ${{ reservation.totalPrice}}
-                    </p>
-                    <div class="d-flex justify-content-between">
-                        <a (click)="viewApartmentClick(reservation.apartmentId)" class="text-primary" style="cursor: pointer;">View Apartment</a>
-                        <div>
-                            <button class="btn btn-primary btn-sm btn-regular-color-main-color" (click)="navigateToReservationDetails(reservation.id)">Details</button>
-                        </div>
-                    </div>
-                </div>
+          <div class="row justify-content-center align-items-center">
+            <div class="col-md-2 text-center">
+              <img src="{{ reservation.apartment.imagePath }}" class="img-thumbnail" style="max-width:250px;max-height:115px;width: auto;height: auto;" alt="{{ reservation.apartment.name }}">
             </div>
+            <div class="col-md-10">
+              <h5 class="text-success mb-1">{{ reservation.statusDescription }}</h5>
+              <p class="mb-2">
+                From <strong>{{ reservation.duration.start | date }}</strong> to <strong>{{ reservation.duration.end | date }}</strong>
+              </p>
+              <p>{{ reservation.apartment.description }}</p>
+              <p>
+                {{ reservation.apartment.name }}, {{ reservation.apartment.address.street }}, {{ reservation.apartment.address.city }}, {{ reservation.apartment.address.state }}, {{ reservation.apartment.address.country }}
+              </p>
+              <p class="text-muted">
+                Total price: ${{ reservation.totalPrice }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a (click)="viewApartmentClick(reservation.apartmentId)" class="text-primary" style="cursor: pointer;">View Apartment</a>
+                <button class="btn btn-primary btn-sm btn-regular-color-main-color" (click)="navigateToReservationDetails(reservation.id)">Details</button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </div>

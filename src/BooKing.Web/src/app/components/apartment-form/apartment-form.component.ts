@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, signal, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApartmentDto } from '../../dtos/apartment.dto';
 import { ApartmentsService } from '../../services/apartments.service';
@@ -9,11 +9,13 @@ import { UpdateApartmentDto } from '../../dtos/updateApartment.dto';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NewApartmentDto } from '../../dtos/newApartment.dto';
+import { BtnPrimaryComponent } from '../btn-primary/btn-primary.component';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 
 @Component({
   selector: 'app-apartment-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BtnPrimaryComponent],
   templateUrl: './apartment-form.component.html',
   styleUrl: './apartment-form.component.css'
 })
@@ -23,7 +25,7 @@ export class ApartmentFormComponent implements OnChanges{
   amenities: AmenityDto[] = [];
   isEditMode: boolean = false;
   selectedAmenities: string[] = [];
-  loading: boolean = false;
+  loading = signal(false);
 
   constructor(
     private fb: FormBuilder,
@@ -114,8 +116,7 @@ export class ApartmentFormComponent implements OnChanges{
   }
 
   onSave(): void {
-    this.loading = true;
-    console.log(this.loading);
+    this.loading.set(true);
     if (!this.apartmentForm.valid)
       console.log('err');
 
@@ -139,18 +140,23 @@ export class ApartmentFormComponent implements OnChanges{
       formValues.imagePath,
     );
 
-    this.apartmentsService.createApartment(newApartmentDto).subscribe(res => {
-      if(res.isSuccess) {
-        this.loading = false;
-        this.toastService.success("Apartment Created!")
-        this.return();
-      }
-
-      this.toastService.error(res.error.name);
-      this.loading = false;
-      return;
-    })
-
+    this.apartmentsService.createApartment(newApartmentDto).subscribe(
+      {
+        next: (result) => {
+          console.log(result)
+          if (result.isSuccess) {
+            this.loading.set(false);
+            window.scroll(0,0);
+            this.toastService.success("Apartment Created!")
+          }
+        },
+        error: (err) => {
+          const ret = err.error as ErrorReturnDto;
+          window.scroll(0,0);
+          this.toastService.error(ret.name);
+          this.loading.set(false);
+        }
+      })
   }
 
   updateApartment() {
@@ -167,16 +173,22 @@ export class ApartmentFormComponent implements OnChanges{
       this.apartment.ownerId
     );
 
-    this.apartmentsService.updateApartment(this.apartment.id, updateApartmentDto).subscribe(res => {
-      if(res.isSuccess) {
-        this.loading = false;
-        this.toastService.success("Apartment updated!")
-        return;
-      }
-      this.toastService.error(res.error.name);
-      this.loading = false;
-      return;
-    })
+    this.apartmentsService.updateApartment(this.apartment.id, updateApartmentDto).subscribe(
+      {
+        next: (result) => {
+          if (result.isSuccess) {
+            this.loading.set(false);
+            window.scroll(0,0);
+            this.toastService.success("Apartment updated!")
+          }
+        },
+        error: (err) => {
+          const ret = err.error as ErrorReturnDto;
+          window.scroll(0,0);
+          this.toastService.error(ret.name);
+          this.loading.set(false);
+        }
+      })
   }
 
   return(){

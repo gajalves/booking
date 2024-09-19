@@ -10,4 +10,5 @@ public interface IReservationService
     Task<Result> GetAllReservationsByUserId(Guid userId);
     Task<Result> GetReservationEvents(Guid reservationId);
     Task<Result> GetReservation(Guid reservationId);
+    Task<Result> CountUserReservations();
 }

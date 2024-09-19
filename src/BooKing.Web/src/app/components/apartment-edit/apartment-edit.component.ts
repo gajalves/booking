@@ -6,6 +6,7 @@ import { AddressDto, ApartmentDto } from '../../dtos/apartment.dto';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApartmentFormComponent } from '../apartment-form/apartment-form.component';
+import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 
 @Component({
   selector: 'app-apartment-edit',
@@ -23,7 +24,7 @@ export class ApartmentEditComponent {
     private apartmentsService: ApartmentsService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
+    private toastService: ToastrService
   ){
     this.selectedApartment = history.state.selectedApartment;
 
@@ -36,8 +37,15 @@ export class ApartmentEditComponent {
     if(!apartmentId)
       this.router.navigate(['profile/apartments']);
 
-    this.apartmentsService.getApartmentDetail(apartmentId!).subscribe(data => {
-      this.selectedApartment = data.body.value as ApartmentDto;
-    })
+    this.apartmentsService.getApartmentDetail(apartmentId!).subscribe(
+      {
+        next: (resp) => {
+          this.selectedApartment = resp.body.value as ApartmentDto;
+        },
+        error: (e) => {
+          const ret = e.error as ErrorReturnDto;
+          this.toastService.error(ret.name);
+        }
+      })
   }
 }

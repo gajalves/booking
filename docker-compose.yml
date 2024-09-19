@@ -69,7 +69,6 @@ services:
       dockerfile: src/BooKing.Outbox/BooKing.Outbox.Service/Dockerfile
     depends_on:      
       - booking.db
-      - booking.rabbitmq
 
   booking.email.service:
     image: ${DOCKER_REGISTRY-}bookingemailservice
@@ -88,7 +87,6 @@ services:
       dockerfile: src/BooKing.Reserve/BooKing.Reserve.Service/Dockerfile
     depends_on:
       - booking.db
-      - booking.rabbitmq
 
   portainer:
     image: portainer/portainer-ce:latest

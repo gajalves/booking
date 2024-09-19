@@ -53,4 +53,16 @@ export class ApartmentsService {
   updateApartment(apartmentId: string, apartment: UpdateApartmentDto): Observable<Result<ApartmentDto[]>> {
     return this.http.put<Result<ApartmentDto[]>>(`${this.API_URL}/Apartment/${apartmentId}`, apartment);
   }
+
+  deleteApartment(apartmentId: string): Observable<Result<string>> {
+    return this.http.delete<Result<string>>(`${this.API_URL}/Apartment/${apartmentId}`);
+  }
+
+  updateIsActive(apartmentId: string, isActive: boolean): Observable<any> {
+    return this.http.patch(`${this.API_URL}/Apartment/${apartmentId}/IsActive`, { isActive });
+  }
+
+  getCountUserApartmentsCreated(): Observable<Result<number>> {
+    return this.http.get<Result<number>>(`${this.API_URL}/Apartment/CountUserApartmentsCreated`)
+  }
 }

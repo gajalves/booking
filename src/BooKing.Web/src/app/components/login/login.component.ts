@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IdentityService } from '../../services/identity.service';
 import { Router } from '@angular/router';
@@ -6,17 +6,18 @@ import { ToastrService } from 'ngx-toastr';
 import { UserLoginDto } from '../../dtos/userLogin.dto';
 import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
 import { CommonModule } from '@angular/common';
+import { BtnPrimaryComponent } from '../btn-primary/btn-primary.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, BtnPrimaryComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   loginForm!: FormGroup;
-  loading: boolean = false;
+  loading = signal(false);
 
   constructor(
     private identityService: IdentityService,
@@ -35,9 +36,11 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.loading = true;
-    if (this.loginForm.invalid)
+    this.loading.set(true);
+    if (this.loginForm.invalid) {
+      this.loading.set(false);
       return;
+    }
 
     const loginObject = this.createRegisterObject();
     this.identityService.login(loginObject.email, loginObject.password).subscribe({
@@ -45,14 +48,14 @@ export class LoginComponent {
         this.loginForm.reset();
         this.toastService.success("Login Successful!");
         setTimeout(() => {
-          this.loading = false;
+          this.loading.set(false);
           this.router.navigate(['/']);
         }, 300);
       },
       error: (e) => {
         const ret = e.error as ErrorReturnDto;
         this.toastService.error(ret.name);
-        this.loading = false;
+        this.loading.set(false);
       }
     });
   }

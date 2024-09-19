@@ -10,9 +10,10 @@ IHost host = Host.CreateDefaultBuilder(args)
     .AddSegAndSerilog()
     .ConfigureServices((hostContext, services) =>
     {
-        services.AddHostedService<OutboxEventsExecutor>().AddOutboxConfigurationSingleton(hostContext.Configuration);
+        services.AddHostedService<OutboxEventsExecutor>();
         services.AddBusConfiguration(hostContext.Configuration);
         services.Configure<OutboxOptions>(hostContext.Configuration.GetSection("OutboxOptions"));
+        services.AddOutboxConfigurationSingleton(hostContext.Configuration);
     })    
     .UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .Build();

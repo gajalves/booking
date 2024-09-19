@@ -47,7 +47,13 @@
                   </div>
                   <div class="col-12">
                     <div class="d-grid">
-                      <button class="btn btn-primary btn-lg" (click)="onSubmit()">Sign up now</button>
+                      <btn-primary
+                        [btnText]="'Sign up now'"
+                        [loading]="loading()"
+                        [disabled]="loading()"
+                        [btnClass]="'btn-primary w-100 btn-regular-color-main-color'"
+                        (submit)="onSubmit()"
+                      ></btn-primary>
                     </div>
                   </div>
                 </div>

@@ -49,4 +49,8 @@ export class ReserveService {
     const payload = '"' + reservationId + '"'
     return this.http.post<BaseResultDto>(`${this.API_URL}/Reservation/Cancel`, payload);
   }
+
+  getCountUserReservations(): Observable<Result<number>> {
+    return this.http.get<Result<number>>(`${this.API_URL}/Reservation/CountUserReservations`);
+  }
 }

@@ -79,4 +79,21 @@ public class ApartmentRepository : BaseRepository<Apartment, BooKingApartmentsCo
 
         base.Update(apartment);
     }
+
+    public async Task<List<Apartment>> SearchByTextAsync(string searchText)
+    {        
+        var tokens = searchText.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
+        var query = _context.Set<Apartment>()
+                        .AsNoTracking()
+                        .Include(x => x.Amenities)
+                        .AsQueryable();
+
+        foreach (var token in tokens)
+        {
+            query = query.Where(a => a.SearchField.ToLower().Contains(token));
+        }
+
+        return await query.ToListAsync();
+    }
 }

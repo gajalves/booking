@@ -10,4 +10,5 @@ public interface IApartmentRepository : IBaseRepository<Apartment>
     Task<List<Apartment>> GetApartmentsByGuids(List<Guid> apartmentIds);
     Task<List<Apartment>> GetApartmentsByUserId(Guid userId);
     void Delete(Apartment apartment);
+    Task<List<Apartment>> SearchByTextAsync(string text);
 }

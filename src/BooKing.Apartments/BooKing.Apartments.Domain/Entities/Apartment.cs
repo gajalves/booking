@@ -15,6 +15,7 @@ public class Apartment : Entity
     public string ImagePath { get; private set; }
     public bool IsActive { get; private set; }
     public bool IsDeleted { get; private set; }
+    public string SearchField { get ; private set; }
 
     public Apartment()
     {        
@@ -37,6 +38,8 @@ public class Apartment : Entity
         ImagePath = imagepath;
         IsActive = true;
         IsDeleted = false;
+
+        SetSearchField();
     }
     
     public void AddAmenitie(Amenity amenitie)
@@ -54,7 +57,12 @@ public class Apartment : Entity
         Address = address;
         Price = price;
         CleaningFee = cleaningFee;
-        ImagePath = imagePath;
+        ImagePath = imagePath;        
+    }
+
+    public void SetSearchField()
+    {
+        SearchField = $"{Name}-{Description}-{Address.City}-{Address.State}-{string.Join("-", Amenities.Select(a => a.Name))}";
     }
 
     public void SetAmenities(List<Amenity> amenities)

@@ -11,11 +11,11 @@
 
       <div class="col-md-6 p-lg-5 mx-auto my-5">
         <h1 class="display-3 fw-bold color-text-main-color">search and book</h1>
-        <input class="search-input" placeholder="Search...">
+        <input class="search-input" placeholder="Search..." (keyup)="onSearch($event)" />
       </div>
       <div class="product-device shadow-sm d-none d-md-block"></div>
       <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
     </div>
-    <app-apartment-list></app-apartment-list>
+    <app-apartment-list [searchTerm]="searchTerm"></app-apartment-list>
   </div>
 </main>

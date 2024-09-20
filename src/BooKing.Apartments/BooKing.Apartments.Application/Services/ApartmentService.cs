@@ -70,6 +70,8 @@ public class ApartmentService : IApartmentService
             newApartment.AddAmenitie(amenity);
         }
 
+        newApartment.SetSearchField();
+
         return newApartment;
     }
 
@@ -155,6 +157,7 @@ public class ApartmentService : IApartmentService
         }
 
         apartment.SetAmenities(amenities);
+        apartment.SetSearchField();
 
         _apartmentRepository.Update(apartment);
 
@@ -212,4 +215,16 @@ public class ApartmentService : IApartmentService
         var count = await _apartmentRepository.CountByUserIdAsync(user.Id);
 
         return Result.Success<int>(count);}
+
+    public async Task<Result<List<ApartmentDto>>> SearchApartmentsAsync(string searchText)
+    {
+        if (string.IsNullOrWhiteSpace(searchText))
+            return Result.Failure<List<ApartmentDto>>(ApplicationErrors.ApplicationError.SearchTextCannotBeEmpty);
+
+        var apartments = await _apartmentRepository.SearchByTextAsync(searchText);
+
+        var apartmentDtos = apartments.Select(a => _mapper.Map<ApartmentDto>(a)).ToList();
+
+        return Result.Success(apartmentDtos);
+    }
 }

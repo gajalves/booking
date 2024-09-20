@@ -47,6 +47,9 @@ public class ApartmentMapping : IEntityTypeConfiguration<Apartment>
             .IsRequired()
             .HasDefaultValue(false);
 
+        builder.Property(a => a.SearchField)
+               .HasMaxLength(1000);
+
 
         builder.ToTable(nameof(Apartment), Schemas.ApartmentsSchema);        
     }

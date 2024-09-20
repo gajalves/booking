@@ -13,6 +13,7 @@ export class ApartmentDto {
   ownerId: string;
   isActive: boolean;
   isDeleted: boolean;
+  searchField: string;
 
   constructor(
     id: string,
@@ -26,7 +27,8 @@ export class ApartmentDto {
     imagePath: string,
     ownerId: string,
     isActive: boolean,
-    isDeleted: boolean
+    isDeleted: boolean,
+    searchField: string
   ) {
     this.id = id;
     this.name = name;
@@ -40,6 +42,7 @@ export class ApartmentDto {
     this.amenitiesDescription = amenitiesDescription;
     this.isActive = isActive;
     this.isDeleted = isDeleted;
+    this.searchField = searchField;
   }
 }
 

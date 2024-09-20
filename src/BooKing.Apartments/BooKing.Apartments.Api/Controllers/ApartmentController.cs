@@ -144,4 +144,18 @@ public class ApartmentController : ControllerBase
 
         return NotFound(result.Error);
     }
+
+    [AllowAnonymous]
+    [HttpGet("Search")]
+    public async Task<IActionResult> Search([FromQuery] string searchText)
+    {
+        var result = await _apartmentService.SearchApartmentsAsync(searchText);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+
+        return BadRequest(result.Error);
+    }
 }

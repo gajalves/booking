@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AddressDto, ApartmentDto } from '../../dtos/apartment.dto';
 import { CommonModule } from '@angular/common';
 import { ApartmentsService } from '../../services/apartments.service';
@@ -18,7 +18,8 @@ import { ErrorReturnDto } from '../../dtos/errorReturn.dto';
   templateUrl: './apartment-list.component.html',
   styleUrl: './apartment-list.component.css'
 })
-export class ApartmentListComponent{
+export class ApartmentListComponent implements OnChanges{
+  @Input() searchTerm: string = '';
   apartments: ApartmentDto[] = [];
   isLoading: boolean = true;
   skeletonItems: number[] = Array(6).fill(0);
@@ -32,7 +33,14 @@ export class ApartmentListComponent{
     private apartmentsService: ApartmentsService,
     private toastService: ToastrService
   ) {
-    this.loadHomeApartments();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.searchTerm) {
+      this.searchApartments();
+    } else {
+      this.loadHomeApartments();
+    }
   }
 
   loadMore() {
@@ -68,5 +76,23 @@ export class ApartmentListComponent{
 
   apartmentCardClick(apartmentId: string){
     this.router.navigate([`/details/${apartmentId}`])
+  }
+
+  searchApartments() {
+    this.isLoading = true;
+    this.apartmentsService.searchApartments(this.searchTerm).subscribe({
+      next: (resp) => {
+        const apartmentList = resp as ApartmentDto[];
+        this.apartments = [...apartmentList]
+        this.isLoading = false;
+        this.hasMoreApartments = false
+      },
+      error: (err) => {
+        const ret = err.error as ErrorReturnDto;
+        this.toastService.error(ret.name);
+        this.toastService.error("Erro inesperado! Tente novamente mais tarde");
+        this.isLoading = false;
+      }
+    });
   }
 }

@@ -14,4 +14,5 @@ public interface IApartmentService
     Task<Result<List<ApartmentDto>>> GetApartmentsByUserId(Guid userId);
     Task<Result<ApartmentDto>> PatchApartmentIsActive(Guid apartmentId, bool isActive);
     Task<Result> CountUserApartmentsCreated();
+    Task<Result<List<ApartmentDto>>> SearchApartmentsAsync(string searchText);
 }

@@ -65,4 +65,8 @@ export class ApartmentsService {
   getCountUserApartmentsCreated(): Observable<Result<number>> {
     return this.http.get<Result<number>>(`${this.API_URL}/Apartment/CountUserApartmentsCreated`)
   }
+
+  searchApartments(searchTerm: string): Observable<ApartmentDto[]> {
+    return this.http.get<ApartmentDto[]>(`${this.API_URL}/Apartment/Search?searchText=${searchTerm}`)
+  }
 }

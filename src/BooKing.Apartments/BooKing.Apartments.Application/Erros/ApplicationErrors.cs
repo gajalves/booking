@@ -1,4 +1,5 @@
 ﻿using BooKing.Generics.Domain;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BooKing.Apartments.Application.Erros;
 public static class ApplicationErrors
@@ -26,5 +27,9 @@ public static class ApplicationErrors
         public static readonly Error PageIndexAndPageSizeMustBeGreaterThanZero = new Error(
            "ApartmentService",
            "Page index and page size must be greater than zero.");
+
+        public static readonly Error SearchTextCannotBeEmpty = new Error(
+           "ApartmentService",
+           "Search text cannot be empty.");
     }
 }

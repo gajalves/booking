@@ -11,7 +11,7 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Worker from Booking.Reserve.Service started at: {time}", DateTimeOffset.Now);
+        _logger.LogInformation("Worker from BooKing.Reserve.Service started at: {time}", DateTimeOffset.Now);
         while (!stoppingToken.IsCancellationRequested)
         {
             await Task.Delay(1000, stoppingToken);

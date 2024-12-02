@@ -29,7 +29,7 @@ public class ReservationCompletionExecutor : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Booking.Reserve.Service - ReservationCompletionExecutor starts at: {time}", DateTimeOffset.Now);
+        _logger.LogInformation("BooKing.Reserve.Service - ReservationCompletionExecutor starts at: {time}", DateTimeOffset.Now);
         
         var secondsToWaitFirstTime = CalculateFirstTimeStart(_outboxOptions.ReservationCompletionExecutorStartTime);
         
@@ -37,7 +37,7 @@ public class ReservationCompletionExecutor : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            _logger.LogInformation("Booking.Reserve.Service - ReservationCompletionExecutor running at: {time}", DateTimeOffset.Now);
+            _logger.LogInformation("BooKing.Reserve.Service - ReservationCompletionExecutor running at: {time}", DateTimeOffset.Now);
 
             var yesterday = DateTimeHelper.HoraBrasilia().Date.AddDays(-1);
             var reservationsToComplete = await _reservationRepository.GetReservationsByStatusAndEndDateAsync(ReservationStatus.Reserved, yesterday.Date);

@@ -19,8 +19,8 @@
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Bus\BooKing.Generics.Bus.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Infra\BooKing.Generics.Infra.csproj" />
     <ProjectReference Include="..\..\BooKing.Generics\BooKing.Generics.Outbox\BooKing.Generics.Outbox.csproj" />
-    <ProjectReference Include="..\Booking.Reserve.Application\BooKing.Reserve.Application.csproj" />
-    <ProjectReference Include="..\Booking.Reserve.Domain\BooKing.Reserve.Domain.csproj" />
-    <ProjectReference Include="..\Booking.Reserve.Infra\BooKing.Reserve.Infra.csproj" />
+    <ProjectReference Include="..\BooKing.Reserve.Application\BooKing.Reserve.Application.csproj" />
+    <ProjectReference Include="..\BooKing.Reserve.Domain\BooKing.Reserve.Domain.csproj" />
+    <ProjectReference Include="..\BooKing.Reserve.Infra\BooKing.Reserve.Infra.csproj" />
   </ItemGroup>
 </Project>

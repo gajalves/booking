@@ -9,8 +9,12 @@ public static class Migration
         using (var serviceScope = app.CreateScope())
         {
             var context = serviceScope.ServiceProvider.GetService<T>();            
-            context.Database.SetCommandTimeout(3 * 1000);            
-            context.Database.Migrate();
+            context.Database.SetCommandTimeout(3 * 1000);
+            
+            if (context.Database.GetPendingMigrations().Any())
+            {
+                context.Database.Migrate();
+            }
         }
     }
 }

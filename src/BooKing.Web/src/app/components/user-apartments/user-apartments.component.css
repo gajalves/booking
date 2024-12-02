@@ -1,0 +1,13 @@
+.custom-switch:checked {
+  background-color: var(--color-main);
+  border-color: #4a5fd6; /* Changed from #6179ff */
+}
+
+.custom-switch:not(:checked) {
+  background-color: #fff;
+  border-color: #575757;
+}
+
+.custom-switch:focus {
+  box-shadow: 0 0 0 0.25rem rgba(66, 66, 66, 0.25);
+}

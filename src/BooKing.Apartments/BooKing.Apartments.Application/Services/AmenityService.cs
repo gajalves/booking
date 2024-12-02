@@ -17,6 +17,9 @@ public class AmenityService : IAmenityService
 
     public async Task<Result<Amenity>> CreateAsync(NewAmenityDto dto)
     {
+        if (string.IsNullOrEmpty(dto.Name))
+            return Result.Failure<Amenity>(ApplicationErrors.AmenityError.InvalidAmenityName);
+
         var newAmenity = new Amenity(dto.Name);
 
         await _amenityRepository.AddAsync(newAmenity);

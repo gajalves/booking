@@ -35,12 +35,12 @@ export class ApartmentFormComponent implements OnChanges{
     private toastService: ToastrService
   ) {
     this.apartmentForm = this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      price: [0, Validators.required],
-      cleaningFee: [0, Validators.required],
-      amenities: [[], Validators.required],
-      imagePath: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
+      description: ['', [Validators.required, Validators.maxLength(1000)]],
+      price: [0, [Validators.required, Validators.min(0)]],
+      cleaningFee: [0, [Validators.required, Validators.min(0)]],
+      amenities: [[], Validators.nullValidator],
+      imagePath: ['', [Validators.required, Validators.maxLength(255)]],
       address: this.fb.group({
         street: ['', Validators.required],
         city: ['', Validators.required],
@@ -117,15 +117,18 @@ export class ApartmentFormComponent implements OnChanges{
 
   onSave(): void {
     this.loading.set(true);
-    if (!this.apartmentForm.valid)
-      console.log('err');
-
-    if(this.apartment){
-      this.updateApartment();
+    if (!this.apartmentForm.valid) {
+      this.markFormGroupTouched(this.apartmentForm);
+      this.loading.set(false);
+      this.toastService.error("Please fill in all required fields correctly.");
       return;
     }
 
-    this.createApartment();
+    if (this.apartment) {
+      this.updateApartment();
+    } else {
+      this.createApartment();
+    }
   }
 
   createApartment() {
@@ -193,5 +196,15 @@ export class ApartmentFormComponent implements OnChanges{
 
   return(){
     this.router.navigate(['/profile/apartments']);
+  }
+
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 }

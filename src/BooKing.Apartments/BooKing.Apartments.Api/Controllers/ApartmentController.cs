@@ -88,7 +88,7 @@ public class ApartmentController : ControllerBase
     }
 
     [HttpPost("GetApartmentsByGuids")]
-    public async Task<IActionResult> Create([FromBody] List<Guid> apartmentGuids)
+    public async Task<IActionResult> GetApartmentsByGuids([FromBody] List<Guid> apartmentGuids)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

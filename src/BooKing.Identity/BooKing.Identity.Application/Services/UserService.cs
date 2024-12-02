@@ -26,6 +26,8 @@ public class UserService : IUserService
 
         var user = await _userRepository.GetByEmailAsync(currentUser.Email);
 
+        if (user == null)
+            return Result.Failure<UserInformationDto>(ApplicationErrors.UserError.UserDoesNotExists);
 
         var userInformation = new UserInformationDto
         {

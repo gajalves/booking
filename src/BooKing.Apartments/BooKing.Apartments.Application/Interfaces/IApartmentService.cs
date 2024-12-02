@@ -5,7 +5,7 @@ using BooKing.Generics.Shared;
 namespace BooKing.Apartments.Application.Interfaces;
 public interface IApartmentService
 {
-    Task<Result> CreateApartmentAsync(NewApartmentDto apartmentDto);
+    Task<Result<ApartmentDto>> CreateApartmentAsync(NewApartmentDto apartmentDto);
     Task<Result<ApartmentDto>> UpdateApartmentAsync(Guid id, UpdateApartmentDto apartmentDto);
     Task<Result> DeleteApartmentAsync(Guid id);
     Task<Result<ApartmentDto>> GetApartmentByIdAsync(Guid id);
@@ -13,6 +13,6 @@ public interface IApartmentService
     Task<Result<List<ApartmentDto>>> GetApartmentsByGuids(List<Guid> apartmentGuids);
     Task<Result<List<ApartmentDto>>> GetApartmentsByUserId(Guid userId);
     Task<Result<ApartmentDto>> PatchApartmentIsActive(Guid apartmentId, bool isActive);
-    Task<Result> CountUserApartmentsCreated();
+    Task<Result<int>> CountUserApartmentsCreated();
     Task<Result<List<ApartmentDto>>> SearchApartmentsAsync(string searchText);
 }

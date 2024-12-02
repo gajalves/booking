@@ -7,13 +7,13 @@ using Newtonsoft.Json;
 namespace BooKing.Generics.Outbox.Service;
 public class OutboxEventService : IOutboxEventService
 {
-    private readonly IOutboxReposity _reposity;
+    private readonly IOutboxReposity _repository;
     private readonly IEventSourcingRepository _eventSourcingRepository;
 
     public OutboxEventService(IOutboxReposity reposity, 
                               IEventSourcingRepository eventSourcingRepository)
     {
-        _reposity = reposity;
+        _repository = reposity;
         _eventSourcingRepository = eventSourcingRepository;
     }
 
@@ -21,7 +21,7 @@ public class OutboxEventService : IOutboxEventService
     {
         var obj = new OutboxIntegrationEvents(queue, @event.GetType().Name, JsonConvert.SerializeObject(@event));
 
-        await _reposity.AddAsync(obj);
+        await _repository.AddAsync(obj);
         await _eventSourcingRepository.SaveEvent(@event);
     }
 
@@ -31,28 +31,28 @@ public class OutboxEventService : IOutboxEventService
         obj.SetMessage($"Event processed by: {processedBy}");
         obj.SetProcessedAtToDateTimeNow();
 
-        await _reposity.AddAsync(obj);
+        await _repository.AddAsync(obj);
         await _eventSourcingRepository.SaveEvent(@event);
     }
 
     public async Task<List<OutboxIntegrationEvents>> ReadEvents()
     {
-       return await _reposity.ReadAsync();
+       return await _repository.ReadAsync();
     }
 
     public async Task SetMessage(Guid eventId, string message)
     {
-        var ev = await _reposity.GetByEventIdAsync(eventId);                
+        var ev = await _repository.GetByEventIdAsync(eventId);                
 
         ev.SetMessage(message);        
 
-        await _reposity.Commit();
+        await _repository.Commit();
     }
 
     public async Task UpdateEventProcessedAt(OutboxIntegrationEvents ev)
     {
         ev.SetProcessedAtToDateTimeNow();
 
-        await _reposity.Commit();
+        await _repository.Commit();
     }
 }

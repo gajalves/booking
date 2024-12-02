@@ -28,7 +28,7 @@ public class ApartmentService : IApartmentService
         _currentUserService = currentUserService;
     }
 
-    public async Task<Result> CreateApartmentAsync(NewApartmentDto dto)
+    public async Task<Result<ApartmentDto>> CreateApartmentAsync(NewApartmentDto dto)
     {
         var newApartment = await InstantiateNewApartment(dto);
         
@@ -36,7 +36,7 @@ public class ApartmentService : IApartmentService
 
         var mappedApartment = _mapper.Map<ApartmentDto>(newApartment);
 
-        return Result.Success(mappedApartment);
+        return Result.Success<ApartmentDto>(mappedApartment);
     }
 
     private async Task<Apartment> InstantiateNewApartment(NewApartmentDto dto)
@@ -64,10 +64,8 @@ public class ApartmentService : IApartmentService
         {
             var amenity = await _amenityRepository.GetByIdAsync(amenityId);
 
-            if (amenity == null)
-                continue;
-
-            newApartment.AddAmenitie(amenity);
+            if (amenity is not null)                
+                newApartment.AddAmenitie(amenity);
         }
 
         newApartment.SetSearchField();
@@ -208,7 +206,7 @@ public class ApartmentService : IApartmentService
         return Result.Success<ApartmentDto>(mappedApartment);
     }
 
-    public async Task<Result> CountUserApartmentsCreated()
+    public async Task<Result<int>> CountUserApartmentsCreated()
     {
         var user = GetUser();
 

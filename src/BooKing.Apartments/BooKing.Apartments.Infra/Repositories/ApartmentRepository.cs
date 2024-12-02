@@ -13,6 +13,7 @@ public class ApartmentRepository : BaseRepository<Apartment, BooKingApartmentsCo
     private readonly IUnitOfWork<BooKingApartmentsContext> _unitOfWork;
 
     public static Expression<Func<Apartment, bool>> NotDeleted = a => !a.IsDeleted;
+    public static Expression<Func<Apartment, bool>> IsActive = a => a.IsActive;
 
     public ApartmentRepository(BooKingApartmentsContext context, 
                                IUnitOfWork<BooKingApartmentsContext> unitOfWork): base(context, unitOfWork)
@@ -38,6 +39,7 @@ public class ApartmentRepository : BaseRepository<Apartment, BooKingApartmentsCo
                           .Include(x => x.Amenities)
                           .AsNoTracking()
                           .Where(NotDeleted)
+                          .Where(IsActive)
                           .Skip((pageIndex - 1) * pageSize)
                           .Take(pageSize)                          
                           .ToListAsync();
@@ -87,6 +89,8 @@ public class ApartmentRepository : BaseRepository<Apartment, BooKingApartmentsCo
         var query = _context.Set<Apartment>()
                         .AsNoTracking()
                         .Include(x => x.Amenities)
+                        .Where(NotDeleted)
+                        .Where(IsActive)
                         .AsQueryable();
 
         foreach (var token in tokens)

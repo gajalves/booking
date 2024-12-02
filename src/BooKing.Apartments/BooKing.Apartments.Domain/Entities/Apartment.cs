@@ -38,8 +38,6 @@ public class Apartment : Entity
         ImagePath = imagepath;
         IsActive = true;
         IsDeleted = false;
-
-        SetSearchField();
     }
     
     public void AddAmenitie(Amenity amenitie)

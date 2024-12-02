@@ -17,6 +17,10 @@ public static class ApplicationErrors
             "UserLoginService.Login",
             "Provided email account does not exists!");
 
+        public static readonly Error UserDoesNotExists = new Error(
+            "UserLoginService",
+            "User does not exists!");
+
         public static readonly Error PasswordIncorrect = new Error(
             "UserLoginService.Login",
             "Password Incorrect!");

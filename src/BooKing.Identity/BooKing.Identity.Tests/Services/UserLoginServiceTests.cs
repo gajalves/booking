@@ -1,5 +1,4 @@
-﻿using BooKing.Generics.Domain;
-using BooKing.Identity.Application.Dtos;
+﻿using BooKing.Identity.Application.Dtos;
 using BooKing.Identity.Application.Erros;
 using BooKing.Identity.Application.Interfaces;
 using BooKing.Identity.Application.Services;

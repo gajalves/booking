@@ -1,6 +1,6 @@
 ﻿using BooKing.Generics.EventSourcing;
+using BooKing.Generics.Infra.Serialization;
 using BooKing.Generics.Outbox.Entities;
-using BooKing.Generics.Outbox.Events;
 using BooKing.Generics.Outbox.Repository;
 using Newtonsoft.Json;
 
@@ -17,17 +17,17 @@ public class OutboxEventService : IOutboxEventService
         _eventSourcingRepository = eventSourcingRepository;
     }
 
-    public async Task AddEvent(string queue, Event @event)
+    public async Task AddEvent(Event @event)
     {
-        var obj = new OutboxIntegrationEvents(queue, @event.GetType().Name, JsonConvert.SerializeObject(@event));
+        var obj = new OutboxIntegrationEvents(@event.GetType().Name, JsonConvert.SerializeObject(@event, SerializerSettings.Instance));
 
         await _repository.AddAsync(obj);
         await _eventSourcingRepository.SaveEvent(@event);
     }
 
-    public async Task AddEventAlreadyProcessed(string queue, Event @event, string processedBy)
+    public async Task AddEventAlreadyProcessed(Event @event, string processedBy)
     {
-        var obj = new OutboxIntegrationEvents(queue, @event.GetType().Name, JsonConvert.SerializeObject(@event));
+        var obj = new OutboxIntegrationEvents(@event.GetType().Name, JsonConvert.SerializeObject(@event));
         obj.SetMessage($"Event processed by: {processedBy}");
         obj.SetProcessedAtToDateTimeNow();
 

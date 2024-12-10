@@ -15,7 +15,7 @@ public class Apartment : Entity
     public string ImagePath { get; private set; }
     public bool IsActive { get; private set; }
     public bool IsDeleted { get; private set; }
-    public string SearchField { get ; private set; }
+    public string SearchField { get ; private set; }    
 
     public Apartment()
     {        
@@ -73,7 +73,7 @@ public class Apartment : Entity
 
     public void SetImagePath(string imagePath)
     {
-        ImagePath = imagePath;
+        ImagePath = imagePath;        
     }
 
     public void SetIsActive(bool isActive)

@@ -8,11 +8,7 @@ public class OutboxIntegrationEventsMapping : IEntityTypeConfiguration<OutboxInt
     public void Configure(EntityTypeBuilder<OutboxIntegrationEvents> builder)
     {
         builder.HasKey(o => o.Id);
-
-        builder.Property(o => o.Queue)
-            .IsRequired()
-            .HasMaxLength(255);
-
+        
         builder.Property(o => o.EventType)
             .HasMaxLength(255);
 

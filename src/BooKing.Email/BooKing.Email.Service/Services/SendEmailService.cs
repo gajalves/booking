@@ -9,7 +9,7 @@ public partial class SendEmailService : ISendEmailService
 {
     public void SendEmail(EmailServiceOptions options, List<string> emailsTo, string subject, string body, List<string> attachments)
     {
-        var setup = new Email(options.SmtpAddress, options.Email, options.Password);
+        var setup = new Email(options.SmtpAddress, options.Email, options.Password, options.From, options.To);
 
         var message = PrepareteMessage(setup, emailsTo, subject, body, attachments);
 
@@ -19,13 +19,13 @@ public partial class SendEmailService : ISendEmailService
     private MailMessage PrepareteMessage(Email email, List<string> emailsTo, string subject, string body, List<string> attachments)
     {
         var mail = new MailMessage();
-        mail.From = new MailAddress(email.SenderEmail);
+        mail.From = new MailAddress(email.From);
 
         foreach (var mailTo in emailsTo)
         {
             if (ValidateEmail(mailTo))
             {
-                mail.To.Add(mailTo);
+                mail.To.Add(email.To);
             }
         }
 
@@ -60,7 +60,7 @@ public partial class SendEmailService : ISendEmailService
     {
         SmtpClient smtpClient = new SmtpClient(email.SmtpClient);
         smtpClient.Host = email.SmtpClient;
-        smtpClient.Port = 587;
+        smtpClient.Port = 2525;
         smtpClient.EnableSsl = true;
         smtpClient.Timeout = 50000;
         smtpClient.UseDefaultCredentials = false;

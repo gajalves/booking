@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BooKing.Generics.Bus.Queues;
 using BooKing.Generics.Domain;
 using BooKing.Generics.Outbox.Events;
 using BooKing.Generics.Outbox.Service;
@@ -45,7 +44,7 @@ public class UserRegisterService : IUserRegisterService
         if(createdUser == null)
             return Result.Failure<ReturnCreatedUserDto>(ApplicationErrors.UserError.UnexpectedErrorCreatingUser);
 
-        await _outboxEventService.AddEvent(QueueMapping.BooKingEmailServiceNewUser, new NewUserEmailEvent(newUser.Id, dto.Name, dto.Email));
+        await _outboxEventService.AddEvent(new NewUserEmailEvent(newUser.Id, dto.Name, dto.Email));
 
         var newUserDto = _mapper.Map<ReturnCreatedUserDto>(createdUser);
 

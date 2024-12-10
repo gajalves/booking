@@ -3,8 +3,7 @@ using BooKing.Generics.Shared;
 
 namespace BooKing.Generics.Outbox.Entities;
 public class OutboxIntegrationEvents : Entity
-{
-    public string Queue { get; set; }
+{    
     public string EventType { get; set; }
     public string Payload { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -16,9 +15,8 @@ public class OutboxIntegrationEvents : Entity
 
     }
 
-    public OutboxIntegrationEvents(string queue, string eventType, string payload)
-    {
-        Queue = queue;
+    public OutboxIntegrationEvents(string eventType, string payload)
+    {        
         EventType = eventType;
         Payload = payload;
         CreatedAt = DateTimeHelper.HoraBrasilia();

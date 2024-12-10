@@ -78,7 +78,7 @@ public class UserRegisterServiceTests
         _passwordServiceMock.Setup(x => x.GenerateSalt(32)).Returns("salt");
         _passwordServiceMock.Setup(x => x.HashPassword(dto.Password, "salt", 100000)).Returns("hashedpassword");
         _userRepositoryMock.Setup(x => x.CreateAsync(It.IsAny<User>())).ReturnsAsync(user);
-        _outboxEventServiceMock.Setup(service => service.AddEvent(It.IsAny<string>(), It.IsAny<Event>())).Returns(Task.CompletedTask);
+        _outboxEventServiceMock.Setup(service => service.AddEvent(It.IsAny<Event>())).Returns(Task.CompletedTask);
 
         // Act
         var result = await _sut.Register(dto);

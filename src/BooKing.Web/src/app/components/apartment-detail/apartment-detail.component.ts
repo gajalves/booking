@@ -56,6 +56,12 @@ export class ApartmentDetailComponent {
   reserve() {
     this.loading.set(true);
 
+    if (!this.checkInDate || !this.checkOutDate) {
+      this.toastService.error('Please fill in both check-in and check-out dates.');
+      this.loading.set(false);
+      return;
+    }
+
     const checkIn =  new Date(this.checkInDate).toJSON();
     const checkOut =  new Date(this.checkOutDate).toJSON();
 

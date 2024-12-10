@@ -1,8 +1,11 @@
-﻿using BooKing.Generics.Bus;
-using BooKing.Generics.Bus.Abstractions;
+﻿using BooKing.Generics.Bus.Abstractions;
+using BooKing.Generics.EventSourcing;
+using BooKing.Generics.Infra.Serialization;
 using BooKing.Generics.Outbox.Configurations;
 using BooKing.Generics.Outbox.Service;
+using BooKing.Generics.Shared;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace BooKing.Outbox.Service.Executors;
 public class OutboxEventsExecutor : BackgroundService
@@ -23,28 +26,24 @@ public class OutboxEventsExecutor : BackgroundService
         _outboxOptions = outboxOptions.Value;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("BooKing.Outbox.Service - OutboxEventsExecutor starts at: {time}", DateTimeOffset.Now);
-        while (!stoppingToken.IsCancellationRequested)
+        _logger.LogInformation("BooKing.Outbox.Service - OutboxEventsExecutor starts at: {time}", DateTimeHelper.HoraBrasilia());
+        while (!cancellationToken.IsCancellationRequested)
         {
-            //_logger.LogInformation("BooKing.Outbox.Service running at: {time}", DateTimeOffset.Now);
+            //_logger.LogInformation("BooKing.Outbox.Service running at: {time}", DateTimeHelper.HoraBrasilia());
 
             var events = await _outboxEventService.ReadEvents();
 
             foreach (var ev in events)
-            {                                
-                var busOptions = EventBusOptions.Config(
-                ev.Queue,
-                ev.Queue,
-                withDeadletter: true);
-                
-                _eventBus.Publish(ev.Payload, busOptions);
+            {
+                var @event = JsonConvert.DeserializeObject<Event>(ev.Payload, SerializerSettings.Instance);
+                await _eventBus.PublishAsync<Event>(@event, cancellationToken);
 
                 await _outboxEventService.UpdateEventProcessedAt(ev);
             }
 
-            await Task.Delay((int)TimeSpan.FromSeconds(_outboxOptions.IntervalInSeconds).TotalMilliseconds, stoppingToken);
+            await Task.Delay((int)TimeSpan.FromSeconds(_outboxOptions.IntervalInSeconds).TotalMilliseconds, cancellationToken);
         }
-    }    
+    }
 }

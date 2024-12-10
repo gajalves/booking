@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BooKing.Generics.Bus.Queues;
 using BooKing.Generics.Domain;
 using BooKing.Generics.EventSourcing;
 using BooKing.Generics.Outbox.Events;
@@ -44,26 +43,29 @@ public class ReservationService : IReservationService
         _eventSourcingRepository = eventSourcingRepository;
     }
 
-    public async Task<Result> Reserve(NewReservationDto dto)
-    {
+    public async Task<Result<ReservationCreatedDto>> Reserve(NewReservationDto dto)
+    {       
         var result = await _apartmentService.GetApartment(dto.ApartmentId);
-
         if (result.IsFailure)
-            return result;
+            return Result.Failure<ReservationCreatedDto>(result.Error);        
 
         var apartment = result.Value;
+        if(!apartment.IsActive)
+            return Result.Failure<ReservationCreatedDto>(ApplicationErrors.ReserveError.ApartmentInactive);
 
         var user = _currentUserService.GetCurrentUser();
 
         if (user.Id.ToString().ToLower() == apartment.OwnerId.ToLower())
-            return Result.Failure(ApplicationErrors.ReserveError.NotAllowedToReserveYourOwnApartment);
+            return Result.Failure<ReservationCreatedDto>(ApplicationErrors.ReserveError.NotAllowedToReserveYourOwnApartment);
 
         var duration = DateRange.Create(dto.StartDate, dto.EndDate);
+        if (duration.IsFailure)
+            return Result.Failure<ReservationCreatedDto>(duration.Error);
 
-        var isApartmentOverlapping = await _reservationRepository.IsOverlappingAsync(dto.ApartmentId, duration);
+        var isApartmentOverlapping = await _reservationRepository.IsOverlappingAsync(dto.ApartmentId, duration.Value);
 
         if (isApartmentOverlapping)
-            return Result.Failure<Guid>(ApplicationErrors.ReserveError.Overlap);
+            return Result.Failure<ReservationCreatedDto>(ApplicationErrors.ReserveError.Overlap);
 
         try
         {
@@ -72,25 +74,24 @@ public class ReservationService : IReservationService
                 user.Id,
                 apartment.Price,
                 apartment.CleaningFee,
-                duration,
+                duration.Value,
                 _pricingService);
 
             await _reservationRepository.AddAsync(reserve);
 
-            await _outboxEventService.AddEvent(
-                QueueMapping.BooKingEmailServiceReservationCreated,
+            await _outboxEventService.AddEvent(                
                 new ReservationCreatedEvent(reserve.Id, user.Id, user.Email, apartment.Id, 
                                             apartment.Name, reserve.Duration.Start, reserve.Duration.End, 
                                             reserve.PriceForPeriod, reserve.CleaningFee, 
                                             reserve.TotalPrice, reserve.CreatedOnUtc));
 
             var reservationDto = _mapper.Map<ReservationCreatedDto>(reserve);
-
+           
             return Result.Success(reservationDto);
         }
         catch (ConcurrencyException)
         {
-            return Result.Failure<Guid>(ApplicationErrors.ReserveError.Overlap);
+            return Result.Failure<ReservationCreatedDto>(ApplicationErrors.ReserveError.Overlap);
         }
     }
 
@@ -112,7 +113,7 @@ public class ReservationService : IReservationService
         _reservationRepository.Update(reservation);
 
         var ev = new ReservationConfirmedByUserEvent(reservation.Id, user.Id, user.Email);
-        await _outboxEventService.AddEvent(QueueMapping.BooKingReserveReservationConfirmed, ev);
+        await _outboxEventService.AddEvent(ev);
 
         return Result.Success();
     }
@@ -125,7 +126,7 @@ public class ReservationService : IReservationService
 
         var user = _currentUserService.GetCurrentUser();
         if (reservation.UserId != user.Id)
-            return Result.Failure(ApplicationErrors.ReserveError.NotAllowedToConfirmReservation);
+            return Result.Failure(ApplicationErrors.ReserveError.NotAllowedToCancelReservation);
 
         if (reservation.Status != ReservationStatus.Pending)
             return Result.Failure(ApplicationErrors.ReserveError.InvalidStatus);
@@ -136,16 +137,16 @@ public class ReservationService : IReservationService
 
         var ev = new ReservationCancelledByUserEvent(reservation.Id, user.Id, user.Email, 
                                                      reservation.Duration.Start, reservation.Duration.End, reservation.TotalPrice);
-        await _outboxEventService.AddEvent(QueueMapping.BooKingReserveReservationCancelled, ev);
+        await _outboxEventService.AddEvent(ev);
 
         return Result.Success();
     }
 
-    public async Task<Result> GetAllReservationsByUserId(Guid userId)
+    public async Task<Result<List<ReservationDto>>> GetAllReservationsByUserId(Guid userId)
     {
         var user = _currentUserService.GetCurrentUser();
         if (userId != user.Id)
-            return Result.Failure(ApplicationErrors.ReserveError.NotAllowedToRetrieveThisInformation);
+            return Result.Failure<List<ReservationDto>>(ApplicationErrors.ReserveError.NotAllowedToRetrieveThisInformation);
 
         var reservations = await _reservationRepository.GetAllReservationsByUserId(userId);
 
@@ -159,7 +160,7 @@ public class ReservationService : IReservationService
             var result = await _apartmentService.GetApartmentByGuidList(apartmentIds);
 
             if (result.IsFailure)
-                return Result.Failure(ApplicationErrors.ReserveError.ErrorObtainingApartmentData);
+                return Result.Failure<List<ReservationDto>>(ApplicationErrors.ReserveError.ErrorObtainingApartmentData);
 
             var apartments = result.Value;
 
@@ -174,21 +175,21 @@ public class ReservationService : IReservationService
         return Result.Success(reservationsDtos);
     }
 
-    public async Task<Result> GetReservation(Guid reservationId)
+    public async Task<Result<ReservationDto>> GetReservation(Guid reservationId)
     {
         var reservation = await _reservationRepository.GetReservation(reservationId);
 
         if(reservation == null)
-            return Result.Failure(ApplicationErrors.ReserveError.NotFound);
+            return Result.Failure<ReservationDto>(ApplicationErrors.ReserveError.NotFound);
 
         var user = _currentUserService.GetCurrentUser();
         if (reservation.UserId != user.Id)
-            return Result.Failure(ApplicationErrors.ReserveError.NotAllowedToRetrieveThisInformation);
+            return Result.Failure<ReservationDto>(ApplicationErrors.ReserveError.NotAllowedToRetrieveThisInformation);
 
         var result = await _apartmentService.GetApartment(reservation.ApartmentId);
 
         if (result.IsFailure)
-            return Result.Failure(ApplicationErrors.ReserveError.ErrorObtainingApartmentData);
+            return Result.Failure<ReservationDto>(ApplicationErrors.ReserveError.ErrorObtainingApartmentData);
 
         var reservationDto = _mapper.Map<ReservationDto>(reservation);
         reservationDto.Apartment = result.Value;
@@ -196,21 +197,21 @@ public class ReservationService : IReservationService
         return Result.Success(reservationDto);
     }
 
-    public async Task<Result> GetReservationEvents(Guid reservationId)
+    public async Task<Result<List<ReservationEventsDto>>> GetReservationEvents(Guid reservationId)
     {
         var reservation = await _reservationRepository.GetReservation(reservationId);
 
         if (reservation == null)
-            return Result.Failure(ApplicationErrors.ReserveError.NotFound);
+            return Result.Failure<List<ReservationEventsDto>>(ApplicationErrors.ReserveError.NotFound);
 
         var user = _currentUserService.GetCurrentUser();
         if (reservation.UserId != user.Id)
-            return Result.Failure(ApplicationErrors.ReserveError.NotAllowedToRetrieveThisInformation);
+            return Result.Failure<List<ReservationEventsDto>>(ApplicationErrors.ReserveError.NotAllowedToRetrieveThisInformation);
 
         var events = await _eventSourcingRepository.GetEvents(reservationId);
 
         if(events == null)
-            return Result.Failure(ApplicationErrors.ReserveError.EventsNotFound);
+            return Result.Failure<List<ReservationEventsDto>>(ApplicationErrors.ReserveError.EventsNotFound);
 
         var reservationEventsDto = HandleReservationEvents(events);
         
@@ -289,7 +290,7 @@ public class ReservationService : IReservationService
         };
     }
 
-    public async Task<Result> CountUserReservations()
+    public async Task<Result<int>> CountUserReservations()
     {
         var user = _currentUserService.GetCurrentUser();
 

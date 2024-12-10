@@ -1,3 +1,5 @@
+using BooKing.Generics.Shared;
+
 namespace BooKing.Email.Service;
 
 public class Worker : BackgroundService
@@ -11,7 +13,7 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Worker from BooKing.Email.Service started at: {time}", DateTimeOffset.Now);
+        _logger.LogInformation("Worker from BooKing.Email.Service started at: {time}", DateTimeHelper.HoraBrasilia());
         while (!stoppingToken.IsCancellationRequested)
         {
             //_logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);

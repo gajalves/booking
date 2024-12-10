@@ -1,11 +1,10 @@
-﻿using BooKing.Generics.Bus.Abstractions;
-using BooKing.Generics.Outbox.Events;
+﻿using BooKing.Generics.Outbox.Events;
 using BooKing.Generics.Outbox.Service;
 using BooKing.Reserve.Domain.Interfaces;
-using BooKing.Reserve.Service;
+using MassTransit;
 
 namespace BooKing.Reserve.Service.Handlers;
-public class ReservationReservedEventHandler : IEventHandler<ReservationReservedEvent>
+public class ReservationReservedEventHandler : IConsumer<ReservationReservedEvent>
 {
     private readonly ILogger<Worker> _logger;
     private readonly IReservationRepository _reservationRepository;
@@ -20,29 +19,28 @@ public class ReservationReservedEventHandler : IEventHandler<ReservationReserved
         _outboxEventService = outboxEventService;
     }
 
-    public async Task<bool> Handle(ReservationReservedEvent @event)
+    public async Task Consume(ConsumeContext<ReservationReservedEvent> context)
     {
         try
         {
-            _logger.LogInformation($"[ReservationReservedEventHandler]: Processing set to reserved for ReservationId: {@event.ReservationId}");
+            _logger.LogInformation($"[ReservationReservedEventHandler]: Processing set to reserved for ReservationId: {context.Message.ReservationId}");
 
-            var reservation = await _reservationRepository.GetByIdAsync(@event.ReservationId);
+            var reservation = await _reservationRepository.GetByIdAsync(context.Message.ReservationId);
             if (reservation == null)
             {
-                _logger.LogWarning($"[ReservationReservedEventHandler]: Reservation not found for ReservationId: {@event.ReservationId}");
-                return false;
+                _logger.LogWarning($"[ReservationReservedEventHandler]: Reservation not found for ReservationId: {context.Message.ReservationId}");
             }
+            else
+            {
+                reservation.SetReservedStatus();
+                _reservationRepository.Update(reservation);
 
-            reservation.SetReservedStatus();
-            _reservationRepository.Update(reservation);
-
-            _logger.LogInformation($"[ReservationReservedEventHandler]: Reservation {reservation.Id} status updated to Reserved.");
-            return true;
+                _logger.LogInformation($"[ReservationReservedEventHandler]: Reservation {reservation.Id} status updated to Reserved.");
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"[ReservationReservedEventHandler]: Error processing set to reserved for ReservationId: {@event.ReservationId}");
-            return false;
+            _logger.LogError(ex, $"[ReservationReservedEventHandler]: Error processing set to reserved for ReservationId: {context.Message.ReservationId}");
         }
     }
 }

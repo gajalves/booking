@@ -8,14 +8,11 @@ IHost host = Host.CreateDefaultBuilder(args)
     .AddSegAndSerilog()
     .ConfigureServices((hostContext, services) =>
     {
-        services.AddBusConfiguration(hostContext.Configuration);
-        services.AddEventHandlersDependency();
+        services.AddBusConfiguration(hostContext.Configuration, EmailServiceConfiguration.AddConsumers);
         services.Configure<EmailServiceOptions>(hostContext.Configuration.GetSection("EmailService"));
         services.AddSingleton<ISendEmailService, SendEmailService>();
     })
     .UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .Build();
-
-host.UseConsumersRabbitMQ();
 
 host.Run();

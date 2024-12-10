@@ -23,7 +23,7 @@ public class BaseRepository<TEntity, TContext> : IBaseRepository<TEntity>
         
     }
 
-    public async Task AddAsync(TEntity obj)
+    public virtual async Task AddAsync(TEntity obj)
     {
         await _dbSet.AddAsync(obj);
         await _unitOfWork.CommitAsync();

@@ -6,6 +6,7 @@ using BooKing.Reserve.Infra.Context;
 using BooKing.Generics.Infra;
 using BooKing.Generics.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
+using BooKing.Generics.Domain;
 
 namespace BooKing.Reserve.Infra.Repositories;
 public class ReservationRepository : BaseRepository<Reservation, BooKingReserveContext>, IReservationRepository

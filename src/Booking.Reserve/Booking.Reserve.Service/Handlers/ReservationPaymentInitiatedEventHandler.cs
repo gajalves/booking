@@ -1,13 +1,11 @@
-﻿using BooKing.Reserve.Application.Interfaces;
-using BooKing.Generics.Bus.Abstractions;
-using BooKing.Generics.Bus.Queues;
-using BooKing.Generics.Outbox.Events;
+﻿using BooKing.Generics.Outbox.Events;
 using BooKing.Generics.Outbox.Service;
+using BooKing.Reserve.Application.Interfaces;
 using BooKing.Reserve.Domain.Interfaces;
-using BooKing.Reserve.Service;
+using MassTransit;
 
 namespace BooKing.Reserve.Service.Handlers;
-public class ReservationPaymentInitiatedEventHandler : IEventHandler<ReservationPaymentInitiatedEvent>
+public class ReservationPaymentInitiatedEventHandler : IConsumer<ReservationPaymentInitiatedEvent>
 {
     private readonly ILogger<Worker> _logger;
     private readonly IReservationRepository _reservationRepository;
@@ -25,46 +23,44 @@ public class ReservationPaymentInitiatedEventHandler : IEventHandler<Reservation
         _paymentService = paymentService;
     }
 
-    public async Task<bool> Handle(ReservationPaymentInitiatedEvent @event)
+    public async Task Consume(ConsumeContext<ReservationPaymentInitiatedEvent> context)
     {
         try
         {
-            _logger.LogInformation($"[ReservationPaymentInitiatedEventHandler]: Initiating payment for ReservationId: {@event.ReservationId}");
-            
-            var reservation = await _reservationRepository.GetByIdAsync(@event.ReservationId);
+            _logger.LogInformation($"[ReservationPaymentInitiatedEventHandler]: Initiating payment for ReservationId: {context.Message.ReservationId}");
+
+            var reservation = await _reservationRepository.GetByIdAsync(context.Message.ReservationId);
             if (reservation == null)
             {
-                await _outboxEventService.SetMessage(@event.EventId, "[ReservationPaymentInitiatedEventHandler] Reservation not found");
-                return false;
+                await _outboxEventService.SetMessage(context.Message.EventId, "[ReservationPaymentInitiatedEventHandler] Reservation not found");
             }
-
-            var paymentResult = await _paymentService.ProcessPaymentAsync(@event.ReservationId, @event.TotalPrice, true);
-
-            var ev = new ReservationPaymentProcessedEvent(reservation.Id, @event.UserEmail, reservation.TotalPrice, paymentResult.IsSuccess);            
-            await _outboxEventService.AddEvent(QueueMapping.BooKingEmailServicePaymentProcessed, ev);
-
-            if (!paymentResult.IsSuccess)
+            else
             {
-                reservation.SetFailedPaymentStatus();
+                var paymentResult = await _paymentService.ProcessPaymentAsync(context.Message.ReservationId, context.Message.TotalPrice, true);
+
+                var ev = new ReservationPaymentProcessedEvent(reservation.Id, context.Message.UserEmail, reservation.TotalPrice, paymentResult.IsSuccess);
+                await _outboxEventService.AddEvent(ev);
+
+                if (!paymentResult.IsSuccess)
+                {
+                    reservation.SetFailedPaymentStatus();
+                    _reservationRepository.Update(reservation);
+
+                    _logger.LogWarning($"[ReservationPaymentInitiatedEventHandler]: Payment failed for ReservationId: {context.Message.ReservationId}");
+                }
+
+                reservation.MarkPaymentCompleted();
                 _reservationRepository.Update(reservation);
-                                
-                _logger.LogWarning($"[ReservationPaymentInitiatedEventHandler]: Payment failed for ReservationId: {@event.ReservationId}");                
-                return false;
+
+                var reservedEvent = new ReservationReservedEvent(reservation.Id);
+                await _outboxEventService.AddEvent(reservedEvent);
+
+                _logger.LogInformation($"[ReservationPaymentInitiatedEventHandler]: Payment successful for ReservationId: {context.Message.ReservationId}");
             }
-                        
-            reservation.MarkPaymentCompleted();
-            _reservationRepository.Update(reservation);
-
-            var reservedEvent = new ReservationReservedEvent(reservation.Id);
-            await _outboxEventService.AddEvent(QueueMapping.BooKingReserveReservationReserved, reservedEvent);
-
-            _logger.LogInformation($"[ReservationPaymentInitiatedEventHandler]: Payment successful for ReservationId: {@event.ReservationId}");
-            return true;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"[ReservationPaymentInitiatedEventHandler]: Error processing payment for ReservationId: {@event.ReservationId}");
-            return false;
+            _logger.LogError(ex, $"[ReservationPaymentInitiatedEventHandler]: Error processing payment for ReservationId: {context.Message.ReservationId}");
         }
     }
 }

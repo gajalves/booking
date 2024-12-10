@@ -21,6 +21,10 @@ public static class ApplicationErrors
             "ReservationService.Confirm",
             "You're not allowed to confirm this reservation!");
 
+        public static readonly Error NotAllowedToCancelReservation = new Error(
+            "ReservationService.Confirm",
+            "You're not allowed to cancel this reservation!");
+
         public static readonly Error InvalidStatus = new Error(
             "ReservationService.Confirm",
             "Invalid reservation status!");
@@ -40,5 +44,9 @@ public static class ApplicationErrors
         public static readonly Error EventsNotFound = new Error(
             "ReservationService.GetReservationEvents",
             "Events not found for this reserve");
+
+        public static readonly Error ApartmentInactive = new Error(
+            "ReservationService.Reserve",
+            "Selected apartment is inactive.");
     }
 }

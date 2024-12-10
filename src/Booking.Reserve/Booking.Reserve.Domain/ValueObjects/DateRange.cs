@@ -1,4 +1,7 @@
-﻿namespace BooKing.Reserve.Domain.ValueObjects;
+﻿using BooKing.Generics.Domain;
+using BooKing.Reserve.Domain.Errors;
+
+namespace BooKing.Reserve.Domain.ValueObjects;
 public record DateRange
 {
     public DateRange()
@@ -11,15 +14,17 @@ public record DateRange
     
     public int lengthInDays => DateOnly.FromDateTime(End).DayNumber - DateOnly.FromDateTime(Start).DayNumber;
 
-    public static DateRange Create(DateTime start, DateTime end)
+    public static Result<DateRange> Create(DateTime start, DateTime end)
     {
         if (start.Date > end.Date)
-            throw new ApplicationException("End date precedes start date.");
+            return Result.Failure<DateRange>(DomainErrors.ReserveError.EndDatePrecedesStartDate);
 
-        return new DateRange
+        var duration = new DateRange
         {
             Start = start.Date,
             End = end.Date
         };
+
+        return Result.Success(duration); 
     }
 }

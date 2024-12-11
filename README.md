@@ -130,13 +130,14 @@ The BooKing project uses the following versions of technologies and frameworks:
     npm start
     ```
 4. Access the services:
+    - **Web**: `http://localhost:4200`
     - **Identity API**: `http://localhost:5001`
     - **Apartments API**: `http://localhost:5002`
     - **Reserve API**: `http://localhost:5003`
     - **RabbitMQ Dashboard**: `http://localhost:15672`
     - **Seq Dashboard**: `http://localhost:8081`
 
-5. Additional Information
+6. Additional Information
    - When running the project, some apartments and users are created along with the migrations to facilitate testing and usage. The password for all of them is: secret123.
    - ![users](https://github.com/gajalves/booking/blob/main/docs/img/db/user.png?raw=true)
    - ![apartments](https://github.com/gajalves/booking/blob/main/docs/img/db/apartment-db.png?raw=true)

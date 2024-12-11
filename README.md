@@ -90,6 +90,18 @@ Unit tests were developed for the main services created. Integration tests and o
 ![BooKingIdentityApplicationServices](https://github.com/gajalves/booking/blob/main/docs/img/coverage/BooKingIdentityApplicationServices.png?raw=true)
 ![BooKingReserveApplicationServices](https://github.com/gajalves/booking/blob/main/docs/img/coverage/BooKingReserveApplicationServices.png?raw=true)
 ---
+## Technologies and Frameworks
+
+The BooKing project uses the following versions of technologies and frameworks:
+
+### Backend
+- **.NET Core**: `7.0`
+
+### Frontend
+- **Angular**: `18.1.0`
+- **Bootstrap**: `5.3.3`
+
+---
 
 ## How to Run Locally
 
@@ -127,5 +139,6 @@ Unit tests were developed for the main services created. Integration tests and o
 5. Additional Information
    - When running the project, some apartments and users are created along with the migrations to facilitate testing and usage. The password for all of them is: secret123.
    - ![users](https://github.com/gajalves/booking/blob/main/docs/img/db/user.png?raw=true)
+   - ![apartments](https://github.com/gajalves/booking/blob/main/docs/img/db/apartment-db.png?raw=true)
 
 ---

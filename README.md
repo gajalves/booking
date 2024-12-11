@@ -95,7 +95,7 @@ Unit tests were developed for the main services created. Integration tests and o
 The BooKing project uses the following versions of technologies and frameworks:
 
 ### Backend
-- **.NET Core**: `7.0`
+- **.NET**: `7.0`
 
 ### Frontend
 - **Angular**: `18.1.0`

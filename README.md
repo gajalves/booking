@@ -96,7 +96,7 @@ Unit tests were developed for the main services created. Integration tests and o
 1. Clone the repository:
     ```bash
     git clone https://github.com/gajalves/booking.git
-    cd booking-project
+    cd booking
     ```
 
 2. Start the services using Docker Compose:

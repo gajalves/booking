@@ -16,7 +16,10 @@ using BooKing.Reserve.Domain.Enums;
 using BooKing.Reserve.Domain.Errors;
 using BooKing.Reserve.Domain.Interfaces;
 using BooKing.Reserve.Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
+using System.Data;
 
 namespace BooKing.Reserve.Tests;
 
@@ -29,6 +32,7 @@ public class ReservationServiceTests
     private readonly IMapper _mapper;
     private readonly Mock<IEventSourcingRepository> _eventSourcingRepositoryMock;
     private readonly Mock<PricingService> _pricingServiceMock;
+    private readonly Mock<IDbContextTransaction> _transactionMock;
 
     private readonly ReservationService _sut;
 
@@ -41,6 +45,7 @@ public class ReservationServiceTests
         _mapper = AutoMapperConfiguration.Create().CreateMapper();
         _eventSourcingRepositoryMock = new Mock<IEventSourcingRepository>();
         _pricingServiceMock = new Mock<PricingService>();
+        _transactionMock = new Mock<IDbContextTransaction>();
 
         _sut = new ReservationService(
             _reservationRepositoryMock.Object,
@@ -214,9 +219,12 @@ public class ReservationServiceTests
         _apartmentServiceMock.Setup(a => a.GetApartment(apartmentId))
             .ReturnsAsync(Result.Success(apartment));
 
-        _reservationRepositoryMock.Setup(r => r.IsOverlappingAsync(apartmentId, duration))
-            .ReturnsAsync(true);
+        _reservationRepositoryMock.Setup(x => x.BeginTransactionAsync(IsolationLevel.Serializable))
+           .ReturnsAsync(_transactionMock.Object);
 
+        _reservationRepositoryMock.Setup(r => r.IsOverlappingAsync(apartmentId, duration, It.IsAny<IDbContextTransaction>()))
+            .ReturnsAsync(true);
+        
         // Act
         var result = await _sut.Reserve(new NewReservationDto
         {
@@ -263,13 +271,15 @@ public class ReservationServiceTests
             .Setup(service => service.GetApartment(apartmentId))
             .ReturnsAsync(Result.Success(apartment));
 
-        _reservationRepositoryMock
-            .Setup(repo => repo.IsOverlappingAsync(apartmentId, duration))
-            .ReturnsAsync(false);
+        _reservationRepositoryMock.Setup(x => x.BeginTransactionAsync(IsolationLevel.Serializable))
+           .ReturnsAsync(_transactionMock.Object);
 
+        _reservationRepositoryMock.Setup(r => r.IsOverlappingAsync(apartmentId, duration, It.IsAny<IDbContextTransaction>()))
+            .ReturnsAsync(true);
+        
         _reservationRepositoryMock
             .Setup(repo => repo.AddAsync(It.IsAny<Reservation>()))
-            .ThrowsAsync(new ConcurrencyException("", new Exception()));
+            .ThrowsAsync(new DbUpdateConcurrencyException("", new Exception()));
 
         // Act
         var result = await _sut.Reserve(newReservationDto);
@@ -313,7 +323,13 @@ public class ReservationServiceTests
         _currentUserServiceMock.Setup(c => c.GetCurrentUser())
             .Returns(currentUser);
 
-        _reservationRepositoryMock.Setup(r => r.IsOverlappingAsync(apartmentId, duration))
+        _transactionMock.Setup(x => x.CommitAsync(It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        _reservationRepositoryMock.Setup(x => x.BeginTransactionAsync(IsolationLevel.Serializable))
+           .ReturnsAsync(_transactionMock.Object);
+
+        _reservationRepositoryMock.Setup(r => r.IsOverlappingAsync(apartmentId, duration, It.IsAny<IDbContextTransaction>()))
             .ReturnsAsync(false);
 
         // Act
@@ -648,7 +664,7 @@ public class ReservationServiceTests
         Assert.True(result.IsFailure);
         Assert.Equal(ApplicationErrors.ReserveError.ErrorObtainingApartmentData, result.Error);
     }
-    
+
     [Fact]
     public async Task GetAllReservationsByUserId_ShouldReturnSuccess_WithMappedReservations()
     {
@@ -661,7 +677,7 @@ public class ReservationServiceTests
             Reservation.Reserve(apartmentId, userId, 100, 50, DateRange.Create(DateTime.UtcNow, DateTime.UtcNow.AddDays(2)).Value, _pricingServiceMock.Object)
         };
         var apartments = new List<GetApartmentDto>()
-        { 
+        {
             new GetApartmentDto() { Id = apartmentId }
         };
 

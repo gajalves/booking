@@ -6,14 +6,15 @@ using BooKing.Generics.Outbox.Service;
 using BooKing.Generics.Shared.CurrentUserService;
 using BooKing.Reserve.Application.Dtos;
 using BooKing.Reserve.Application.Erros;
-using BooKing.Reserve.Application.Exceptions;
 using BooKing.Reserve.Application.Interfaces;
 using BooKing.Reserve.Domain;
 using BooKing.Reserve.Domain.Entities;
 using BooKing.Reserve.Domain.Enums;
 using BooKing.Reserve.Domain.Interfaces;
 using BooKing.Reserve.Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace BooKing.Reserve.Application.Services;
 public class ReservationService : IReservationService
@@ -44,13 +45,13 @@ public class ReservationService : IReservationService
     }
 
     public async Task<Result<ReservationCreatedDto>> Reserve(NewReservationDto dto)
-    {       
+    {
         var result = await _apartmentService.GetApartment(dto.ApartmentId);
         if (result.IsFailure)
-            return Result.Failure<ReservationCreatedDto>(result.Error);        
+            return Result.Failure<ReservationCreatedDto>(result.Error);
 
         var apartment = result.Value;
-        if(!apartment.IsActive)
+        if (!apartment.IsActive)
             return Result.Failure<ReservationCreatedDto>(ApplicationErrors.ReserveError.ApartmentInactive);
 
         var user = _currentUserService.GetCurrentUser();
@@ -62,13 +63,16 @@ public class ReservationService : IReservationService
         if (duration.IsFailure)
             return Result.Failure<ReservationCreatedDto>(duration.Error);
 
-        var isApartmentOverlapping = await _reservationRepository.IsOverlappingAsync(dto.ApartmentId, duration.Value);
-
-        if (isApartmentOverlapping)
-            return Result.Failure<ReservationCreatedDto>(ApplicationErrors.ReserveError.Overlap);
-
+        using var transaction = await _reservationRepository.BeginTransactionAsync(IsolationLevel.Serializable);
         try
         {
+            var isApartmentOverlapping = await _reservationRepository.IsOverlappingAsync(dto.ApartmentId, duration.Value, transaction);
+            if (isApartmentOverlapping)
+            {
+                await transaction.RollbackAsync();
+                return Result.Failure<ReservationCreatedDto>(ApplicationErrors.ReserveError.Overlap);
+            }
+
             var reserve = Reservation.Reserve(
                 apartment.Id,
                 user.Id,
@@ -78,19 +82,21 @@ public class ReservationService : IReservationService
                 _pricingService);
 
             await _reservationRepository.AddAsync(reserve);
-
-            await _outboxEventService.AddEvent(                
-                new ReservationCreatedEvent(reserve.Id, user.Id, user.Email, apartment.Id, 
-                                            apartment.Name, reserve.Duration.Start, reserve.Duration.End, 
-                                            reserve.PriceForPeriod, reserve.CleaningFee, 
+            await _outboxEventService.AddEvent(
+                new ReservationCreatedEvent(reserve.Id, user.Id, user.Email, apartment.Id,
+                                            apartment.Name, reserve.Duration.Start, reserve.Duration.End,
+                                            reserve.PriceForPeriod, reserve.CleaningFee,
                                             reserve.TotalPrice, reserve.CreatedOnUtc));
 
+            await transaction.CommitAsync();
+
             var reservationDto = _mapper.Map<ReservationCreatedDto>(reserve);
-           
+
             return Result.Success(reservationDto);
         }
-        catch (ConcurrencyException)
+        catch (DbUpdateConcurrencyException)
         {
+            await transaction.RollbackAsync();
             return Result.Failure<ReservationCreatedDto>(ApplicationErrors.ReserveError.Overlap);
         }
     }
@@ -135,7 +141,7 @@ public class ReservationService : IReservationService
 
         _reservationRepository.Update(reservation);
 
-        var ev = new ReservationCancelledByUserEvent(reservation.Id, user.Id, user.Email, 
+        var ev = new ReservationCancelledByUserEvent(reservation.Id, user.Id, user.Email,
                                                      reservation.Duration.Start, reservation.Duration.End, reservation.TotalPrice);
         await _outboxEventService.AddEvent(ev);
 
@@ -164,10 +170,10 @@ public class ReservationService : IReservationService
 
             var apartments = result.Value;
 
-            foreach ( var reservation in reservationsDtos) 
+            foreach (var reservation in reservationsDtos)
             {
                 var apartment = apartments.Where(a => a.Id == reservation.ApartmentId).FirstOrDefault();
-                if(apartment is not null)
+                if (apartment is not null)
                     reservation.Apartment = apartment;
             }
         }
@@ -179,7 +185,7 @@ public class ReservationService : IReservationService
     {
         var reservation = await _reservationRepository.GetReservation(reservationId);
 
-        if(reservation == null)
+        if (reservation == null)
             return Result.Failure<ReservationDto>(ApplicationErrors.ReserveError.NotFound);
 
         var user = _currentUserService.GetCurrentUser();
@@ -193,7 +199,7 @@ public class ReservationService : IReservationService
 
         var reservationDto = _mapper.Map<ReservationDto>(reservation);
         reservationDto.Apartment = result.Value;
-        
+
         return Result.Success(reservationDto);
     }
 
@@ -210,11 +216,11 @@ public class ReservationService : IReservationService
 
         var events = await _eventSourcingRepository.GetEvents(reservationId);
 
-        if(events == null)
+        if (events == null)
             return Result.Failure<List<ReservationEventsDto>>(ApplicationErrors.ReserveError.EventsNotFound);
 
         var reservationEventsDto = HandleReservationEvents(events);
-        
+
         return Result.Success(reservationEventsDto);
     }
 

@@ -8,7 +8,8 @@ services:
       context: .
       dockerfile: src/BooKing.Identity/BooKing.Identity.Api/Dockerfile
     depends_on:
-      - booking.db    
+      booking.prebase:
+        condition: service_completed_successfully    
 
   booking.apartments.api:
     image: ${DOCKER_REGISTRY-}bookingapartmentsapi
@@ -16,8 +17,9 @@ services:
     build:
       context: .
       dockerfile: src/BooKing.Apartments/BooKing.Apartments.Api/Dockerfile
-    depends_on:      
-      - booking.db 
+    depends_on:
+      booking.prebase:
+        condition: service_completed_successfully
 
   booking.reserve.api:
     image: ${DOCKER_REGISTRY-}bookingreserveapi
@@ -25,20 +27,35 @@ services:
     build:
       context: .
       dockerfile: src/BooKing.Reserve/BooKing.Reserve.Api/Dockerfile
-    depends_on:      
-      - booking.db 
+    depends_on:
+      booking.prebase:
+        condition: service_completed_successfully
 
   booking.db:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: BooKing.DB
     restart: always
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=password123
+      - MSSQL_SA_PASSWORD=Password123!
       - MSSQL_PID=Express
     ports:
       - "1433:1433"
-    
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Password123!", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  booking.prebase:
+    image: ${DOCKER_REGISTRY-}bookinginfraprebase
+    container_name: BooKing.Infra.PreBase
+    build:
+      context: .
+      dockerfile: src/BooKing.Generics/BooKing.Infra.PreBase/Dockerfile    
+    restart: "no"
+
   booking.rabbitmq:
     image: rabbitmq:3-management
     container_name: BooKing.RabbitMQ
@@ -67,8 +84,9 @@ services:
     build:
       context: .
       dockerfile: src/BooKing.Outbox/BooKing.Outbox.Service/Dockerfile
-    depends_on:      
-      - booking.db
+    depends_on:
+      booking.prebase:
+        condition: service_completed_successfully
 
   booking.email.service:
     image: ${DOCKER_REGISTRY-}bookingemailservice
@@ -86,7 +104,8 @@ services:
       context: .
       dockerfile: src/BooKing.Reserve/BooKing.Reserve.Service/Dockerfile
     depends_on:
-      - booking.db
+      booking.prebase:
+        condition: service_completed_successfully
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -126,4 +145,3 @@ volumes:
     portainer_data:
     eventstore-volume-data:
     eventstore-volume-logs:
-

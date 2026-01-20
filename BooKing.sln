@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooKing.Reserve.Tests", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooKing.Reserve.Api", "src\BooKing.Reserve\BooKing.Reserve.Api\BooKing.Reserve.Api.csproj", "{F490C6AB-A685-43A5-844C-6069C9D2288E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooKing.Infra.PreBase", "src\BooKing.Generics\BooKing.Infra.PreBase\BooKing.Infra.PreBase.csproj", "{A543D96B-DB56-4B76-BCF0-1540E3EE5F9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -179,6 +181,10 @@ Global
 		{F490C6AB-A685-43A5-844C-6069C9D2288E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F490C6AB-A685-43A5-844C-6069C9D2288E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F490C6AB-A685-43A5-844C-6069C9D2288E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A543D96B-DB56-4B76-BCF0-1540E3EE5F9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A543D96B-DB56-4B76-BCF0-1540E3EE5F9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A543D96B-DB56-4B76-BCF0-1540E3EE5F9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A543D96B-DB56-4B76-BCF0-1540E3EE5F9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -215,6 +221,7 @@ Global
 		{1938F555-697C-403D-851B-402C1F89F4A7} = {5E2F2F52-D69C-4AFD-96C7-7E96B7EE9213}
 		{6432ECA2-34D3-48E9-AA7D-5A3CEE6AABA9} = {870675DD-CC66-4422-80DF-BB5373D37857}
 		{F490C6AB-A685-43A5-844C-6069C9D2288E} = {870675DD-CC66-4422-80DF-BB5373D37857}
+		{A543D96B-DB56-4B76-BCF0-1540E3EE5F9D} = {9EA064E4-BA30-4773-88F0-A555D8D9B888}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83DDAC6D-5483-44AD-B21F-634C77DACD0F}
